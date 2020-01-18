@@ -1,7 +1,9 @@
 import React from "react";
 
-function Teamalyzer() {
-  return <div>teamalyzer</div>;
+class Teamalyzer extends React.Component {
+  render() {
+    return <div>Teamalyzer</div>;
+  }
 }
 
 export default Teamalyzer;
