@@ -5,13 +5,20 @@ import ImportExport from "./ImportExport";
 import PokemonInput from "./PokemonInput";
 import Tools from "./Tools";
 
+const inputBlock = {
+  float: "left",
+  border: "1px solid"
+};
+
 class Teamalyzer extends React.Component {
   render() {
     return (
       <div>
-        <ImportExport />
-        <FieldInput />
-        <PokemonInput />
+        <div style={inputBlock}>
+          <ImportExport />
+          <FieldInput />
+          <PokemonInput />
+        </div>
         <Tools />
       </div>
     );
