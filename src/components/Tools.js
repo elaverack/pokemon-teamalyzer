@@ -7,7 +7,8 @@ const toolBlock = {
 
 class Tools extends React.Component {
   render() {
-    return <div style={toolBlock}>Tools</div>;
+    console.log(this.props);
+    return <div style={toolBlock}>Tools {this.props.input.pokemon1.name}</div>;
   }
 }
 

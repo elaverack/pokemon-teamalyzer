@@ -1,4 +1,5 @@
 import React from "react";
+import { Pokemon } from "@smogon/calc";
 
 import FieldInput from "./FieldInput";
 import ImportExport from "./ImportExport";
@@ -11,6 +12,19 @@ const inputBlock = {
 };
 
 class Teamalyzer extends React.Component {
+  /*
+Use pokemon object as part of state? yes, can do, can access all parts of pokemon class from prop
+create array of pokemon as part of state?
+*/
+
+  constructor() {
+    super();
+    this.state = {
+      level: 50,
+      pokemon1: new Pokemon(8, "Ditto")
+    };
+  }
+
   render() {
     return (
       <div>
@@ -19,7 +33,7 @@ class Teamalyzer extends React.Component {
           <FieldInput />
           <PokemonInput />
         </div>
-        <Tools />
+        <Tools input={this.state} />
       </div>
     );
   }
