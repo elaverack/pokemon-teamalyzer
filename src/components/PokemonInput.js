@@ -4,6 +4,8 @@ import React from "react";
 sort through this mess
 break up stat rows into their own components?
 break up move rows into components?
+use formik to make inputs easier?
+update state using the pokemon class from the calc to fill in blanks
 */
 
 class PokemonInput extends React.Component {

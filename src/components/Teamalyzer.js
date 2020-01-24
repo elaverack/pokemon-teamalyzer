@@ -11,17 +11,15 @@ const inputBlock = {
   border: "1px solid"
 };
 
-class Teamalyzer extends React.Component {
-  /*
-Use pokemon object as part of state? yes, can do, can access all parts of pokemon class from prop
-create array of pokemon as part of state?
-*/
+// TODO, might be a cleaner way to do this?
+const TeamSlot = new Pokemon(8, "Ditto");
+const PokeArr = [TeamSlot, TeamSlot, TeamSlot, TeamSlot, TeamSlot, TeamSlot];
 
+class Teamalyzer extends React.Component {
   constructor() {
     super();
     this.state = {
-      level: 50,
-      pokemon1: new Pokemon(8, "Ditto")
+      team: PokeArr
     };
   }
 
@@ -31,9 +29,10 @@ create array of pokemon as part of state?
         <div style={inputBlock}>
           <ImportExport />
           <FieldInput />
+          {/* TODO Level Input component? Think about where to put this */}
           <PokemonInput />
         </div>
-        <Tools input={this.state} />
+        <Tools team={this.state.team} />
       </div>
     );
   }
