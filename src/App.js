@@ -1,10 +1,13 @@
+import { Pokemon, SPECIES } from "@smogon/calc";
 import React from "react";
 import "./App.css";
-
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Teamalyzer from "./components/Teamalyzer";
-import Footer from "./components/Footer";
+
+window.Pokemon = Pokemon;
+window.SPECIES = SPECIES;
 
 function App() {
   return (

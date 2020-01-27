@@ -1,38 +1,37 @@
 import React from "react";
-import { Pokemon } from "@smogon/calc";
 
-import FieldInput from "./FieldInput";
-import ImportExport from "./ImportExport";
-import PokemonInput from "./PokemonInput";
+import Inputs from "./Inputs";
 import Tools from "./Tools";
 
-const inputBlock = {
-  float: "left",
-  border: "1px solid"
-};
+// TODO create state data object that takes all pokemon inputs
 
-// TODO, might be a cleaner way to do this?
-const TeamSlot = new Pokemon(8, "Ditto");
-const PokeArr = [TeamSlot, TeamSlot, TeamSlot, TeamSlot, TeamSlot, TeamSlot];
+/* TODO State brainstorm
+var Teamalyzer inputs = {
+  field = {
+    singles, doubles,
+    weather = 
+    field effects = stealthrock, steelsurge, spikes, etc
+  }
+  team = {
+    pokemon[] = 
+      species, type, forme, gender, level, stats[] = 
+        hp, atk, def, satk, sdef, spe[ivs, evs]
+      nature, ability, abilityOn, item, status, currentHPstat, currentHP% ??, move[] = 
+        movename, power, type, category, isCrit, isMax
+  }
+}
+*/
 
 class Teamalyzer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      team: PokeArr
-    };
-  }
+  // constructor() {
+  //   super();
+  // }
 
   render() {
     return (
       <div>
-        <div style={inputBlock}>
-          <ImportExport />
-          <FieldInput />
-          {/* TODO Level Input component? Think about where to put this */}
-          <PokemonInput />
-        </div>
-        <Tools team={this.state.team} />
+        <Inputs />
+        <Tools />
       </div>
     );
   }
