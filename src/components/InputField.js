@@ -2,7 +2,11 @@ import React from "react";
 
 class InputField extends React.Component {
   render() {
-    return <div>InputField</div>;
+    return (
+      <div>
+        <div></div>InputField
+      </div>
+    );
   }
 }
 
