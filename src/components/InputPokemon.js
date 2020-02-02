@@ -1,12 +1,12 @@
 import React from "react";
-import StatInput from "./StatInput";
-import MoveInput from "./MoveInput";
+import InputStat from "./InputStat";
+import InputMove from "./InputMove";
 /* TODO
 sort through this mess
 update state using the pokemon class from the calc to fill in blanks
 */
 
-class PokemonInput extends React.Component {
+class InputPokemon extends React.Component {
   render() {
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
@@ -58,7 +58,7 @@ class PokemonInput extends React.Component {
               />
             </div>
           </div>
-          <StatInput />
+          <InputStat />
           <div className="info-group info-selectors">
             <div className="gen-specific g3 g4 g5 g6 g7 g8">
               <label id="natureL1">Nature</label>
@@ -160,11 +160,11 @@ class PokemonInput extends React.Component {
             <br />
             Health <div className="hpbar"></div>
           </div>
-          <MoveInput />
+          <InputMove />
         </fieldset>
       </div>
     );
   }
 }
 
-export default PokemonInput;
+export default InputPokemon;

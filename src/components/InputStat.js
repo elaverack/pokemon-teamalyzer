@@ -2,7 +2,7 @@ import React from "react";
 
 // TODO gather inputs into state
 
-class StatInput extends React.Component {
+class InputStat extends React.Component {
   render() {
     return (
       <div>
@@ -68,4 +68,4 @@ class StatInput extends React.Component {
   }
 }
 
-export default StatInput;
+export default InputStat;

@@ -1,6 +1,6 @@
 import React from "react";
 
-class MoveInput extends React.Component {
+class InputMove extends React.Component {
   //   constructor() {
   //     super();
   //   }
@@ -73,4 +73,4 @@ class MoveInput extends React.Component {
   }
 }
 
-export default MoveInput;
+export default InputMove;
