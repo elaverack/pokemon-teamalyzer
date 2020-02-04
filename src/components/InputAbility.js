@@ -1,11 +1,14 @@
 import React from "react";
 import { genAbilityOptions } from "../utils";
 
+// STRETCH limit visible abilities to species/forme
+
 class InputAbility extends React.Component {
   render() {
     return (
       <div>
         <label id="ability">Ability</label>
+        {/* TODO input value as default ability from state */}
         <input
           type="text"
           className="abilitySelector"

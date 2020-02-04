@@ -15,6 +15,8 @@ update state using the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
 
+const stats = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
+
 class InputPokemon extends React.Component {
   render() {
     return (
@@ -25,12 +27,15 @@ class InputPokemon extends React.Component {
           <InputType />
           <InputGender />
           <Weight />
-          <InputStat />
+          {/* TODO loop render stats */}
+          <InputStat title={stats[0]} />
+          <InputStat title={stats[1]} />
           <InputNature />
           <InputAbility />
           <InputItem />
           <InputStatus />
           <InputHP />
+          {/* TODO loop render moves */}
           <InputMove />
         </fieldset>
       </div>

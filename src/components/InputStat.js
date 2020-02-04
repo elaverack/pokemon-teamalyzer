@@ -6,9 +6,8 @@ class InputStat extends React.Component {
   render() {
     return (
       <div>
-        {/* TODO conditional render column headers */}
         <thead>
-          <tr>
+          <tr hidden={this.props.title !== "HP" && "hidden"}>
             <th />
             <th className="col">Base</th>
             <th className="col">IV</th>
@@ -17,15 +16,16 @@ class InputStat extends React.Component {
             <th className="col">Boost</th>
           </tr>
         </thead>
-        <tr className="at">
+        <tr className={this.props.title}>
           <th className="row">
-            {/* TODO pass in row title via props */}
-            <label>Attack</label>
+            <label>{this.props.title}</label>
           </th>
           <td>
+            {/* TODO pass value based on state */}
             <input className="base" defaultValue="100" min="0" />
           </td>
           <td>
+            {/* TODO pass value based on state */}
             <input className="ivs" defaultValue="31" min="0" max="31" />
           </td>
           <td>
@@ -35,13 +35,14 @@ class InputStat extends React.Component {
               min="0"
               max="252"
               step="4"
+              // TODO pass value in based on state
               defaultValue="0"
             />
           </td>
           <td>
-            <span className="total">236</span>
+            <output className="total">236</output>
           </td>
-          <td>
+          <td hidden={this.props.title === "HP" && "hidden"}>
             <select className="boost" defaultValue="0">
               <option value="6">+6</option>
               <option value="5">+5</option>
@@ -59,7 +60,7 @@ class InputStat extends React.Component {
             </select>
           </td>
           {/* TODO pass in stat totals with props */}
-          <td>
+          <td hidden={this.props.title === "HP" && "hidden"}>
             <span className="totalMod">---</span>
           </td>
         </tr>

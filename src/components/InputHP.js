@@ -7,10 +7,8 @@ class InputHP extends React.Component {
     return (
       <div>
         <label id="currentHp">Current HP</label>
-        <br />
         <input className="currenthp" id="currentHp" defaultValue="341" />/
-        <output className="max-hp">341</output>
-        <br /> (
+        <output className="max-hp">341</output>(
         <input className="percent-hp" defaultValue="100" />
         %)
       </div>

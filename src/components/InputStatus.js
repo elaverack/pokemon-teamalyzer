@@ -1,11 +1,13 @@
 import React from "react";
 
+//TODO add state conditions
+
 class InputStatus extends React.Component {
   render() {
     return (
       <div>
         <label id="statusL1">Status</label>
-        <select className="status calc-trigger" id="statusL1">
+        <select className="status" id="statusL1">
           <option value="Healthy">Healthy</option>
           <option value="Poisoned">Poisoned</option>
           <option value="Badly Poisoned">Badly Poisoned</option>
@@ -15,8 +17,10 @@ class InputStatus extends React.Component {
           <option value="Frozen">Frozen</option>
         </select>
         <select
+          // OPTIONAL allow for badly poisoned status
           aria-label="Toxic counter"
-          className="toxic-counter calc-trigger hide"
+          className="toxic-counter"
+          hidden
         >
           <option value="1">1/16</option>
           <option value="2">2/16</option>
