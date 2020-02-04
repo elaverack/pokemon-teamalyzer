@@ -16,14 +16,25 @@ make this component repeatable for 6 pokemon
 */
 
 const stats = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
+let pokemon = {
+  species: ""
+};
 
 class InputPokemon extends React.Component {
+  constructor() {
+    super();
+    this.state = pokemon;
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange() {}
+
   render() {
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
         <fieldset className="poke-info" id="p1">
           <legend align="center">Pok&eacute;mon 1</legend>
-          <InputSpecies />
+          <InputSpecies species={this.state.species} />
           <InputType />
           <InputGender />
           <Weight />

@@ -12,6 +12,7 @@ class InputSpecies extends React.Component {
           className="speciesSelector"
           list="speciesOptions"
           placeholder="(No Species)"
+          defaultValue={this.props.species}
         />
         <datalist id="speciesOptions">{genSpeciesOptions()}</datalist>
         {/* STRETCH

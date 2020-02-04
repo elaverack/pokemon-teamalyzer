@@ -22,11 +22,23 @@ class InputStat extends React.Component {
           </th>
           <td>
             {/* TODO pass value based on state */}
-            <input className="base" defaultValue="100" min="0" />
+            <input
+              className="base"
+              type="number"
+              defaultValue="100"
+              min="0"
+              max="255"
+            />
           </td>
           <td>
             {/* TODO pass value based on state */}
-            <input className="ivs" defaultValue="31" min="0" max="31" />
+            <input
+              className="ivs"
+              type="number"
+              defaultValue="31"
+              min="0"
+              max="31"
+            />
           </td>
           <td>
             <input
