@@ -1,4 +1,5 @@
 import React from "react";
+import { genTypeOptions, genMoveOptions } from "../utils";
 
 class InputMove extends React.Component {
   //   constructor() {
@@ -7,58 +8,58 @@ class InputMove extends React.Component {
 
   render() {
     return (
-      <div className="move4">
-        <select className="move-selector calc-trigger small-select"></select>
-        <input className="move-bp calc-trigger" value="0" />
-        <select className="move-type calc-trigger"></select>
-        <select className="move-cat calc-trigger gen-specific g4 g5 g6 g7 g8">
+      <div className="move">
+        <input
+          type="text"
+          className="moveSelector"
+          list="moveOptions"
+          placeholder="(No Move)"
+          // TODO set value from state aquired from imported set, empty string shows placeholder
+        />
+        <datalist id="moveOptions">{genMoveOptions()}</datalist>
+        <input className="move-bp" defaultValue="0" />
+        {/* TODO set type defaultValue to move default */}
+        <select id="move-type">{genTypeOptions()}</select>
+        <select className="move-cat">
           <option value="Physical">Physical</option>
           <option value="Special">Special</option>
+          <option value="Status">Status</option>
         </select>
-        <input
-          aria-describedby="criticalHitInstruction"
-          className="move-crit calc-trigger visually-hidden"
-          type="checkbox"
-          id="critL4"
-        />
-        <label
-          className="btn crit-btn"
-          id="critL4"
+        <button
+          className="move-crit"
           title="Force this attack to be a critical hit?"
+          type="button"
         >
           Crit
-        </label>
-        <input
-          aria-describedby="zMoveInstruction"
-          className="move-z calc-trigger visually-hidden"
-          type="checkbox"
-          id="zL4"
-        />
-        <label
-          className="btn z-btn gen-specific g7"
-          id="zL4"
-          title="Make this attack a Z-move?"
+        </button>
+        {/* TODO Support Max move toggle when available
+        <button
+          className="move-max"
+          title="Force this attack to be a Max move?"
+          type="button"
         >
-          Z
-        </label>
-        <select className="move-hits calc-trigger hide">
+          Max
+        </button> */}
+        {/* TODO conditional render the move hits for multi-attack moves */}
+        <select className="move-hits" defaultValue="3">
           <option value="2">2 hits</option>
           <option value="3">3 hits</option>
           <option value="4">4 hits</option>
           <option value="5">5 hits</option>
         </select>
+        {/* OPTIONAL conditional render multi-use stat drop moves and metronome 
         <select
-          className="stat-drops calc-trigger hide"
+          className="stat-drops"
           title="How many times was this move used in a row?"
         >
-          ><option value="1">Once</option>
-          <option value="2">Twice</option>
-          <option value="3">3 times</option>
-          <option value="4">4 times</option>
-          <option value="5">5 times</option>
-        </select>
+          <option value="1">1 Time</option>
+          <option value="2">1 Times</option>
+          <option value="3">3 Times</option>
+          <option value="4">4 Times</option>
+          <option value="5">5 Times</option>
+        </select> 
         <select
-          className="metronome calc-trigger hide"
+          className="metronome hide"
           title="How many times was this move successfully and consecutively used while holding Metronome before this turn?"
         >
           <option value="0">Never</option>
@@ -67,7 +68,7 @@ class InputMove extends React.Component {
           <option value="3">3 times</option>
           <option value="4">4 times</option>
           <option value="5">5 times</option>
-        </select>
+        </select> */}
       </div>
     );
   }

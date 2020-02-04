@@ -7,7 +7,7 @@
   padding: 0;
 }
 
-/* general button styling */
+/* general button styling
 .btn {
   text-align: center;
   border: solid 1px #aaaaaa;
@@ -58,9 +58,9 @@
 .btn-mid {
   border-radius: 0;
 }
-.visually-hidden:focus + .btn, /* Add visual indication when focusing on visually hidden elements */
+.visually-hidden:focus + .btn, /* Add visual indication when focusing on visually hidden elements
 .btn:hover {
   z-index: 10;
   border-color: #777777;
   background: #e3e3e3;
-}
+} */

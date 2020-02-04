@@ -1,21 +1,18 @@
 import React from "react";
 
+// TODO set and read current hp, % hp, and max hp value with state
+
 class InputHP extends React.Component {
   render() {
     return (
-      <div className="info-group">
-        <label id="currentHpL1">Current HP</label>
-        <input
-          className="current-hp calc-trigger"
-          id="currentHpL1"
-          value="341"
-        />
-        /<span className="max-hp">341</span> (
-        <input className="percent-hp calc-trigger" value="100" />
+      <div>
+        <label id="currentHp">Current HP</label>
+        <br />
+        <input className="currenthp" id="currentHp" defaultValue="341" />/
+        <output className="max-hp">341</output>
+        <br /> (
+        <input className="percent-hp" defaultValue="100" />
         %)
-        <br />
-        <br />
-        Health <div className="hpbar"></div>
       </div>
     );
   }

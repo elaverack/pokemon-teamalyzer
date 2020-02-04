@@ -1,16 +1,22 @@
 import React from "react";
+import { genAbilityOptions } from "../utils";
 
 class InputAbility extends React.Component {
   render() {
     return (
-      <div className="gen-specific g3 g4 g5 g6 g7 g8">
-        <label id="abilityL1">Ability</label>
-        <select
-          className="ability terrain-trigger calc-trigger"
-          id="abilityL1"
-        ></select>
+      <div>
+        <label id="ability">Ability</label>
+        <input
+          type="text"
+          className="abilitySelector"
+          list="abilityOptions"
+          placeholder="(No Ability)"
+        />
+        <datalist id="abilityOptions">{genAbilityOptions()}</datalist>
+        Active?
         <input
           type="checkbox"
+          defaultChecked
           title="Is this ability active?"
           className="abilityToggle calc-trigger"
         />

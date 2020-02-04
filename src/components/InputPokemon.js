@@ -11,8 +11,8 @@ import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 import InputHP from "./InputHP";
 /* TODO
-sort through this mess
 update state using the pokemon class from the calc to fill in blanks
+make this component repeatable for 6 pokemon
 */
 
 class InputPokemon extends React.Component {
