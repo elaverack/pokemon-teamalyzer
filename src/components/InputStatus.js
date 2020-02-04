@@ -6,8 +6,8 @@ class InputStatus extends React.Component {
   render() {
     return (
       <div>
-        <label id="statusL1">Status</label>
-        <select className="status" id="statusL1">
+        <label id="status">Status</label>
+        <select className="status" id="status">
           <option value="Healthy">Healthy</option>
           <option value="Poisoned">Poisoned</option>
           <option value="Badly Poisoned">Badly Poisoned</option>
