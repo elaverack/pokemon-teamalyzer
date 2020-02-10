@@ -18,7 +18,8 @@ make this component repeatable for 6 pokemon
 const stats = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
 let pokemon = {
   species: "",
-  type: "Dragon"
+  types: ["None", "None"],
+  gender: "Genderless"
 };
 
 class InputPokemon extends React.Component {
@@ -29,10 +30,21 @@ class InputPokemon extends React.Component {
 
   handleChange(event) {
     //console.log(...arguments);
-    //console.log(event.target);
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    console.log(event.target.name);
+    console.log(event.target.id);
+    const { name, value, id } = event.target;
+    let types = this.state.types.slice(); //creates the clone of the state
+
+    if (name === "types") {
+      types[id] = value;
+      this.setState({
+        types: types
+      });
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   }
 
   render() {
@@ -44,12 +56,12 @@ class InputPokemon extends React.Component {
             species={this.state.species}
             handleChange={event => this.handleChange(event)}
           />
-          <h1>
-            {this.state.species}
-            {this.state.type}
-          </h1>
-          <InputType />
-          <InputGender />
+
+          <InputType
+            types={this.state.types}
+            handleChange={event => this.handleChange(event)}
+          />
+          <InputGender gender={this.state.gender} />
           <Weight />
           {/* TODO loop render stats */}
           <InputStat title={stats[0]} />
@@ -61,6 +73,12 @@ class InputPokemon extends React.Component {
           <InputHP />
           {/* TODO loop render moves */}
           <InputMove />
+          <h1>
+            {this.state.species}
+            <br />
+            {this.state.types[0]} {this.state.types[1]}
+            <br />
+          </h1>
         </fieldset>
       </div>
     );

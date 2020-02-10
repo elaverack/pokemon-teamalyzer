@@ -7,8 +7,22 @@ class InputType extends React.Component {
       <div>
         <label>Type</label>
         {/* TODO set defaultvalue with state props */}
-        <select id="type1">{genTypeOptions()}</select>
-        <select id="type2">{genTypeOptions()}</select>
+        <select
+          name="types"
+          id="0"
+          value={this.props.types[0]}
+          onChange={this.props.handleChange}
+        >
+          {genTypeOptions()}
+        </select>
+        <select
+          name="types"
+          id="1"
+          value={this.props.types[1]}
+          onChange={this.props.handleChange}
+        >
+          {genTypeOptions()}
+        </select>
       </div>
     );
   }
