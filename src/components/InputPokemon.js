@@ -15,11 +15,14 @@ update state using the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
 
-const stats = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
+const statNames = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
 let pokemon = {
   species: "",
   types: ["None", "None"],
-  gender: "Genderless"
+  gender: "Genderless",
+  weight: 10.0,
+  baseVals: [100, 100, 100, 100, 100, 100],
+  ivVals: [31, 31, 31, 31, 31, 31]
 };
 
 class InputPokemon extends React.Component {
@@ -29,25 +32,54 @@ class InputPokemon extends React.Component {
   }
 
   handleChange(event) {
-    //console.log(...arguments);
-    console.log(event.target.name);
-    console.log(event.target.id);
     const { name, value, id } = event.target;
-    let types = this.state.types.slice(); //creates the clone of the state
+    console.log(name, id, value);
 
-    if (name === "types") {
-      types[id] = value;
-      this.setState({
-        types: types
-      });
-    } else {
-      this.setState({
-        [name]: value
-      });
+    switch (name) {
+      case "types":
+        let types = this.state.types.slice();
+        types[id] = value;
+        this.setState({
+          types: types
+        });
+        break;
+      case "baseVal":
+        let baseVals = this.state.baseVals.slice();
+        baseVals[id] = value;
+        this.setState({
+          baseVals: baseVals
+        });
+        break;
+      case "ivVal":
+        let ivVals = this.state.ivVals.slice();
+        ivVals[id] = value;
+        this.setState({
+          ivVals: ivVals
+        });
+        break;
+      default:
+        this.setState({
+          name: value
+        });
     }
   }
 
   render() {
+    //Loop render stat input components
+    const statInputs = [];
+    for (const [i] of statNames.entries()) {
+      statInputs.push(
+        <InputStat
+          title={statNames[i]}
+          key={statNames[i]}
+          baseVal={this.state.baseVals[i]}
+          ivVal={this.state.ivVals[i]}
+          handleChange={event => this.handleChange(event)}
+          index={i}
+        />
+      );
+    }
+
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
         <fieldset className="poke-info" id="p1">
@@ -56,16 +88,13 @@ class InputPokemon extends React.Component {
             species={this.state.species}
             handleChange={event => this.handleChange(event)}
           />
-
           <InputType
             types={this.state.types}
             handleChange={event => this.handleChange(event)}
           />
           <InputGender gender={this.state.gender} />
-          <Weight />
-          {/* TODO loop render stats */}
-          <InputStat title={stats[0]} />
-          <InputStat title={stats[1]} />
+          <Weight weight={this.state.weight} />
+          {statInputs}
           <InputNature />
           <InputAbility />
           <InputItem />
