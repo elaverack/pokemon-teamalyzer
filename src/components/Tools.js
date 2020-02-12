@@ -7,7 +7,6 @@ const toolBlock = {
 
 class Tools extends React.Component {
   render() {
-    console.log(this.props);
     return <div style={toolBlock}>Tools</div>;
   }
 }

@@ -7,7 +7,12 @@ class InputNature extends React.Component {
     return (
       <div>
         <label id="nature">Nature</label>
-        <select className="nature" defaultValue="Serious">
+        <select
+          className="nature"
+          name="nature"
+          value={this.props.nature}
+          onChange={this.props.handleChange}
+        >
           <option value="Adamant">Adamant (+Atk, -SpA)</option>
           <option value="Bashful">Bashful</option>
           <option value="Bold">Bold (+Def, -Atk)</option>

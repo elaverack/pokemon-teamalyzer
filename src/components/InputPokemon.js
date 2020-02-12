@@ -1,4 +1,5 @@
 import React from "react";
+//import { Pokemon } from "@smogon/calc";
 import InputStat from "./InputStat";
 import InputMove from "./InputMove";
 import InputSpecies from "./InputSpecies";
@@ -15,14 +16,29 @@ update state using the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
 
-const statNames = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
+// var reference = new Pokemon(8, "Gengar");
+// console.log(reference);
+
+const statNames = [
+  "HP",
+  "Attack",
+  "Defense",
+  "Sp-Attack",
+  "Sp-Defense",
+  "Speed"
+];
 let pokemon = {
   species: "",
   types: ["None", "None"],
   gender: "Genderless",
   weight: 10.0,
-  baseVals: [100, 100, 100, 100, 100, 100],
-  ivVals: [31, 31, 31, 31, 31, 31]
+  baseVals: ["100", "100", "100", "100", "100", "100"],
+  ivVals: ["31", "31", "31", "31", "31", "31"],
+  evVals: ["0", "0", "0", "0", "0", "0"],
+  boosts: ["0", "0", "0", "0", "0", "0"],
+  nature: "Serious",
+  ability: "",
+  abilityOn: true
 };
 
 class InputPokemon extends React.Component {
@@ -57,9 +73,28 @@ class InputPokemon extends React.Component {
           ivVals: ivVals
         });
         break;
+      case "evVal":
+        let evVals = this.state.evVals.slice();
+        evVals[id] = value;
+        this.setState({
+          evVals: evVals
+        });
+        break;
+      case "boost":
+        let boosts = this.state.boosts.slice();
+        boosts[id] = value;
+        this.setState({
+          boosts: boosts
+        });
+        break;
+      case "abilityOn":
+        //QUESTION is this modifying state directly?
+        let toggle = this.state.abilityOn;
+        this.setState({ [name]: !toggle });
+        break;
       default:
         this.setState({
-          name: value
+          [name]: value
         });
     }
   }
@@ -74,6 +109,8 @@ class InputPokemon extends React.Component {
           key={statNames[i]}
           baseVal={this.state.baseVals[i]}
           ivVal={this.state.ivVals[i]}
+          evVal={this.state.evVals[i]}
+          boost={this.state.boosts[i]}
           handleChange={event => this.handleChange(event)}
           index={i}
         />
@@ -95,8 +132,15 @@ class InputPokemon extends React.Component {
           <InputGender gender={this.state.gender} />
           <Weight weight={this.state.weight} />
           {statInputs}
-          <InputNature />
-          <InputAbility />
+          <InputNature
+            nature={this.state.nature}
+            handleChange={event => this.handleChange(event)}
+          />
+          <InputAbility
+            ability={this.state.ability}
+            abilityOn={this.state.abilityOn}
+            handleChange={event => this.handleChange(event)}
+          />
           <InputItem />
           <InputStatus />
           <InputHP />
@@ -107,6 +151,7 @@ class InputPokemon extends React.Component {
             <br />
             {this.state.types[0]} {this.state.types[1]}
             <br />
+            {this.state.abilityOn && "true"}
           </h1>
         </fieldset>
       </div>

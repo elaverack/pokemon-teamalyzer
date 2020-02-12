@@ -35,7 +35,6 @@ class InputStat extends React.Component {
               />
             </td>
             <td>
-              {/* TODO pass value based on state */}
               <input
                 className="ivs"
                 name="ivVal"
@@ -51,19 +50,27 @@ class InputStat extends React.Component {
             <td>
               <input
                 className="evs"
+                name="evVal"
+                value={this.props.evVal}
+                onChange={this.props.handleChange}
+                id={this.props.index}
                 type="number"
                 min="0"
                 max="252"
                 step="4"
-                // TODO pass value in based on state
-                defaultValue="0"
               />
             </td>
             <td>
-              <output className="total">236</output>
+              <output className="total">---</output>
             </td>
             <td hidden={this.props.title === "HP" && "hidden"}>
-              <select className="boost" defaultValue="0">
+              <select
+                className="boost"
+                name="boost"
+                value={this.props.boost}
+                onChange={this.props.handleChange}
+                id={this.props.index}
+              >
                 <option value="6">+6</option>
                 <option value="5">+5</option>
                 <option value="4">+4</option>
