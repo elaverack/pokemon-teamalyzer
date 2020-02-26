@@ -7,10 +7,15 @@ class InputStatus extends React.Component {
     return (
       <div>
         <label id="status">Status</label>
-        <select className="status" id="status">
+        <select
+          className="status"
+          name="status"
+          value={this.props.status}
+          onChange={this.props.handleChange}
+        >
           <option value="Healthy">Healthy</option>
           <option value="Poisoned">Poisoned</option>
-          <option value="Badly Poisoned">Badly Poisoned</option>
+          {/* <option value="Badly Poisoned">Badly Poisoned</option> */}
           <option value="Burned">Burned</option>
           <option value="Paralyzed">Paralyzed</option>
           <option value="Asleep">Asleep</option>

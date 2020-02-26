@@ -1,15 +1,25 @@
 import React from "react";
 
 // TODO set and read current hp, % hp, and max hp value with state
+//QUESTION how to limit input to be within bounds, maybe Pokemon class can handle that?
 
 class InputHP extends React.Component {
   render() {
     return (
       <div>
-        <label id="currentHp">Current HP</label>
-        <input className="currenthp" id="currentHp" defaultValue="341" />/
-        <output className="max-hp">341</output>(
-        <input className="percent-hp" defaultValue="100" />
+        <label id="currentHP">{"Current HP:  "}</label>
+        <input
+          type="number"
+          className="currentHP"
+          id="currentHP"
+          name="curHP"
+          value={this.props.curHP}
+          max={this.props.maxHP}
+          min="0"
+          onChange={this.props.handleChange}
+        />
+        /<output className="maxHP">{this.props.maxHP}</output>
+        {" : "}(<output className="percentHP">{this.props.percentHP}</output>
         %)
       </div>
     );

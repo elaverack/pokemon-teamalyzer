@@ -13,6 +13,9 @@ class InputItem extends React.Component {
           className="itemSelector"
           list="itemOptions"
           placeholder="(No Item)"
+          name="item"
+          value={this.props.item}
+          onChange={this.props.handleChange}
         />
         <datalist id="itemOptions">{genItemOptions()}</datalist>
       </div>

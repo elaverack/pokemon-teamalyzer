@@ -18,16 +18,16 @@ class InputAbility extends React.Component {
           onChange={this.props.handleChange}
         />
         <datalist id="abilityOptions">{genAbilityOptions()}</datalist>
-        Active?
-        <input
-          type="checkbox"
-          defaultChecked
-          title="Is this ability active?"
-          className="abilityToggle"
-          value={this.props.abilityOn}
+        {/* TODO conditional button styling to indicate state */}
+        <button
           name="abilityOn"
-          onChange={this.props.handleChange}
-        />
+          className="abilityToggle"
+          title="Is this ability active?"
+          type="button"
+          onClick={this.props.handleChange}
+        >
+          Active?
+        </button>
       </div>
     );
   }

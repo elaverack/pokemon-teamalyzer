@@ -1,5 +1,4 @@
 import React from "react";
-//import { Pokemon } from "@smogon/calc";
 import InputStat from "./InputStat";
 import InputMove from "./InputMove";
 import InputSpecies from "./InputSpecies";
@@ -12,12 +11,12 @@ import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 import InputHP from "./InputHP";
 /* TODO
-update state using the pokemon class from the calc to fill in blanks
+use the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
-
-// var reference = new Pokemon(8, "Gengar");
-// console.log(reference);
+import { Pokemon } from "@smogon/calc";
+var reference = new Pokemon(8, "Gengar");
+console.log(reference);
 
 const statNames = [
   "HP",
@@ -27,6 +26,9 @@ const statNames = [
   "Sp-Defense",
   "Speed"
 ];
+
+//QUESTION
+//create move field with its own props?
 let pokemon = {
   species: "",
   types: ["None", "None"],
@@ -38,7 +40,10 @@ let pokemon = {
   boosts: ["0", "0", "0", "0", "0", "0"],
   nature: "Serious",
   ability: "",
-  abilityOn: true
+  abilityOn: true,
+  item: "",
+  status: "",
+  curHP: "341"
 };
 
 class InputPokemon extends React.Component {
@@ -51,6 +56,7 @@ class InputPokemon extends React.Component {
     const { name, value, id } = event.target;
     console.log(name, id, value);
 
+    // QUESTION am I modifying state directly with any of these?
     switch (name) {
       case "types":
         let types = this.state.types.slice();
@@ -88,7 +94,7 @@ class InputPokemon extends React.Component {
         });
         break;
       case "abilityOn":
-        //QUESTION is this modifying state directly?
+        //QUESTION is this modifying state directly? probably
         let toggle = this.state.abilityOn;
         this.setState({ [name]: !toggle });
         break;
@@ -110,12 +116,17 @@ class InputPokemon extends React.Component {
           baseVal={this.state.baseVals[i]}
           ivVal={this.state.ivVals[i]}
           evVal={this.state.evVals[i]}
+          // TODO incorporate rawstats through smogon pokemon object
+          //rawStat={}
           boost={this.state.boosts[i]}
           handleChange={event => this.handleChange(event)}
           index={i}
         />
       );
     }
+
+    //Loop render moves
+    //const moveInputs = [];
 
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
@@ -141,9 +152,21 @@ class InputPokemon extends React.Component {
             abilityOn={this.state.abilityOn}
             handleChange={event => this.handleChange(event)}
           />
-          <InputItem />
-          <InputStatus />
-          <InputHP />
+          <InputItem
+            item={this.state.item}
+            handleChange={event => this.handleChange(event)}
+          />
+          <InputStatus
+            status={this.state.status}
+            handleChange={event => this.handleChange(event)}
+          />
+          {/* TODO calculate percent HP, incorporate maxHP value, DO NOT make %HP input */}
+          <InputHP
+            curHP={this.state.curHP}
+            maxHP="341"
+            percentHP="100"
+            handleChange={event => this.handleChange(event)}
+          />
           {/* TODO loop render moves */}
           <InputMove />
           <h1>
