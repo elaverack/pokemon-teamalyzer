@@ -1,7 +1,7 @@
 import React from "react";
 import { TYPE_CHART, MOVES, SPECIES, ITEMS, ABILITIES } from "@smogon/calc";
 
-const gen = 8;
+export const gen = 8;
 
 // SECTION OPTION GENERATORS
 export function genTypeOptions() {
@@ -42,4 +42,15 @@ export function genAbilityOptions() {
       {name}
     </option>
   ));
+}
+
+export function validSpecies(input) {
+  let names = Object.keys(SPECIES[gen]);
+  for (let i = 0; i < names.length; i++) {
+    if (input === names[i]) {
+      console.log("valid");
+      return true;
+    }
+  }
+  return false;
 }

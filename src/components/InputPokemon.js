@@ -1,4 +1,5 @@
 import React from "react";
+import { gen, validSpecies } from "../utils";
 import InputStat from "./InputStat";
 import InputMove from "./InputMove";
 import InputSpecies from "./InputSpecies";
@@ -15,7 +16,7 @@ use the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
 import { Pokemon } from "@smogon/calc";
-var reference = new Pokemon(8, "Gengar");
+var reference = new Pokemon(gen, "Pikachu");
 console.log(reference);
 
 const statNames = [
@@ -27,12 +28,15 @@ const statNames = [
   "Speed"
 ];
 
+let pokeInfo = {
+  weight: "10.0",
+  rawStats: ["100", "100", "100", "100", "100", "100"]
+};
+
 let pokemon = {
   species: "",
   types: ["None", "None"],
   gender: "Genderless",
-  //TODO remove weight from state
-  weight: 10.0,
   baseVals: ["100", "100", "100", "100", "100", "100"],
   ivVals: ["31", "31", "31", "31", "31", "31"],
   evVals: ["0", "0", "0", "0", "0", "0"],
@@ -69,6 +73,12 @@ class InputPokemon extends React.Component {
     console.log(name, id, value);
 
     switch (name) {
+      case "species":
+        this.setSpeciesState(value);
+        this.setState({
+          [name]: value
+        });
+        break;
       case "types":
         let types = [...this.state.types];
         types[id] = value;
@@ -114,7 +124,58 @@ class InputPokemon extends React.Component {
     }
   }
 
+  //TODO use to grab info from pokemon class and update state with it
+  setSpeciesState(input) {
+    if (validSpecies(input)) {
+      let currPokemon = new Pokemon(gen, input);
+
+      let types = [currPokemon.type1, currPokemon.type2 || "None"];
+      let baseVals = [...Object.values(currPokemon.species.bs)];
+      this.setState({
+        types: types,
+        baseVals: baseVals
+      });
+    }
+    return;
+  }
+
+  setPokeInfo() {
+    if (validSpecies(this.state.species)) {
+      let state = this.state;
+      console.log(state.nature);
+      let currPokemon = new Pokemon(gen, state.species, {
+        item: state.item,
+        ability: state.ability,
+        nature: state.nature,
+        abilityOn: state.abilityOn,
+        ivs: {
+          //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
+          // evs seem to work fine so idk
+          hp: parseInt(state.ivVals[0], 10),
+          atk: parseInt(state.ivVals[1], 10),
+          def: parseInt(state.ivVals[2], 10),
+          spa: parseInt(state.ivVals[3], 10),
+          spd: parseInt(state.ivVals[4], 10),
+          spe: parseInt(state.ivVals[5], 10)
+        },
+        evs: {
+          hp: state.evVals[0],
+          atk: state.evVals[1],
+          def: state.evVals[2],
+          spa: state.evVals[3],
+          spd: state.evVals[4],
+          spe: state.evVals[5]
+        }
+      });
+
+      pokeInfo.weight = currPokemon.weight;
+      pokeInfo.rawStats = [...Object.values(currPokemon.stats)];
+      console.log(currPokemon.rawStats);
+    }
+  }
+
   render() {
+    this.setPokeInfo();
     //Loop render stat input components
     const statInputs = [];
     for (const [i] of statNames.entries()) {
@@ -125,8 +186,7 @@ class InputPokemon extends React.Component {
           baseVal={this.state.baseVals[i]}
           ivVal={this.state.ivVals[i]}
           evVal={this.state.evVals[i]}
-          // TODO incorporate rawstats through smogon pokemon object
-          //rawStat={}
+          rawStat={pokeInfo.rawStats[i]}
           boost={this.state.boosts[i]}
           handleChange={event => this.handleChange(event)}
           handleRange={event => this.handleRange(event)}
@@ -154,7 +214,7 @@ class InputPokemon extends React.Component {
             gender={this.state.gender}
             handleChange={event => this.handleChange(event)}
           />
-          <Weight weight={this.state.weight} />
+          <Weight weight={pokeInfo.weight} />
           {statInputs}
           <InputNature
             nature={this.state.nature}
