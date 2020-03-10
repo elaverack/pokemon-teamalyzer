@@ -3,19 +3,6 @@ import React from "react";
 // TODO gather inputs into state
 
 class InputStat extends React.Component {
-  handleRange(event) {
-    const input = event.target;
-    if (input.value < parseInt(input.min, 10)) {
-      input.value = input.min;
-      this.props.handleChange(event);
-    } else if (input.value > parseInt(input.max, 10)) {
-      input.value = input.max;
-      this.props.handleChange(event);
-    } else {
-      this.props.handleChange(event);
-    }
-  }
-
   render() {
     return (
       <table>
@@ -44,7 +31,7 @@ class InputStat extends React.Component {
                 max="255"
                 step="1"
                 value={this.props.baseVal}
-                onChange={event => this.handleRange(event)}
+                onChange={event => this.props.handleRange(event)}
               />
             </td>
             <td>
@@ -52,7 +39,7 @@ class InputStat extends React.Component {
                 className="ivs"
                 name="ivVal"
                 value={this.props.ivVal}
-                onChange={event => this.handleRange(event)}
+                onChange={event => this.props.handleRange(event)}
                 id={this.props.index}
                 type="number"
                 min="0"
@@ -65,7 +52,7 @@ class InputStat extends React.Component {
                 className="evs"
                 name="evVal"
                 value={this.props.evVal}
-                onChange={event => this.handleRange(event)}
+                onChange={event => this.props.handleRange(event)}
                 id={this.props.index}
                 type="number"
                 min="0"

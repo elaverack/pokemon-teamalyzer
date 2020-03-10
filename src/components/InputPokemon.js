@@ -51,6 +51,19 @@ class InputPokemon extends React.Component {
     this.state = pokemon;
   }
 
+  handleRange(event) {
+    const input = event.target;
+    if (input.value < parseInt(input.min, 10)) {
+      input.value = input.min;
+      this.handleChange(event);
+    } else if (input.value > parseInt(input.max, 10)) {
+      input.value = input.max;
+      this.handleChange(event);
+    } else {
+      this.handleChange(event);
+    }
+  }
+
   handleChange(event) {
     const { name, value, id } = event.target;
     console.log(name, id, value);
@@ -116,6 +129,7 @@ class InputPokemon extends React.Component {
           //rawStat={}
           boost={this.state.boosts[i]}
           handleChange={event => this.handleChange(event)}
+          handleRange={event => this.handleRange(event)}
           index={i}
         />
       );
@@ -162,6 +176,7 @@ class InputPokemon extends React.Component {
             maxHP="341"
             percentHP="100"
             handleChange={event => this.handleChange(event)}
+            handleRange={event => this.handleRange(event)}
           />
           {/* TODO loop render moves */}
           <InputMove />

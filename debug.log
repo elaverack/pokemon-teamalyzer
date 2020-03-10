@@ -120,3 +120,5 @@
 [0309/215232.650:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0309/215232.651:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0309/215732.669:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0309/221232.672:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0309/222732.674:ERROR:crash_report_database_win.cc(469)] failed to stat report
