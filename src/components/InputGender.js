@@ -7,7 +7,11 @@ class InputGender extends React.Component {
     return (
       <div className="hide">
         <label>Gender</label>
-        <select className="gender calc-trigger">
+        <select
+          className="gender"
+          name="gender"
+          onChange={this.props.handleChange}
+        >
           <option value="genderless">Genderless</option>
           <option value="male">Male</option>
           <option value="female">Female</option>

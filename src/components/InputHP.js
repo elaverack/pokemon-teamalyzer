@@ -15,7 +15,7 @@ class InputHP extends React.Component {
           value={this.props.curHP}
           max={this.props.maxHP}
           min="0"
-          onChange={event => this.props.handleRange(event)}
+          onChange={this.props.handleRange}
         />
         /<output className="maxHP">{this.props.maxHP}</output>
         {" : "}(<output className="percentHP">{this.props.percentHP}</output>

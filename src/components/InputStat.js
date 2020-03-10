@@ -31,7 +31,7 @@ class InputStat extends React.Component {
                 max="255"
                 step="1"
                 value={this.props.baseVal}
-                onChange={event => this.props.handleRange(event)}
+                onChange={this.props.handleRange}
               />
             </td>
             <td>
@@ -39,7 +39,7 @@ class InputStat extends React.Component {
                 className="ivs"
                 name="ivVal"
                 value={this.props.ivVal}
-                onChange={event => this.props.handleRange(event)}
+                onChange={this.props.handleRange}
                 id={this.props.index}
                 type="number"
                 min="0"
@@ -52,7 +52,7 @@ class InputStat extends React.Component {
                 className="evs"
                 name="evVal"
                 value={this.props.evVal}
-                onChange={event => this.props.handleRange(event)}
+                onChange={this.props.handleRange}
                 id={this.props.index}
                 type="number"
                 min="0"

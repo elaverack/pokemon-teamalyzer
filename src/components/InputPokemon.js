@@ -150,7 +150,10 @@ class InputPokemon extends React.Component {
             types={this.state.types}
             handleChange={event => this.handleChange(event)}
           />
-          <InputGender gender={this.state.gender} />
+          <InputGender
+            gender={this.state.gender}
+            handleChange={event => this.handleChange(event)}
+          />
           <Weight weight={this.state.weight} />
           {statInputs}
           <InputNature
