@@ -27,12 +27,11 @@ const statNames = [
   "Speed"
 ];
 
-//QUESTION
-//create move field with its own props?
 let pokemon = {
   species: "",
   types: ["None", "None"],
   gender: "Genderless",
+  //TODO remove weight from state
   weight: 10.0,
   baseVals: ["100", "100", "100", "100", "100", "100"],
   ivVals: ["31", "31", "31", "31", "31", "31"],
@@ -47,8 +46,8 @@ let pokemon = {
 };
 
 class InputPokemon extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = pokemon;
   }
 
@@ -56,47 +55,44 @@ class InputPokemon extends React.Component {
     const { name, value, id } = event.target;
     console.log(name, id, value);
 
-    // QUESTION am I modifying state directly with any of these?
     switch (name) {
       case "types":
-        let types = this.state.types.slice();
+        let types = [...this.state.types];
         types[id] = value;
         this.setState({
           types: types
         });
         break;
       case "baseVal":
-        let baseVals = this.state.baseVals.slice();
+        let baseVals = [...this.state.baseVals];
         baseVals[id] = value;
         this.setState({
           baseVals: baseVals
         });
         break;
       case "ivVal":
-        let ivVals = this.state.ivVals.slice();
+        let ivVals = [...this.state.ivVals];
         ivVals[id] = value;
         this.setState({
           ivVals: ivVals
         });
         break;
       case "evVal":
-        let evVals = this.state.evVals.slice();
+        let evVals = [...this.state.evVals];
         evVals[id] = value;
         this.setState({
           evVals: evVals
         });
         break;
       case "boost":
-        let boosts = this.state.boosts.slice();
+        let boosts = [...this.state.boosts];
         boosts[id] = value;
         this.setState({
           boosts: boosts
         });
         break;
       case "abilityOn":
-        //QUESTION is this modifying state directly? probably
-        let toggle = this.state.abilityOn;
-        this.setState({ [name]: !toggle });
+        this.setState({ [name]: !this.state.abilityOn });
         break;
       default:
         this.setState({
