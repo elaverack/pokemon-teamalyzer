@@ -30,7 +30,7 @@ const statNames = [
 
 let pokeInfo = {
   weight: "10.0",
-  rawStats: ["100", "100", "100", "100", "100", "100"]
+  stats: ["100", "100", "100", "100", "100", "100"]
 };
 
 let pokemon = {
@@ -148,6 +148,14 @@ class InputPokemon extends React.Component {
         ability: state.ability,
         nature: state.nature,
         abilityOn: state.abilityOn,
+        boosts: {
+          hp: state.boosts[0],
+          atk: state.boosts[1],
+          def: state.boosts[2],
+          spa: state.boosts[3],
+          spd: state.boosts[4],
+          spe: state.boosts[5]
+        },
         ivs: {
           //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
           // evs seem to work fine so idk
@@ -169,8 +177,8 @@ class InputPokemon extends React.Component {
       });
 
       pokeInfo.weight = currPokemon.weight;
-      pokeInfo.rawStats = [...Object.values(currPokemon.stats)];
-      console.log(currPokemon.rawStats);
+      pokeInfo.stats = [...Object.values(currPokemon.stats)];
+      console.log(currPokemon.stats);
     }
   }
 
@@ -186,7 +194,7 @@ class InputPokemon extends React.Component {
           baseVal={this.state.baseVals[i]}
           ivVal={this.state.ivVals[i]}
           evVal={this.state.evVals[i]}
-          rawStat={pokeInfo.rawStats[i]}
+          stat={pokeInfo.stats[i]}
           boost={this.state.boosts[i]}
           handleChange={event => this.handleChange(event)}
           handleRange={event => this.handleRange(event)}

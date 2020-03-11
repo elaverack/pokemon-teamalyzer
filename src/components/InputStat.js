@@ -61,7 +61,7 @@ class InputStat extends React.Component {
               />
             </td>
             <td>
-              <output className="total">{this.props.rawStat}</output>
+              <output className="total">{this.props.stat}</output>
             </td>
             <td hidden={this.props.title === "HP" && "hidden"}>
               <select
