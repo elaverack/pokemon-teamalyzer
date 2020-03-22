@@ -45,8 +45,8 @@ let pokemon = {
   ability: "",
   abilityOn: true,
   item: "",
-  status: "",
-  curHP: "341"
+  status: ""
+  // curHP: "100"
 };
 
 class InputPokemon extends React.Component {
@@ -127,13 +127,34 @@ class InputPokemon extends React.Component {
   //TODO use to grab info from pokemon class and update state with it
   setSpeciesState(input) {
     if (validSpecies(input)) {
-      let currPokemon = new Pokemon(gen, input);
+      let state = this.state;
+      let currPokemon = new Pokemon(gen, input, {
+        ivs: {
+          //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
+          // evs seem to work fine so idk
+          hp: parseInt(state.ivVals[0], 10),
+          atk: parseInt(state.ivVals[1], 10),
+          def: parseInt(state.ivVals[2], 10),
+          spa: parseInt(state.ivVals[3], 10),
+          spd: parseInt(state.ivVals[4], 10),
+          spe: parseInt(state.ivVals[5], 10)
+        },
+        evs: {
+          hp: state.evVals[0],
+          atk: state.evVals[1],
+          def: state.evVals[2],
+          spa: state.evVals[3],
+          spd: state.evVals[4],
+          spe: state.evVals[5]
+        }
+      });
 
       let types = [currPokemon.type1, currPokemon.type2 || "None"];
       let baseVals = [...Object.values(currPokemon.species.bs)];
       this.setState({
         types: types,
-        baseVals: baseVals
+        baseVals: baseVals,
+        curHP: currPokemon.stats.hp
       });
     }
     return;
@@ -142,7 +163,6 @@ class InputPokemon extends React.Component {
   setPokeInfo() {
     if (validSpecies(this.state.species)) {
       let state = this.state;
-      console.log(state.nature);
       let currPokemon = new Pokemon(gen, state.species, {
         item: state.item,
         ability: state.ability,
@@ -241,14 +261,14 @@ class InputPokemon extends React.Component {
             status={this.state.status}
             handleChange={event => this.handleChange(event)}
           />
-          {/* TODO calculate percent HP, incorporate maxHP value, DO NOT make %HP input */}
-          <InputHP
+          {/* TODO calculate percent HP, incorporate maxHP value, make maxHP change on load, DO NOT make %HP input */}
+          {/* <InputHP
             curHP={this.state.curHP}
-            maxHP="341"
-            percentHP="100"
+            maxHP={pokeInfo.stats[0]}
+            percentHP={Math.floor((this.state.curHP / pokeInfo.stats[0]) * 100)}
             handleChange={event => this.handleChange(event)}
             handleRange={event => this.handleRange(event)}
-          />
+          /> */}
           {/* TODO loop render moves */}
           <InputMove />
           <h1>
