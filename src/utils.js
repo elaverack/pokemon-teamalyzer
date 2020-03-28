@@ -13,7 +13,16 @@ export function genTypeOptions() {
 }
 
 export function genMoveOptions() {
-  return Object.keys(MOVES[gen]).map(name => (
+  //Filter out Z moves and Max moves
+  let moves = {},
+    key;
+  for (key in MOVES[gen]) {
+    if (!MOVES[gen][key].isMax && !MOVES[gen][key].isZ) {
+      moves[key] = MOVES[gen][key];
+    }
+  }
+
+  return Object.keys(moves).map(name => (
     <option value={name} key={name}>
       {name}
     </option>

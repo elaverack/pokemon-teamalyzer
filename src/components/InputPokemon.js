@@ -10,12 +10,13 @@ import InputNature from "./InputNature";
 import InputAbility from "./InputAbility";
 import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
-import InputHP from "./InputHP";
+//import InputHP from "./InputHP";
 /* TODO
 use the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
-import { Pokemon } from "@smogon/calc";
+import { Pokemon, MOVES } from "@smogon/calc";
+console.log(MOVES);
 var reference = new Pokemon(gen, "Pikachu");
 console.log(reference);
 
@@ -33,6 +34,16 @@ let pokeInfo = {
   stats: ["100", "100", "100", "100", "100", "100"]
 };
 
+let move = {
+  name: "",
+  power: "",
+  type: "",
+  cat: "",
+  isMulti: false,
+  hitNum: "",
+  isMax: false
+};
+
 let pokemon = {
   species: "",
   types: ["None", "None"],
@@ -45,8 +56,9 @@ let pokemon = {
   ability: "",
   abilityOn: true,
   item: "",
-  status: ""
+  status: "",
   // curHP: "100"
+  moves: new Array(4).fill(move)
 };
 
 class InputPokemon extends React.Component {
