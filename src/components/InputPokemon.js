@@ -1,3 +1,5 @@
+/////// IMPORTS /////////////////////////////////////////////////////////////////////////////////
+
 import React from "react";
 import { gen, validSpecies } from "../utils";
 import InputStat from "./InputStat";
@@ -15,11 +17,14 @@ import InputStatus from "./InputStatus";
 use the pokemon class from the calc to fill in blanks
 make this component repeatable for 6 pokemon
 */
+
+////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
 import { Pokemon, MOVES } from "@smogon/calc";
 console.log(MOVES);
 var reference = new Pokemon(gen, "Pikachu");
 console.log(reference);
 
+////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
 const statNames = [
   "HP",
   "Attack",
@@ -35,12 +40,12 @@ let pokeInfo = {
 };
 
 let move = {
-  name: "",
-  power: "",
-  type: "",
-  cat: "",
+  name: "thunderbolt",
+  power: "90",
+  type: "Electric",
+  cat: "Special",
   isMulti: false,
-  hitNum: "",
+  hitNum: "1",
   isMax: false
 };
 
@@ -61,11 +66,17 @@ let pokemon = {
   moves: new Array(4).fill(move)
 };
 
+console.log(pokemon);
+
+//////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
+
 class InputPokemon extends React.Component {
   constructor(props) {
     super(props);
     this.state = pokemon;
   }
+
+  //// STATE CHANGE HANDLERS //////////////////////////////////////////////////////////////////////////
 
   handleRange(event) {
     const input = event.target;
@@ -81,7 +92,9 @@ class InputPokemon extends React.Component {
   }
 
   handleChange(event) {
+    //QUESTION want to change ids to index but cannot access through event.target??
     const { name, value, id } = event.target;
+    console.log(event.target);
     console.log(name, id, value);
 
     switch (name) {
@@ -136,6 +149,7 @@ class InputPokemon extends React.Component {
     }
   }
 
+  //////// STATE CHANGE UTIL FUNCITONS /////////////////////////////////////////////////////////////////////
   //TODO use to grab info from pokemon class and update state with it
   setSpeciesState(input) {
     if (validSpecies(input)) {
@@ -172,6 +186,7 @@ class InputPokemon extends React.Component {
     return;
   }
 
+  // Grabs info for fields not stored in state
   setPokeInfo() {
     if (validSpecies(this.state.species)) {
       let state = this.state;
@@ -236,7 +251,24 @@ class InputPokemon extends React.Component {
     }
 
     //Loop render moves
-    //const moveInputs = [];
+    const moveInputs = [];
+    for (const [i] of this.state.moves.entries()) {
+      moveInputs.push(
+        <InputMove
+          key={i}
+          index={i}
+          moveName={this.state.moves[i].name}
+          movePower={this.state.moves[i].power}
+          moveType={this.state.moves[i].type}
+          moveCat={this.state.moves[i].cat}
+          isMulti={this.state.moves[i].isMulti}
+          hitNum={this.state.moves[i].hitNum}
+          isMax={this.state.moves[i].isMax}
+          handleChange={event => this.handleChange(event)}
+          handleRange={event => this.handleRange(event)}
+        />
+      );
+    }
 
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
@@ -282,7 +314,7 @@ class InputPokemon extends React.Component {
             handleRange={event => this.handleRange(event)}
           /> */}
           {/* TODO loop render moves */}
-          <InputMove />
+          {moveInputs}
           <h1>
             {this.state.species}
             <br />

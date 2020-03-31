@@ -86,7 +86,7 @@ class InputStat extends React.Component {
                 <option value="-6">-6</option>
               </select>
             </td>
-            {/* TODO pass in stat totals with props */}
+            {/* TODO pass in modded stat totals with props */}
             <td hidden={this.props.title === "HP" && "hidden"}>
               <span className="totalMod"></span>
             </td>
