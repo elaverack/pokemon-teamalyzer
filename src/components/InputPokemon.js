@@ -317,7 +317,6 @@ class InputPokemon extends React.Component {
             handleChange={event => this.handleChange(event)}
             handleRange={event => this.handleRange(event)}
           /> */}
-          {/* TODO loop render moves */}
           {moveInputs}
           <h1>
             {this.state.species}
