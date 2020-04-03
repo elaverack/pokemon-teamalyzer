@@ -19,10 +19,11 @@ make this component repeatable for 6 pokemon
 */
 
 ////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
-import { Pokemon, MOVES } from "@smogon/calc";
+import { Pokemon, MOVES, SPECIES } from "@smogon/calc";
 console.log(MOVES);
 var reference = new Pokemon(gen, "Pikachu");
 console.log(reference);
+console.log(SPECIES);
 
 ////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
 const statNames = [
@@ -44,9 +45,8 @@ let move = {
   power: "90",
   type: "Electric",
   cat: "Special",
-  isMulti: false,
-  hitNum: "1",
-  isMax: false
+  isMulti: true,
+  hitNum: "1"
 };
 
 let pokemon = {
@@ -62,6 +62,7 @@ let pokemon = {
   abilityOn: true,
   item: "",
   status: "",
+  isMax: false,
   // curHP: "100"
   moves: new Array(4).fill(move)
 };
@@ -142,6 +143,9 @@ class InputPokemon extends React.Component {
       case "abilityOn":
         this.setState({ [name]: !this.state.abilityOn });
         break;
+      case "isMax":
+        this.setState({ [name]: !this.state.isMax });
+        break;
       default:
         this.setState({
           [name]: value
@@ -175,12 +179,10 @@ class InputPokemon extends React.Component {
         }
       });
 
-      let types = [currPokemon.type1, currPokemon.type2 || "None"];
-      let baseVals = [...Object.values(currPokemon.species.bs)];
       this.setState({
-        types: types,
-        baseVals: baseVals,
-        curHP: currPokemon.stats.hp
+        types: [currPokemon.type1, currPokemon.type2 || "None"],
+        baseVals: [...Object.values(currPokemon.species.bs)],
+        curHP: currPokemon.maxHP()
       });
     }
     return;
@@ -195,6 +197,7 @@ class InputPokemon extends React.Component {
         ability: state.ability,
         nature: state.nature,
         abilityOn: state.abilityOn,
+        isDynamaxed: state.isMax,
         boosts: {
           hp: state.boosts[0],
           atk: state.boosts[1],
@@ -225,6 +228,7 @@ class InputPokemon extends React.Component {
 
       pokeInfo.weight = currPokemon.weight;
       pokeInfo.stats = [...Object.values(currPokemon.stats)];
+      pokeInfo.stats[0] = currPokemon.maxHP();
       console.log(currPokemon.stats);
     }
   }
@@ -263,7 +267,7 @@ class InputPokemon extends React.Component {
           moveCat={this.state.moves[i].cat}
           isMulti={this.state.moves[i].isMulti}
           hitNum={this.state.moves[i].hitNum}
-          isMax={this.state.moves[i].isMax}
+          isMax={this.state.isMax}
           handleChange={event => this.handleChange(event)}
           handleRange={event => this.handleRange(event)}
         />
@@ -320,7 +324,7 @@ class InputPokemon extends React.Component {
             <br />
             {this.state.types[0]} {this.state.types[1]}
             <br />
-            {this.state.abilityOn && "true"}
+            {this.state.isMax && "true"}
           </h1>
         </fieldset>
       </div>

@@ -56,7 +56,7 @@ class InputMove extends React.Component {
                 className="move-type"
                 id={this.props.index}
                 value={this.props.moveType}
-                onChange={this.props.onChange}
+                onChange={this.props.handleChange}
               >
                 {genTypeOptions()}
               </select>
@@ -67,7 +67,7 @@ class InputMove extends React.Component {
                 name="moveCat"
                 id={this.props.index}
                 value={this.props.moveCat}
-                onChange={this.props.onChange}
+                onChange={this.props.handleChange}
               >
                 <option value="Physical">Physical</option>
                 <option value="Special">Special</option>
@@ -79,21 +79,18 @@ class InputMove extends React.Component {
                 className="move-crit"
                 title="Force this attack to be a critical hit?"
                 type="button"
+                onChange={this.props.onChange}
               >
                 Crit
               </button>
             </td>
-            {/* TODO Support Max move toggle when available
-                  <button
-                    className="move-max"
-                    title="Force this attack to be a Max move?"
-                    type="button"
-                  >
-                    Max
-                  </button> */}
-            {/* TODO conditional render the move hits for multi-attack moves */}
             <td>
-              <select className="move-hits" defaultValue="3">
+              <select
+                className="move-hits"
+                value={this.props.hitNum}
+                onChange={this.props.handleChange}
+                hidden={!this.props.isMulti && "hidden"}
+              >
                 <option value="2">2 hits</option>
                 <option value="3">3 hits</option>
                 <option value="4">4 hits</option>

@@ -17,6 +17,15 @@ class InputSpecies extends React.Component {
           name="species"
         />
         <datalist id="speciesOptions">{genSpeciesOptions()}</datalist>
+        <button
+          type="button"
+          className="dynamaxButton"
+          name="isMax"
+          title="Dynamax this Pokemon?"
+          onClick={this.props.handleChange}
+        >
+          Dynamax
+        </button>
         {/* STRETCH
         figure out how to import sets from smogon and store them
         <span
