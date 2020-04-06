@@ -54,9 +54,21 @@ export function genAbilityOptions() {
 }
 
 export function validSpecies(input) {
-  let names = Object.keys(SPECIES[gen]);
-  for (let i = 0; i < names.length; i++) {
-    if (input === names[i]) {
+  //let names = Object.keys(SPECIES[gen]); let i = 0; i < names.length; i++
+  let key;
+  for (key in SPECIES[gen]) {
+    if (input === key) {
+      console.log("valid");
+      return true;
+    }
+  }
+  return false;
+}
+
+export function validMove(input) {
+  let key;
+  for (key in MOVES[gen]) {
+    if (input === key) {
       console.log("valid");
       return true;
     }

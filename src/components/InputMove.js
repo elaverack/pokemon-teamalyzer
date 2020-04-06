@@ -38,7 +38,7 @@ class InputMove extends React.Component {
                 id={this.props.index}
                 // TODO set value from state aquired from imported set, empty string shows placeholder
               />
-              <datalist className="moveOptions">{genMoveOptions()}</datalist>
+              <datalist id="moveOptions">{genMoveOptions()}</datalist>
             </td>
             <td>
               <input
@@ -87,9 +87,9 @@ class InputMove extends React.Component {
             <td>
               <select
                 className="move-hits"
-                value={this.props.hitNum}
+                value={this.props.hits}
                 onChange={this.props.handleChange}
-                hidden={!this.props.isMulti && "hidden"}
+                hidden={this.props.moveHits < 2 && "hidden"}
               >
                 <option value="2">2 hits</option>
                 <option value="3">3 hits</option>

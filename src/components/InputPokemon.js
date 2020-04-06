@@ -1,7 +1,7 @@
 /////// IMPORTS /////////////////////////////////////////////////////////////////////////////////
 
 import React from "react";
-import { gen, validSpecies } from "../utils";
+import { gen, validSpecies, validMove } from "../utils";
 import InputStat from "./InputStat";
 import InputMove from "./InputMove";
 import InputSpecies from "./InputSpecies";
@@ -19,11 +19,11 @@ make this component repeatable for 6 pokemon
 */
 
 ////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
-import { Pokemon, MOVES, SPECIES } from "@smogon/calc";
-console.log(MOVES);
-var reference = new Pokemon(gen, "Pikachu");
-console.log(reference);
-console.log(SPECIES);
+import { Pokemon, MOVES, SPECIES, Move } from "@smogon/calc";
+// console.log(MOVES);
+// var reference = new Pokemon(gen, "Pikachu");
+// console.log(reference);
+// console.log(SPECIES);
 
 ////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
 const statNames = [
@@ -41,12 +41,11 @@ let pokeInfo = {
 };
 
 let move = {
-  name: "thunderbolt",
-  power: "90",
-  type: "Electric",
-  cat: "Special",
-  isMulti: true,
-  hitNum: "1"
+  name: "",
+  power: "",
+  type: "",
+  cat: "",
+  hits: "5"
 };
 
 let pokemon = {
@@ -67,7 +66,7 @@ let pokemon = {
   moves: new Array(4).fill(move)
 };
 
-console.log(pokemon);
+//console.log(pokemon);
 
 //////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
 
@@ -146,6 +145,14 @@ class InputPokemon extends React.Component {
       case "isMax":
         this.setState({ [name]: !this.state.isMax });
         break;
+      case "moveName":
+        this.setMoveState(value, id);
+        let moves = [...this.state.moves];
+        moves[id].name = value;
+        this.setState({
+          moves: moves
+        });
+        break;
       default:
         this.setState({
           [name]: value
@@ -186,6 +193,25 @@ class InputPokemon extends React.Component {
       });
     }
     return;
+  }
+
+  setMoveState(input, id) {
+    if (validMove(input)) {
+      let currMove = new Move(gen, input, {
+        ability: this.state.ability,
+        useMax: this.state.isMax
+      });
+
+      let currMoves = [...this.state.moves];
+      currMoves[id].type = currMove.type;
+      currMoves[id].power = currMove.bp;
+      currMoves[id].cat = currMove.category;
+      currMoves[id].hits = currMove.hits;
+
+      this.setState({
+        moves: currMoves
+      });
+    }
   }
 
   // Grabs info for fields not stored in state
@@ -235,6 +261,7 @@ class InputPokemon extends React.Component {
 
   render() {
     this.setPokeInfo();
+
     //Loop render stat input components
     const statInputs = [];
     for (const [i] of statNames.entries()) {
@@ -265,9 +292,7 @@ class InputPokemon extends React.Component {
           movePower={this.state.moves[i].power}
           moveType={this.state.moves[i].type}
           moveCat={this.state.moves[i].cat}
-          isMulti={this.state.moves[i].isMulti}
-          hitNum={this.state.moves[i].hitNum}
-          isMax={this.state.isMax}
+          moveHits={this.state.moves[i].hits}
           handleChange={event => this.handleChange(event)}
           handleRange={event => this.handleRange(event)}
         />
