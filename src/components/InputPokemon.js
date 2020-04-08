@@ -63,7 +63,7 @@ let pokemon = {
   status: "",
   isMax: false,
   // curHP: "100"
-  moves: new Array(4).fill(move)
+  moves: Array(4).fill(null).map(() => ( {...move} ))
 };
 
 //console.log(pokemon);
@@ -94,8 +94,6 @@ class InputPokemon extends React.Component {
   handleChange(event) {
     //QUESTION want to change ids to index but cannot access through event.target??
     const { name, value, id } = event.target;
-    console.log(event.target);
-    console.log(name, id, value);
 
     switch (name) {
       case "species":
@@ -147,11 +145,6 @@ class InputPokemon extends React.Component {
         break;
       case "moveName":
         this.setMoveState(value, id);
-        let moves = [...this.state.moves];
-        moves[id].name = value;
-        this.setState({
-          moves: moves
-        });
         break;
       default:
         this.setState({
@@ -201,11 +194,11 @@ class InputPokemon extends React.Component {
         useMax: this.state.isMax
       });
 
+      const { name, type, bp: power, category: cat, hits } = currMove;
+      const newMove = { name, type, power, cat, hits };
+      
       let currMoves = [...this.state.moves];
-      currMoves[id].type = currMove.type;
-      currMoves[id].power = currMove.bp;
-      currMoves[id].cat = currMove.category;
-      currMoves[id].hits = currMove.hits;
+      currMoves.splice(id, 1, newMove);
 
       this.setState({
         moves: currMoves
