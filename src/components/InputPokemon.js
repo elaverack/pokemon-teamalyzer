@@ -161,7 +161,6 @@ class InputPokemon extends React.Component {
   }
 
   //////// STATE CHANGE UTIL FUNCITONS /////////////////////////////////////////////////////////////////////
-  //TODO use to grab info from pokemon class and update state with it
   setSpeciesState(input) {
     if (validSpecies(input)) {
       let state = this.state;
