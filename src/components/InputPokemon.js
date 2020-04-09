@@ -78,20 +78,20 @@ class InputPokemon extends React.Component {
 
   //// STATE CHANGE HANDLERS //////////////////////////////////////////////////////////////////////////
 
-  handleRange(event) {
+  handleRange(event, data) {
     const input = event.target;
     if (input.value < parseInt(input.min, 10)) {
       input.value = input.min;
-      this.handleChange(event);
+      this.handleChange(event, data);
     } else if (input.value > parseInt(input.max, 10)) {
       input.value = input.max;
-      this.handleChange(event);
+      this.handleChange(event, data);
     } else {
-      this.handleChange(event);
+      this.handleChange(event, data);
     }
   }
 
-  handleChange(event) {
+  handleChange(event, data) {
     //QUESTION want to change ids to index but cannot access through event.target??
     const { name, value, id } = event.target;
 
@@ -144,7 +144,10 @@ class InputPokemon extends React.Component {
         this.setState({ [name]: !this.state.isMax });
         break;
       case "moveName":
-        this.setMoveState(value, id);
+        this.setMoveNameState(value, data.move);
+        break;
+      case "movePower":
+        this.setMovePowerState(value, data.move);
         break;
       default:
         this.setState({
@@ -187,23 +190,35 @@ class InputPokemon extends React.Component {
     return;
   }
 
-  setMoveState(input, id) {
+  setMoveNameState(input, oldMove) {
+    const idx = this.state.moves.findIndex(move => move === oldMove);
+
+    let newMove;
+
     if (validMove(input)) {
-      let currMove = new Move(gen, input, {
+      const { name, type, bp: power, category: cat, hits } = new Move(gen, input, {
         ability: this.state.ability,
         useMax: this.state.isMax
       });
-
-      const { name, type, bp: power, category: cat, hits } = currMove;
-      const newMove = { name, type, power, cat, hits };
-      
-      let currMoves = [...this.state.moves];
-      currMoves.splice(id, 1, newMove);
-
-      this.setState({
-        moves: currMoves
-      });
+      newMove = { name, type, power, cat, hits };
+    } else {
+      newMove = { ...move, name: input };
     }
+
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+
+    this.setState({ moves });
+  }
+
+  setMovePowerState(input, oldMove) {
+    const idx = this.state.moves.findIndex(move => move === oldMove);
+    const newMove = { ...oldMove, power: input };
+
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+
+    this.setState({ moves });
   }
 
   // Grabs info for fields not stored in state
@@ -274,23 +289,20 @@ class InputPokemon extends React.Component {
     }
 
     //Loop render moves
-    const moveInputs = [];
-    for (const [i] of this.state.moves.entries()) {
-      moveInputs.push(
-        <InputMove
-          key={i}
-          index={i}
-          moveName={this.state.moves[i].name}
-          movePower={this.state.moves[i].power}
-          moveType={this.state.moves[i].type}
-          moveCat={this.state.moves[i].cat}
-          moveHits={this.state.moves[i].hits}
-          handleChange={event => this.handleChange(event)}
-          handleRange={event => this.handleRange(event)}
-        />
-      );
-    }
-
+    const moveInputs = this.state.moves.map((move, idx) => (
+      <InputMove
+        key={idx}
+        index={idx}
+        moveName={move.name}
+        movePower={move.power}
+        moveType={move.type}
+        moveCat={move.cat}
+        moveHits={move.hits}
+        handleChange={event => this.handleChange(event, { move })}
+        handleRange={event => this.handleRange(event, { move })}
+      />
+    ))
+    
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
         <fieldset className="poke-info" id="p1">
