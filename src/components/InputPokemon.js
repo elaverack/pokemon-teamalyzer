@@ -40,6 +40,10 @@ let pokeInfo = {
   stats: ["100", "100", "100", "100", "100", "100"]
 };
 
+let moveInfo = {
+  maxName: ["", "", "", ""]
+};
+
 let move = {
   name: "",
   power: "",
@@ -146,12 +150,18 @@ class InputPokemon extends React.Component {
         this.setState({ [name]: !this.state.isMax });
         break;
       case "moveName":
+        //debugger;
+        //TODO may want to move this after setstate to take in the new state and not rely on the value and id fields
         this.setMoveState(value, id);
+        //debugger;
         let moves = [...this.state.moves];
+        //debugger;
         moves[id].name = value;
+        //debugger;
         this.setState({
           moves: moves
         });
+        //this.setMoveState(this.state.moves, this.state.isMax)
         break;
       default:
         this.setState({
@@ -194,11 +204,11 @@ class InputPokemon extends React.Component {
     return;
   }
 
+  //TODO change function to take inputs from move state and isMax state, then set the move name and power accordingly
   setMoveState(input, id) {
     if (validMove(input)) {
       let currMove = new Move(gen, input, {
-        ability: this.state.ability,
-        useMax: this.state.isMax
+        ability: this.state.ability
       });
 
       let currMoves = [...this.state.moves];
@@ -211,6 +221,12 @@ class InputPokemon extends React.Component {
         moves: currMoves
       });
     }
+    return;
+  }
+
+  //Toggles max move names and info
+  toggleMaxMoves() {
+    //loop through moves in state, set
   }
 
   // Grabs info for fields not stored in state
@@ -234,7 +250,7 @@ class InputPokemon extends React.Component {
         ivs: {
           //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
           // evs seem to work fine so idk
-          hp: parseInt(state.ivVals[0], 10),
+          hp: +state.ivVals[0],
           atk: parseInt(state.ivVals[1], 10),
           def: parseInt(state.ivVals[2], 10),
           spa: parseInt(state.ivVals[3], 10),
@@ -288,10 +304,12 @@ class InputPokemon extends React.Component {
           key={i}
           index={i}
           moveName={this.state.moves[i].name}
+          moveMaxName={moveInfo.maxName[i]}
           movePower={this.state.moves[i].power}
           moveType={this.state.moves[i].type}
           moveCat={this.state.moves[i].cat}
           moveHits={this.state.moves[i].hits}
+          isMax={this.state.isMax}
           handleChange={event => this.handleChange(event)}
           handleRange={event => this.handleRange(event)}
         />
