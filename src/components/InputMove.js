@@ -23,7 +23,6 @@ class InputMove extends React.Component {
                 }
                 name="moveName"
                 onChange={this.props.handleChange}
-                id={this.props.index}
                 // TODO set value from state aquired from imported set, empty string shows placeholder
               />
               <datalist id="moveOptions">{genMoveOptions()}</datalist>
@@ -34,7 +33,6 @@ class InputMove extends React.Component {
                 name="movePower"
                 min="0"
                 max="999"
-                id={this.props.index}
                 value={this.props.movePower}
                 onChange={this.props.handleRange}
               />

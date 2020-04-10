@@ -67,7 +67,7 @@ let pokemon = {
   status: "",
   isMax: false,
   // curHP: "100"
-  moves: new Array(4).fill(move)
+  moves: Array(4).fill(null).map(() => ( {...move} ))
 };
 
 //console.log(pokemon);
@@ -82,24 +82,22 @@ class InputPokemon extends React.Component {
 
   //// STATE CHANGE HANDLERS //////////////////////////////////////////////////////////////////////////
 
-  handleRange(event) {
+  handleRange(event, data) {
     const input = event.target;
     if (input.value < parseInt(input.min, 10)) {
       input.value = input.min;
-      this.handleChange(event);
+      this.handleChange(event, data);
     } else if (input.value > parseInt(input.max, 10)) {
       input.value = input.max;
-      this.handleChange(event);
+      this.handleChange(event, data);
     } else {
-      this.handleChange(event);
+      this.handleChange(event, data);
     }
   }
 
-  handleChange(event) {
+  handleChange(event, data) {
     //QUESTION want to change ids to index but cannot access through event.target??
     const { name, value, id } = event.target;
-    console.log(event.target);
-    console.log(name, id, value);
 
     switch (name) {
       case "species":
@@ -150,18 +148,10 @@ class InputPokemon extends React.Component {
         this.setState({ [name]: !this.state.isMax });
         break;
       case "moveName":
-        //debugger;
-        //TODO may want to move this after setstate to take in the new state and not rely on the value and id fields
-        this.setMoveState(value, id);
-        //debugger;
-        let moves = [...this.state.moves];
-        //debugger;
-        moves[id].name = value;
-        //debugger;
-        this.setState({
-          moves: moves
-        });
-        //this.setMoveState(this.state.moves, this.state.isMax)
+        this.setMoveNameState(value, data.move);
+        break;
+      case "movePower":
+        this.setMovePowerState(value, data.move);
         break;
       default:
         this.setState({
@@ -204,25 +194,39 @@ class InputPokemon extends React.Component {
     return;
   }
 
-  //TODO change function to take inputs from move state and isMax state, then set the move name and power accordingly
-  setMoveState(input, id) {
+  setMoveNameState(input, oldMove) {
+    const idx = this.state.moves.findIndex(move => move === oldMove);
+
+    let newMove;
+
     if (validMove(input)) {
-      let currMove = new Move(gen, input, {
-        ability: this.state.ability
-      });
+      const { name, type, bp: power, category: cat, hits } = new Move(gen, input, {
+        ability: this.state.ability,
+        useMax: this.state.isMax
 
-      let currMoves = [...this.state.moves];
-      currMoves[id].type = currMove.type;
-      currMoves[id].power = currMove.bp;
-      currMoves[id].cat = currMove.category;
-      currMoves[id].hits = currMove.hits;
-
-      this.setState({
-        moves: currMoves
+  //TODO change function to take inputs from move state and isMax state, then set the move name and power accordingly
       });
+      newMove = { name, type, power, cat, hits };
+    } else {
+      newMove = { ...move, name: input };
     }
-    return;
+
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+
+    this.setState({ moves });
   }
+
+  setMovePowerState(input, oldMove) {
+    const idx = this.state.moves.findIndex(move => move === oldMove);
+    const newMove = { ...oldMove, power: input };
+
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+
+    this.setState({ moves });
+  }
+
 
   //Toggles max move names and info
   toggleMaxMoves() {
@@ -297,25 +301,20 @@ class InputPokemon extends React.Component {
     }
 
     //Loop render moves
-    const moveInputs = [];
-    for (const [i] of this.state.moves.entries()) {
-      moveInputs.push(
-        <InputMove
-          key={i}
-          index={i}
-          moveName={this.state.moves[i].name}
-          moveMaxName={moveInfo.maxName[i]}
-          movePower={this.state.moves[i].power}
-          moveType={this.state.moves[i].type}
-          moveCat={this.state.moves[i].cat}
-          moveHits={this.state.moves[i].hits}
-          isMax={this.state.isMax}
-          handleChange={event => this.handleChange(event)}
-          handleRange={event => this.handleRange(event)}
-        />
-      );
-    }
-
+    const moveInputs = this.state.moves.map((move, idx) => (
+      <InputMove
+        key={idx}
+        index={idx}
+        moveName={move.name}
+        movePower={move.power}
+        moveType={move.type}
+        moveCat={move.cat}
+        moveHits={move.hits}
+        handleChange={event => this.handleChange(event, { move })}
+        handleRange={event => this.handleRange(event, { move })}
+      />
+    ))
+    
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
         <fieldset className="poke-info" id="p1">
