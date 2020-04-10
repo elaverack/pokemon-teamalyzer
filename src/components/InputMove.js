@@ -1,20 +1,6 @@
 import React from "react";
 import { genTypeOptions, genMoveOptions } from "../utils";
 
-//// PROPS
-/* <InputMove
-key={i}
-moveName={this.state.moves[i].name}
-movePower={this.state.moves[i].power}
-moveType={this.state.moves[i].type}
-moveCat={this.state.moves[i].cat}
-isMulti={this.state.moves[i].isMulti}
-hitNum={this.state.moves[i].hitNum}
-isMax={this.state.moves[i].isMax}
-handleChange={event => this.handleChange(event)}
-handleRange={event => this.handleRange(event)}
-/> */
-
 class InputMove extends React.Component {
   // constructor(props) {
   //   super(props);
@@ -32,7 +18,9 @@ class InputMove extends React.Component {
                 className="moveSelector"
                 list="moveOptions"
                 placeholder="(No Move)"
-                value={this.props.moveName}
+                value={
+                  this.props.isMax ? this.props.maxName : this.props.moveName
+                }
                 name="moveName"
                 onChange={this.props.handleChange}
                 // TODO set value from state aquired from imported set, empty string shows placeholder

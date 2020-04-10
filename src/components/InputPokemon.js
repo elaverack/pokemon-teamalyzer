@@ -40,6 +40,10 @@ let pokeInfo = {
   stats: ["100", "100", "100", "100", "100", "100"]
 };
 
+let moveInfo = {
+  maxName: ["", "", "", ""]
+};
+
 let move = {
   name: "",
   power: "",
@@ -199,6 +203,8 @@ class InputPokemon extends React.Component {
       const { name, type, bp: power, category: cat, hits } = new Move(gen, input, {
         ability: this.state.ability,
         useMax: this.state.isMax
+
+  //TODO change function to take inputs from move state and isMax state, then set the move name and power accordingly
       });
       newMove = { name, type, power, cat, hits };
     } else {
@@ -219,6 +225,12 @@ class InputPokemon extends React.Component {
     moves.splice(idx, 1, newMove);
 
     this.setState({ moves });
+  }
+
+
+  //Toggles max move names and info
+  toggleMaxMoves() {
+    //loop through moves in state, set
   }
 
   // Grabs info for fields not stored in state
@@ -242,7 +254,7 @@ class InputPokemon extends React.Component {
         ivs: {
           //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
           // evs seem to work fine so idk
-          hp: parseInt(state.ivVals[0], 10),
+          hp: +state.ivVals[0],
           atk: parseInt(state.ivVals[1], 10),
           def: parseInt(state.ivVals[2], 10),
           spa: parseInt(state.ivVals[3], 10),
