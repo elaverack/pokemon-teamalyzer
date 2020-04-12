@@ -18,9 +18,7 @@ class InputMove extends React.Component {
                 className="moveSelector"
                 list="moveOptions"
                 placeholder="(No Move)"
-                value={
-                  this.props.isMax ? this.props.maxName : this.props.moveName
-                }
+                value={this.props.moveName}
                 name="moveName"
                 onChange={this.props.handleChange}
                 // TODO set value from state aquired from imported set, empty string shows placeholder

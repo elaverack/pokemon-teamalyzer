@@ -13,17 +13,9 @@ import InputAbility from "./InputAbility";
 import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 //import InputHP from "./InputHP";
-/* TODO
-use the pokemon class from the calc to fill in blanks
-make this component repeatable for 6 pokemon
-*/
 
 ////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
-import { Pokemon, MOVES, SPECIES, Move } from "@smogon/calc";
-// console.log(MOVES);
-// var reference = new Pokemon(gen, "Pikachu");
-// console.log(reference);
-// console.log(SPECIES);
+import { Pokemon, Move } from "@smogon/calc";
 
 ////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
 const statNames = [
@@ -32,24 +24,20 @@ const statNames = [
   "Defense",
   "Sp-Attack",
   "Sp-Defense",
-  "Speed"
+  "Speed",
 ];
 
 let pokeInfo = {
   weight: "10.0",
-  stats: ["100", "100", "100", "100", "100", "100"]
-};
-
-let moveInfo = {
-  maxName: ["", "", "", ""]
+  stats: ["100", "100", "100", "100", "100", "100"],
 };
 
 let move = {
   name: "",
-  power: "",
+  bp: "",
   type: "",
-  cat: "",
-  hits: "5"
+  category: "",
+  hits: "5",
 };
 
 let pokemon = {
@@ -66,11 +54,12 @@ let pokemon = {
   item: "",
   status: "",
   isMax: false,
+  //TODO OPTIONAL allow changing current hp to affect moves
   // curHP: "100"
-  moves: Array(4).fill(null).map(() => ( {...move} ))
+  moves: Array(4)
+    .fill(null)
+    .map(() => ({ ...move })),
 };
-
-//console.log(pokemon);
 
 //////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
 
@@ -96,49 +85,48 @@ class InputPokemon extends React.Component {
   }
 
   handleChange(event, data) {
-    //QUESTION want to change ids to index but cannot access through event.target??
     const { name, value, id } = event.target;
 
     switch (name) {
       case "species":
         this.setSpeciesState(value);
         this.setState({
-          [name]: value
+          [name]: value,
         });
         break;
       case "types":
         let types = [...this.state.types];
         types[id] = value;
         this.setState({
-          types: types
+          types: types,
         });
         break;
       case "baseVal":
         let baseVals = [...this.state.baseVals];
         baseVals[id] = value;
         this.setState({
-          baseVals: baseVals
+          baseVals: baseVals,
         });
         break;
       case "ivVal":
         let ivVals = [...this.state.ivVals];
         ivVals[id] = value;
         this.setState({
-          ivVals: ivVals
+          ivVals: ivVals,
         });
         break;
       case "evVal":
         let evVals = [...this.state.evVals];
         evVals[id] = value;
         this.setState({
-          evVals: evVals
+          evVals: evVals,
         });
         break;
       case "boost":
         let boosts = [...this.state.boosts];
         boosts[id] = value;
         this.setState({
-          boosts: boosts
+          boosts: boosts,
         });
         break;
       case "abilityOn":
@@ -155,7 +143,7 @@ class InputPokemon extends React.Component {
         break;
       default:
         this.setState({
-          [name]: value
+          [name]: value,
         });
     }
   }
@@ -166,14 +154,12 @@ class InputPokemon extends React.Component {
       let state = this.state;
       let currPokemon = new Pokemon(gen, input, {
         ivs: {
-          //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
-          // evs seem to work fine so idk
-          hp: parseInt(state.ivVals[0], 10),
-          atk: parseInt(state.ivVals[1], 10),
-          def: parseInt(state.ivVals[2], 10),
-          spa: parseInt(state.ivVals[3], 10),
-          spd: parseInt(state.ivVals[4], 10),
-          spe: parseInt(state.ivVals[5], 10)
+          hp: +state.ivVals[0],
+          atk: +state.ivVals[1],
+          def: +state.ivVals[2],
+          spa: +state.ivVals[3],
+          spd: +state.ivVals[4],
+          spe: +state.ivVals[5],
         },
         evs: {
           hp: state.evVals[0],
@@ -181,32 +167,29 @@ class InputPokemon extends React.Component {
           def: state.evVals[2],
           spa: state.evVals[3],
           spd: state.evVals[4],
-          spe: state.evVals[5]
-        }
+          spe: state.evVals[5],
+        },
       });
 
       this.setState({
         types: [currPokemon.type1, currPokemon.type2 || "None"],
         baseVals: [...Object.values(currPokemon.species.bs)],
-        curHP: currPokemon.maxHP()
+        curHP: currPokemon.maxHP(),
       });
     }
     return;
   }
 
+  //TODO OPTIONAL toggle displayed max move name and power
   setMoveNameState(input, oldMove) {
-    const idx = this.state.moves.findIndex(move => move === oldMove);
-
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
     let newMove;
 
     if (validMove(input)) {
-      const { name, type, bp: power, category: cat, hits } = new Move(gen, input, {
+      const { name, type, bp, category, hits } = new Move(gen, input, {
         ability: this.state.ability,
-        useMax: this.state.isMax
-
-  //TODO change function to take inputs from move state and isMax state, then set the move name and power accordingly
       });
-      newMove = { name, type, power, cat, hits };
+      newMove = { name, type, bp, category, hits };
     } else {
       newMove = { ...move, name: input };
     }
@@ -218,19 +201,13 @@ class InputPokemon extends React.Component {
   }
 
   setMovePowerState(input, oldMove) {
-    const idx = this.state.moves.findIndex(move => move === oldMove);
-    const newMove = { ...oldMove, power: input };
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
+    const newMove = { ...oldMove, bp: input };
 
     const moves = [...this.state.moves];
     moves.splice(idx, 1, newMove);
 
     this.setState({ moves });
-  }
-
-
-  //Toggles max move names and info
-  toggleMaxMoves() {
-    //loop through moves in state, set
   }
 
   // Grabs info for fields not stored in state
@@ -249,17 +226,15 @@ class InputPokemon extends React.Component {
           def: state.boosts[2],
           spa: state.boosts[3],
           spd: state.boosts[4],
-          spe: state.boosts[5]
+          spe: state.boosts[5],
         },
         ivs: {
-          //TODO QUESTION find a cleaner way around this, doesnt like these number strings for some reason
-          // evs seem to work fine so idk
           hp: +state.ivVals[0],
-          atk: parseInt(state.ivVals[1], 10),
-          def: parseInt(state.ivVals[2], 10),
-          spa: parseInt(state.ivVals[3], 10),
-          spd: parseInt(state.ivVals[4], 10),
-          spe: parseInt(state.ivVals[5], 10)
+          atk: +state.ivVals[1],
+          def: +state.ivVals[2],
+          spa: +state.ivVals[3],
+          spd: +state.ivVals[4],
+          spe: +state.ivVals[5],
         },
         evs: {
           hp: state.evVals[0],
@@ -267,8 +242,8 @@ class InputPokemon extends React.Component {
           def: state.evVals[2],
           spa: state.evVals[3],
           spd: state.evVals[4],
-          spe: state.evVals[5]
-        }
+          spe: state.evVals[5],
+        },
       });
 
       pokeInfo.weight = currPokemon.weight;
@@ -293,8 +268,8 @@ class InputPokemon extends React.Component {
           evVal={this.state.evVals[i]}
           stat={pokeInfo.stats[i]}
           boost={this.state.boosts[i]}
-          handleChange={event => this.handleChange(event)}
-          handleRange={event => this.handleRange(event)}
+          handleChange={(event) => this.handleChange(event)}
+          handleRange={(event) => this.handleRange(event)}
           index={i}
         />
       );
@@ -306,49 +281,50 @@ class InputPokemon extends React.Component {
         key={idx}
         index={idx}
         moveName={move.name}
-        movePower={move.power}
+        movePower={move.bp}
         moveType={move.type}
-        moveCat={move.cat}
+        moveCat={move.category}
         moveHits={move.hits}
-        handleChange={event => this.handleChange(event, { move })}
-        handleRange={event => this.handleRange(event, { move })}
+        isMax={this.state.isMax}
+        handleChange={(event) => this.handleChange(event, { move })}
+        handleRange={(event) => this.handleRange(event, { move })}
       />
-    ))
-    
+    ));
+
     return (
       <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
         <fieldset className="poke-info" id="p1">
           <legend align="center">Pok&eacute;mon 1</legend>
           <InputSpecies
             species={this.state.species}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <InputType
             types={this.state.types}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <InputGender
             gender={this.state.gender}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <Weight weight={pokeInfo.weight} />
           {statInputs}
           <InputNature
             nature={this.state.nature}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <InputAbility
             ability={this.state.ability}
             abilityOn={this.state.abilityOn}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <InputItem
             item={this.state.item}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           <InputStatus
             status={this.state.status}
-            handleChange={event => this.handleChange(event)}
+            handleChange={(event) => this.handleChange(event)}
           />
           {/* TODO calculate percent HP, incorporate maxHP value, make maxHP change on load, DO NOT make %HP input */}
           {/* <InputHP

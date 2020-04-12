@@ -6,7 +6,7 @@ import InputPokemon from "./InputPokemon";
 
 const inputBlock = {
   float: "left",
-  border: "1px solid"
+  border: "1px solid",
 };
 
 class Inputs extends React.Component {

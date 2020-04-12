@@ -26,6 +26,7 @@ class InputSpecies extends React.Component {
         >
           Dynamax
         </button>
+        {/* TODO change species/button style to reflect dynamax state */}
         {/* STRETCH
         figure out how to import sets from smogon and store them
         <span
