@@ -71,6 +71,10 @@ class InputPokemon extends React.Component {
 
   //// STATE CHANGE HANDLERS //////////////////////////////////////////////////////////////////////////
 
+  onSubmit(event) {
+    event.preventDefault();
+  }
+
   handleRange(event, data) {
     const input = event.target;
     if (input.value < parseInt(input.min, 10)) {
@@ -249,7 +253,6 @@ class InputPokemon extends React.Component {
       pokeInfo.weight = currPokemon.weight;
       pokeInfo.stats = [...Object.values(currPokemon.stats)];
       pokeInfo.stats[0] = currPokemon.maxHP();
-      console.log(currPokemon.stats);
     }
   }
 
@@ -257,23 +260,20 @@ class InputPokemon extends React.Component {
     this.setPokeInfo();
 
     //Loop render stat input components
-    const statInputs = [];
-    for (const [i] of statNames.entries()) {
-      statInputs.push(
-        <InputStat
-          title={statNames[i]}
-          key={statNames[i]}
-          baseVal={this.state.baseVals[i]}
-          ivVal={this.state.ivVals[i]}
-          evVal={this.state.evVals[i]}
-          stat={pokeInfo.stats[i]}
-          boost={this.state.boosts[i]}
-          handleChange={(event) => this.handleChange(event)}
-          handleRange={(event) => this.handleRange(event)}
-          index={i}
-        />
-      );
-    }
+    const statInputs = statNames.map((statNames, idx) => (
+      <InputStat
+        title={statNames}
+        key={statNames}
+        baseVal={this.state.baseVals[idx]}
+        ivVal={this.state.ivVals[idx]}
+        evVal={this.state.evVals[idx]}
+        stat={pokeInfo.stats[idx]}
+        boost={this.state.boosts[idx]}
+        handleChange={(event) => this.handleChange(event)}
+        handleRange={(event) => this.handleRange(event)}
+        index={idx}
+      />
+    ));
 
     //Loop render moves
     const moveInputs = this.state.moves.map((move, idx) => (
@@ -326,22 +326,8 @@ class InputPokemon extends React.Component {
             status={this.state.status}
             handleChange={(event) => this.handleChange(event)}
           />
-          {/* TODO calculate percent HP, incorporate maxHP value, make maxHP change on load, DO NOT make %HP input */}
-          {/* <InputHP
-            curHP={this.state.curHP}
-            maxHP={pokeInfo.stats[0]}
-            percentHP={Math.floor((this.state.curHP / pokeInfo.stats[0]) * 100)}
-            handleChange={event => this.handleChange(event)}
-            handleRange={event => this.handleRange(event)}
-          /> */}
           {moveInputs}
-          <h1>
-            {this.state.species}
-            <br />
-            {this.state.types[0]} {this.state.types[1]}
-            <br />
-            {this.state.isMax && "true"}
-          </h1>
+          <input type="button" value="Analyze Team" onClick={this.onSubmit} />
         </fieldset>
       </div>
     );
