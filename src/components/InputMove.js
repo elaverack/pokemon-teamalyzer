@@ -27,7 +27,7 @@ class InputMove extends React.Component {
             </td>
             <td>
               <input
-                className="movePower"
+                className="powerInput"
                 name="movePower"
                 min="0"
                 max="999"
@@ -37,7 +37,8 @@ class InputMove extends React.Component {
             </td>
             <td>
               <select
-                className="move-type"
+                className="typeSelector"
+                name="moveType"
                 id={this.props.index}
                 value={this.props.moveType}
                 onChange={this.props.handleChange}
@@ -47,7 +48,7 @@ class InputMove extends React.Component {
             </td>
             <td>
               <select
-                className="moveCat"
+                className="catSelector"
                 name="moveCat"
                 id={this.props.index}
                 value={this.props.moveCat}
@@ -60,18 +61,20 @@ class InputMove extends React.Component {
             </td>
             <td>
               <button
-                className="move-crit"
+                className="critButton"
+                name="moveCrit"
                 title="Force this attack to be a critical hit?"
                 type="button"
-                onChange={this.props.onChange}
+                onClick={this.props.handleChange}
               >
                 Crit
               </button>
             </td>
             <td>
               <select
-                className="move-hits"
-                value={this.props.hits}
+                className="hitsSelector"
+                name="moveHits"
+                value={this.props.moveHits}
                 onChange={this.props.handleChange}
                 hidden={this.props.moveHits < 2 && "hidden"}
               >

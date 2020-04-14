@@ -1,7 +1,6 @@
 /////// IMPORTS /////////////////////////////////////////////////////////////////////////////////
 
 import React from "react";
-import { gen, validSpecies, validMove } from "../utils";
 import InputStat from "./InputStat";
 import InputMove from "./InputMove";
 import InputSpecies from "./InputSpecies";
@@ -13,52 +12,23 @@ import InputAbility from "./InputAbility";
 import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 //import InputHP from "./InputHP";
+import {
+  gen,
+  validSpecies,
+  validMove,
+  move,
+  pokemon,
+  statNames,
+} from "../utils";
 
 ////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
 import { Pokemon, Move } from "@smogon/calc";
 
-////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
-const statNames = [
-  "HP",
-  "Attack",
-  "Defense",
-  "Sp-Attack",
-  "Sp-Defense",
-  "Speed",
-];
-
+//////////// OBJECT DEFINITION //////////////////////////////////////////////////////////////
+//used to store non input data from the pokemon class only within this component
 let pokeInfo = {
   weight: "10.0",
   stats: ["100", "100", "100", "100", "100", "100"],
-};
-
-let move = {
-  name: "",
-  bp: "",
-  type: "",
-  category: "",
-  hits: "5",
-};
-
-let pokemon = {
-  species: "",
-  types: ["None", "None"],
-  gender: "Genderless",
-  baseVals: ["100", "100", "100", "100", "100", "100"],
-  ivVals: ["31", "31", "31", "31", "31", "31"],
-  evVals: ["0", "0", "0", "0", "0", "0"],
-  boosts: ["0", "0", "0", "0", "0", "0"],
-  nature: "Serious",
-  ability: "",
-  abilityOn: true,
-  item: "",
-  status: "",
-  isMax: false,
-  //TODO OPTIONAL allow changing current hp to affect moves
-  // curHP: "100"
-  moves: Array(4)
-    .fill(null)
-    .map(() => ({ ...move })),
 };
 
 //////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
@@ -145,6 +115,18 @@ class InputPokemon extends React.Component {
       case "movePower":
         this.setMovePowerState(value, data.move);
         break;
+      case "moveType":
+        this.setMoveTypeState(value, data.move);
+        break;
+      case "moveCat":
+        this.setMoveCatState(value, data.move);
+        break;
+      case "moveHits":
+        this.setMoveHitsState(value, data.move);
+        break;
+      case "moveCrit":
+        this.setMoveCritState(data.move);
+        break;
       default:
         this.setState({
           [name]: value,
@@ -190,7 +172,7 @@ class InputPokemon extends React.Component {
     let newMove;
 
     if (validMove(input)) {
-      const { name, type, bp, category, hits } = new Move(gen, input, {
+      let { name, type, bp, category, hits } = new Move(gen, input, {
         ability: this.state.ability,
       });
       newMove = { name, type, bp, category, hits };
@@ -200,17 +182,46 @@ class InputPokemon extends React.Component {
 
     const moves = [...this.state.moves];
     moves.splice(idx, 1, newMove);
-
     this.setState({ moves });
   }
 
   setMovePowerState(input, oldMove) {
     const idx = this.state.moves.findIndex((move) => move === oldMove);
     const newMove = { ...oldMove, bp: input };
-
     const moves = [...this.state.moves];
     moves.splice(idx, 1, newMove);
+    this.setState({ moves });
+  }
 
+  setMoveTypeState(input, oldMove) {
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
+    const newMove = { ...oldMove, type: input };
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+    this.setState({ moves });
+  }
+
+  setMoveCatState(input, oldMove) {
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
+    const newMove = { ...oldMove, category: input };
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+    this.setState({ moves });
+  }
+
+  setMoveHitsState(input, oldMove) {
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
+    const newMove = { ...oldMove, hits: input };
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
+    this.setState({ moves });
+  }
+
+  setMoveCritState(oldMove) {
+    const idx = this.state.moves.findIndex((move) => move === oldMove);
+    const newMove = { ...oldMove, crit: !oldMove.crit };
+    const moves = [...this.state.moves];
+    moves.splice(idx, 1, newMove);
     this.setState({ moves });
   }
 
@@ -292,9 +303,9 @@ class InputPokemon extends React.Component {
     ));
 
     return (
-      <div aria-label="Pok&eacute;mon 1" className="panel" role="region">
-        <fieldset className="poke-info" id="p1">
-          <legend align="center">Pok&eacute;mon 1</legend>
+      <div aria-label="Pok&eacute;mon" className="panel" role="region">
+        <fieldset className="pokeInput" id="p">
+          <legend align="center">Pok&eacute;mon</legend>
           <InputSpecies
             species={this.state.species}
             handleChange={(event) => this.handleChange(event)}
