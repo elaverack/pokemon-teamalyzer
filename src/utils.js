@@ -1,6 +1,8 @@
 import React from "react";
 import { TYPE_CHART, MOVES, SPECIES, ITEMS, ABILITIES } from "@smogon/calc";
 
+// GLOBAL CONSTANTS
+
 export const gen = 8;
 
 ////// OBJECT DEFINITIONS /////////////////////////////////////////////////////////////////////////////
@@ -12,6 +14,34 @@ export const statNames = [
   "Sp-Defense",
   "Speed",
 ];
+
+export let fieldSide = {
+  stealthRock: false,
+  steelsurge: false,
+  spikes: "0",
+  reflect: false,
+  lightscreen: false,
+  protect: false,
+  leechseed: false,
+  foresight: false,
+  helpinghand: false,
+  tailwind: false,
+  friendguard: false,
+  auroraveil: false,
+  allboost: false,
+  battery: false,
+  switch: false,
+};
+
+export let field = {
+  format: "Doubles",
+  terrain: "None",
+  weather: "None",
+  gravity: false,
+  sides: Array(2)
+    .fill(null)
+    .map(() => ({ ...fieldSide })),
+};
 
 export let move = {
   name: "",
@@ -41,6 +71,14 @@ export let pokemon = {
   moves: Array(4)
     .fill(null)
     .map(() => ({ ...move })),
+};
+
+export let inputData = {
+  field: field,
+  level: "50",
+  team: Array(6)
+    .fill(null)
+    .map(() => ({ ...pokemon })),
 };
 
 // SECTION OPTION GENERATORS
@@ -93,12 +131,11 @@ export function genAbilityOptions() {
   ));
 }
 
+// VALIDATION CHECK FUNCTIONS
 export function validSpecies(input) {
-  //let names = Object.keys(SPECIES[gen]); let i = 0; i < names.length; i++
   let key;
   for (key in SPECIES[gen]) {
     if (input === key) {
-      console.log("valid");
       return true;
     }
   }
@@ -109,7 +146,6 @@ export function validMove(input) {
   let key;
   for (key in MOVES[gen]) {
     if (input === key) {
-      console.log("valid");
       return true;
     }
   }

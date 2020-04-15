@@ -3,6 +3,7 @@ import React from "react";
 import InputField from "./InputField";
 import ImportExport from "./ImportExport";
 import InputPokemon from "./InputPokemon";
+import InputLevel from "./InputLevel";
 
 const inputBlock = {
   float: "left",
@@ -18,8 +19,9 @@ class Inputs extends React.Component {
     return (
       <div style={inputBlock}>
         <ImportExport />
+        <InputLevel />
         <InputField />
-        {/* TODO Level Input component? Think about where to put this */}
+
         <InputPokemon />
       </div>
     );
