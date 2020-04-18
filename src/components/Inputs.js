@@ -19,6 +19,7 @@ class Inputs extends React.Component {
     return (
       <div style={inputBlock}>
         <ImportExport />
+        <input type="button" value="Analyze Team" onClick={this.onSubmit} />
         <InputLevel />
         <InputField />
 

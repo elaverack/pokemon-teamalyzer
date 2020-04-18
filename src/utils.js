@@ -73,7 +73,7 @@ export let pokemon = {
     .map(() => ({ ...move })),
 };
 
-export let inputData = {
+export let TeamState = {
   field: field,
   level: "50",
   team: Array(6)

@@ -338,7 +338,6 @@ class InputPokemon extends React.Component {
             handleChange={(event) => this.handleChange(event)}
           />
           {moveInputs}
-          <input type="button" value="Analyze Team" onClick={this.onSubmit} />
         </fieldset>
       </div>
     );
