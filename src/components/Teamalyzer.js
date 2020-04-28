@@ -2,12 +2,12 @@ import React from "react";
 
 import Inputs from "./Inputs";
 import Tools from "./Tools";
-import { TeamState } from "../utils";
+import { teamState } from "../store";
 
 class Teamalyzer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = TeamState;
+    this.state = teamState;
   }
 
   //QUESTIONS
