@@ -83,3 +83,15 @@ export function validMove(input) {
   }
   return false;
 }
+
+// HANDLE RANGE FUNCTION
+
+export function handleRange(event) {
+  const input = event.target;
+  if (input.value < parseInt(input.min, 10)) {
+    input.value = input.min;
+  } else if (input.value > parseInt(input.max, 10)) {
+    input.value = input.max;
+  }
+  return input.value;
+}

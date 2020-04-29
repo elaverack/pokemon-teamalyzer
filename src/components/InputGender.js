@@ -1,24 +1,33 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 // TODO set up state within component
+const InputGender = observer(
+  class InputGender extends React.Component {
+    onGenderChange(event) {
+      this.props.pokeState.gender = event.target.value;
+    }
 
-class InputGender extends React.Component {
-  render() {
-    return (
-      <div className="hide">
-        <label>Gender</label>
-        <select
-          className="gender"
-          name="gender"
-          onChange={this.props.handleChange}
-        >
-          <option value="genderless">Genderless</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-      </div>
-    );
+    render() {
+      return (
+        <div className="hide">
+          <label>Gender: </label>
+          <select
+            className="gender"
+            name="gender"
+            value={this.props.pokeState.gender}
+            onChange={(event) => {
+              this.onGenderChange(event);
+            }}
+          >
+            <option value="genderless">Genderless</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      );
+    }
   }
-}
+);
 
 export default InputGender;

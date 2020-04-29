@@ -1,33 +1,63 @@
 import React from "react";
-import { genSpeciesOptions } from "../utils";
+import { observer } from "mobx-react";
+import { Pokemon } from "@smogon/calc";
+import { genSpeciesOptions, validSpecies, gen } from "../utils";
 
 // TODO onchange handler and state update
 
-class InputSpecies extends React.Component {
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          className="speciesSelector"
-          list="speciesOptions"
-          placeholder="(No Species)"
-          value={this.props.species}
-          onChange={this.props.handleChange}
-          name="species"
-        />
-        <datalist id="speciesOptions">{genSpeciesOptions()}</datalist>
-        <button
-          type="button"
-          className="dynamaxButton"
-          name="isMax"
-          title="Dynamax this Pokemon?"
-          onClick={this.props.handleChange}
-        >
-          Dynamax
-        </button>
-        {/* TODO change species/button style to reflect dynamax state */}
-        {/* STRETCH
+const InputSpecies = observer(
+  class InputSpecies extends React.Component {
+    onSpeciesChange(event) {
+      this.props.pokeState.species = event.target.value;
+      if (validSpecies(event.target.value)) {
+        let currPokemon = new Pokemon(gen, event.target.value, {
+          ivs: { ...this.props.pokeState.ivVals },
+          evs: { ...this.props.pokeState.evVals },
+        });
+
+        this.props.pokeState.types = [
+          currPokemon.type1,
+          currPokemon.type2 || "None",
+        ];
+        this.props.pokeState.baseVals = [
+          ...Object.values(currPokemon.species.bs),
+        ];
+        this.props.pokeState.curHP = currPokemon.maxHP();
+      }
+    }
+
+    onDynamaxChange() {
+      this.props.pokeState.isMax = !this.props.pokeState.isMax;
+    }
+
+    render() {
+      return (
+        <div>
+          <input
+            type="text"
+            className="speciesSelector"
+            list="speciesOptions"
+            placeholder="(No Species)"
+            value={this.props.pokeState.species}
+            onChange={(event) => {
+              this.onSpeciesChange(event);
+            }}
+            name="species"
+          />
+          <datalist id="speciesOptions">{genSpeciesOptions()}</datalist>
+          <button
+            type="button"
+            className="dynamaxButton"
+            name="isMax"
+            title="Dynamax this Pokemon?"
+            onClick={() => {
+              this.onDynamaxChange();
+            }}
+          >
+            Dynamax
+          </button>
+          {/* TODO change species/button style to reflect dynamax state */}
+          {/* STRETCH
         figure out how to import sets from smogon and store them
         <span
           id="importedSetsOptions"
@@ -37,15 +67,16 @@ class InputSpecies extends React.Component {
           <br />
           <button id="clearSets">Clear Custom Sets</button>
         </span> */}
-        {/* OPTIONAL
+          {/* OPTIONAL
         make dropdown to flip formes of pokemon without changing overall species
         <div className="hide">
           <label>Forme</label>
           <select className="forme"></select>
         </div> */}
-      </div>
-    );
+        </div>
+      );
+    }
   }
-}
+);
 
 export default InputSpecies;

@@ -52,14 +52,8 @@ const InputPokemon = observer(
 
     handleChange(event, data) {
       const { name, value, id } = event.target;
-
       switch (name) {
         case "species":
-          this.setSpeciesState(value);
-          // this.setState({
-          //   [name]: value,
-          // });
-          this.props.pokeState.species = value;
           break;
         case "types":
           let types = [...this.state.types];
@@ -128,36 +122,6 @@ const InputPokemon = observer(
     }
 
     //////// STATE CHANGE UTIL FUNCITONS /////////////////////////////////////////////////////////////////////
-    setSpeciesState(input) {
-      if (validSpecies(input)) {
-        let state = this.state;
-        let currPokemon = new Pokemon(gen, input, {
-          ivs: {
-            hp: +state.ivVals[0],
-            atk: +state.ivVals[1],
-            def: +state.ivVals[2],
-            spa: +state.ivVals[3],
-            spd: +state.ivVals[4],
-            spe: +state.ivVals[5],
-          },
-          evs: {
-            hp: state.evVals[0],
-            atk: state.evVals[1],
-            def: state.evVals[2],
-            spa: state.evVals[3],
-            spd: state.evVals[4],
-            spe: state.evVals[5],
-          },
-        });
-
-        this.setState({
-          types: [currPokemon.type1, currPokemon.type2 || "None"],
-          baseVals: [...Object.values(currPokemon.species.bs)],
-          curHP: currPokemon.maxHP(),
-        });
-      }
-      return;
-    }
 
     //TODO OPTIONAL toggle displayed max move name and power
     setMoveNameState(input, oldMove) {
@@ -268,13 +232,7 @@ const InputPokemon = observer(
         <InputStat
           title={statNames}
           key={statNames}
-          baseVal={this.state.baseVals[idx]}
-          ivVal={this.state.ivVals[idx]}
-          evVal={this.state.evVals[idx]}
-          stat={pokeInfo.stats[idx]}
-          boost={this.state.boosts[idx]}
-          handleChange={(event) => this.handleChange(event)}
-          handleRange={(event) => this.handleRange(event)}
+          pokeState={this.props.pokeState}
           index={idx}
         />
       ));
@@ -299,18 +257,9 @@ const InputPokemon = observer(
         <div aria-label="Pok&eacute;mon" className="panel" role="region">
           <fieldset className="pokeInput" id="p">
             <legend align="center">Pok&eacute;mon</legend>
-            <InputSpecies
-              species={this.state.species}
-              handleChange={(event) => this.handleChange(event)}
-            />
-            <InputType
-              types={this.state.types}
-              handleChange={(event) => this.handleChange(event)}
-            />
-            <InputGender
-              gender={this.state.gender}
-              handleChange={(event) => this.handleChange(event)}
-            />
+            <InputSpecies pokeState={this.props.pokeState} />
+            <InputType pokeState={this.props.pokeState} />
+            <InputGender pokeState={this.props.pokeState} />
             <Weight weight={pokeInfo.weight} />
             {statInputs}
             <InputNature
