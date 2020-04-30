@@ -10,19 +10,17 @@ const InputSpecies = observer(
     onSpeciesChange(event) {
       this.props.pokeState.species = event.target.value;
       if (validSpecies(event.target.value)) {
-        let currPokemon = new Pokemon(gen, event.target.value, {
-          ivs: { ...this.props.pokeState.ivVals },
-          evs: { ...this.props.pokeState.evVals },
-        });
-
+        let currPokemon = new Pokemon(gen, event.target.value);
         this.props.pokeState.types = [
           currPokemon.type1,
           currPokemon.type2 || "None",
         ];
+        this.props.pokeState.gender = currPokemon.gender;
+        this.props.pokeState.weight = currPokemon.weight;
         this.props.pokeState.baseVals = [
           ...Object.values(currPokemon.species.bs),
         ];
-        this.props.pokeState.curHP = currPokemon.maxHP();
+        this.props.pokeState.ability = currPokemon.ability;
       }
     }
 
@@ -37,7 +35,7 @@ const InputSpecies = observer(
             type="text"
             className="speciesSelector"
             list="speciesOptions"
-            placeholder="(No Species)"
+            placeholder="(Ditto)"
             value={this.props.pokeState.species}
             onChange={(event) => {
               this.onSpeciesChange(event);

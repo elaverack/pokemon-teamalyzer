@@ -25,6 +25,7 @@ class Inputs extends React.Component {
         <InputField />
 
         <InputPokemon pokeState={teamState.team[0]} />
+        <InputPokemon pokeState={teamState.team[1]} />
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Pokemon } from "@smogon/calc";
-import { handleRange, gen, validSpecies } from "../utils";
+import { handleRange } from "../utils";
 
 // TODO gather inputs into state
 const InputStat = observer(
@@ -21,27 +20,6 @@ const InputStat = observer(
     onBoostChange(event) {
       this.props.pokeState.boosts[this.props.index] = event.target.value;
     }
-    //TODO calc stat based on state base value
-    getStat(statIndex) {
-      let state = this.props.pokeState;
-      let species = state.species;
-      if (!validSpecies(species)) {
-        species = "Ditto";
-      }
-      let currPokemon = new Pokemon(gen, species, {
-        nature: state.nature,
-        isDynamaxed: state.isMax,
-        ivs: { ...state.ivVals },
-        evs: { ...state.evVals },
-      });
-      let statOut = 0;
-      if (this.props.title === "HP") {
-        statOut = currPokemon.maxHP();
-      } else {
-        statOut = [...Object.values(currPokemon.stats)][this.props.index];
-      }
-      return statOut;
-    }
 
     render() {
       return (
@@ -59,10 +37,10 @@ const InputStat = observer(
           <thead>
             <tr>
               <th className="row">
-                <label>{this.props.title}</label>
+                <label>{this.props.title}: </label>
               </th>
               <td>
-                <input
+                {/* <input
                   className="base"
                   name="baseVal"
                   type="number"
@@ -73,7 +51,8 @@ const InputStat = observer(
                   onChange={(event) => {
                     this.onBaseChange(event);
                   }}
-                />
+                /> */}
+                {this.props.pokeState.baseVals[this.props.index]}
               </td>
               <td>
                 <input
@@ -104,9 +83,7 @@ const InputStat = observer(
                 />
               </td>
               <td>
-                <output className="total">
-                  {this.getStat(this.props.index)}
-                </output>
+                <output>{this.props.pokeState.stat(this.props.index)}</output>
               </td>
               <td hidden={this.props.title === "HP" && "hidden"}>
                 <select

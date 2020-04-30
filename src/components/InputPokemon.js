@@ -13,18 +13,11 @@ import InputAbility from "./InputAbility";
 import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 //import InputHP from "./InputHP";
-import { gen, validSpecies, validMove, statNames } from "../utils";
+import { gen, validMove, statNames } from "../utils";
 import { move } from "../store";
 
 ////// REFERENCE/EXPOSE DATA /////////////////////////////////////////////////////////////////////////
-import { Pokemon, Move } from "@smogon/calc";
-
-//////////// OBJECT DEFINITION //////////////////////////////////////////////////////////////
-//used to store non input data from the pokemon class only within this component
-let pokeInfo = {
-  weight: "10.0",
-  stats: ["100", "100", "100", "100", "100", "100"],
-};
+import { Move } from "@smogon/calc";
 
 //////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
 
@@ -37,65 +30,9 @@ const InputPokemon = observer(
 
     //// STATE CHANGE HANDLERS //////////////////////////////////////////////////////////////////////////
 
-    handleRange(event, data) {
-      const input = event.target;
-      if (input.value < parseInt(input.min, 10)) {
-        input.value = input.min;
-        this.handleChange(event, data);
-      } else if (input.value > parseInt(input.max, 10)) {
-        input.value = input.max;
-        this.handleChange(event, data);
-      } else {
-        this.handleChange(event, data);
-      }
-    }
-
     handleChange(event, data) {
-      const { name, value, id } = event.target;
+      const { name, value } = event.target;
       switch (name) {
-        case "species":
-          break;
-        case "types":
-          let types = [...this.state.types];
-          types[id] = value;
-          this.setState({
-            types: types,
-          });
-          break;
-        case "baseVal":
-          let baseVals = [...this.state.baseVals];
-          baseVals[id] = value;
-          this.setState({
-            baseVals: baseVals,
-          });
-          break;
-        case "ivVal":
-          let ivVals = [...this.state.ivVals];
-          ivVals[id] = value;
-          this.setState({
-            ivVals: ivVals,
-          });
-          break;
-        case "evVal":
-          let evVals = [...this.state.evVals];
-          evVals[id] = value;
-          this.setState({
-            evVals: evVals,
-          });
-          break;
-        case "boost":
-          let boosts = [...this.state.boosts];
-          boosts[id] = value;
-          this.setState({
-            boosts: boosts,
-          });
-          break;
-        case "abilityOn":
-          this.setState({ [name]: !this.state.abilityOn });
-          break;
-        case "isMax":
-          this.setState({ [name]: !this.state.isMax });
-          break;
         case "moveName":
           this.setMoveNameState(value, data.move);
           break;
@@ -182,51 +119,7 @@ const InputPokemon = observer(
       this.setState({ moves });
     }
 
-    // Grabs info for fields not stored in state
-    setPokeInfo() {
-      if (validSpecies(this.state.species)) {
-        let state = this.state;
-        let currPokemon = new Pokemon(gen, state.species, {
-          item: state.item,
-          ability: state.ability,
-          nature: state.nature,
-          abilityOn: state.abilityOn,
-          isDynamaxed: state.isMax,
-          boosts: {
-            hp: state.boosts[0],
-            atk: state.boosts[1],
-            def: state.boosts[2],
-            spa: state.boosts[3],
-            spd: state.boosts[4],
-            spe: state.boosts[5],
-          },
-          ivs: {
-            hp: +state.ivVals[0],
-            atk: +state.ivVals[1],
-            def: +state.ivVals[2],
-            spa: +state.ivVals[3],
-            spd: +state.ivVals[4],
-            spe: +state.ivVals[5],
-          },
-          evs: {
-            hp: state.evVals[0],
-            atk: state.evVals[1],
-            def: state.evVals[2],
-            spa: state.evVals[3],
-            spd: state.evVals[4],
-            spe: state.evVals[5],
-          },
-        });
-
-        pokeInfo.weight = currPokemon.weight;
-        pokeInfo.stats = [...Object.values(currPokemon.stats)];
-        pokeInfo.stats[0] = currPokemon.maxHP();
-      }
-    }
-
     render() {
-      this.setPokeInfo();
-
       //Loop render stat input components
       const statInputs = statNames.map((statNames, idx) => (
         <InputStat
@@ -260,25 +153,12 @@ const InputPokemon = observer(
             <InputSpecies pokeState={this.props.pokeState} />
             <InputType pokeState={this.props.pokeState} />
             <InputGender pokeState={this.props.pokeState} />
-            <Weight weight={pokeInfo.weight} />
+            <Weight pokeState={this.props.pokeState} />
             {statInputs}
-            <InputNature
-              nature={this.state.nature}
-              handleChange={(event) => this.handleChange(event)}
-            />
-            <InputAbility
-              ability={this.state.ability}
-              abilityOn={this.state.abilityOn}
-              handleChange={(event) => this.handleChange(event)}
-            />
-            <InputItem
-              item={this.state.item}
-              handleChange={(event) => this.handleChange(event)}
-            />
-            <InputStatus
-              status={this.state.status}
-              handleChange={(event) => this.handleChange(event)}
-            />
+            <InputNature pokeState={this.props.pokeState} />
+            <InputAbility pokeState={this.props.pokeState} />
+            <InputItem pokeState={this.props.pokeState} />
+            <InputStatus pokeState={this.props.pokeState} />
             {moveInputs}
           </fieldset>
         </div>
