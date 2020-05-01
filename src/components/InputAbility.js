@@ -19,9 +19,7 @@ const InputAbility = observer(
         <div>
           <label>Ability</label>
           <input
-            name="ability"
             type="text"
-            className="abilitySelector"
             list="abilityOptions"
             placeholder="(No Ability)"
             value={this.props.pokeState.ability}
@@ -32,15 +30,13 @@ const InputAbility = observer(
           <datalist id="abilityOptions">{genAbilityOptions()}</datalist>
           {/* TODO conditional button styling to indicate state */}
           <button
-            name="abilityOn"
-            className="abilityToggle"
             title="Is this ability active?"
             type="button"
             onClick={() => {
               this.onAbilityToggle();
             }}
           >
-            Active?
+            Active
           </button>
         </div>
       );

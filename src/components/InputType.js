@@ -15,9 +15,7 @@ const InputType = observer(
       return (
         <div>
           <label>Type</label>
-          {/* TODO set defaultvalue with state props */}
           <select
-            name="types"
             id="0"
             value={this.props.pokeState.types[0]}
             onChange={(event) => {
@@ -27,7 +25,6 @@ const InputType = observer(
             {genTypeOptions()}
           </select>
           <select
-            name="types"
             id="1"
             value={this.props.pokeState.types[1]}
             onChange={(event) => {

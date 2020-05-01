@@ -33,20 +33,16 @@ const InputSpecies = observer(
         <div>
           <input
             type="text"
-            className="speciesSelector"
             list="speciesOptions"
             placeholder="(Ditto)"
             value={this.props.pokeState.species}
             onChange={(event) => {
               this.onSpeciesChange(event);
             }}
-            name="species"
           />
           <datalist id="speciesOptions">{genSpeciesOptions()}</datalist>
           <button
             type="button"
-            className="dynamaxButton"
-            name="isMax"
             title="Dynamax this Pokemon?"
             onClick={() => {
               this.onDynamaxChange();

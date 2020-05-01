@@ -36,9 +36,11 @@ const InputPokemon = observer(
       ));
 
       return (
-        <div aria-label="Pok&eacute;mon" className="panel" role="region">
-          <fieldset className="pokeInput">
-            <legend align="center">Pok&eacute;mon</legend>
+        <div>
+          <fieldset>
+            <legend align="center">
+              Pok&eacute;mon {this.props.index + 1}
+            </legend>
             <InputSpecies pokeState={this.props.pokeState} />
             <InputType pokeState={this.props.pokeState} />
             <InputGender pokeState={this.props.pokeState} />

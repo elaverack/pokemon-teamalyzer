@@ -29,6 +29,7 @@ const InputStat = observer(
         species = "Ditto";
       }
       let currPokemon = new Pokemon(gen, species, {
+        level: +state.level,
         nature: state.nature,
         isDynamaxed: state.isMax,
         ivs: {
@@ -71,7 +72,7 @@ const InputStat = observer(
           </thead>
           <thead>
             <tr>
-              <th className="row">
+              <th>
                 <label>{this.props.title}: </label>
               </th>
               <td>
@@ -105,8 +106,6 @@ const InputStat = observer(
               </td>
               <td>
                 <input
-                  className="evs"
-                  name="evVal"
                   value={this.props.pokeState.evVals[this.props.index]}
                   type="number"
                   min="0"
@@ -122,8 +121,6 @@ const InputStat = observer(
               </td>
               <td hidden={this.props.title === "HP" && "hidden"}>
                 <select
-                  className="boost"
-                  name="boost"
                   value={this.props.pokeState.boosts[this.props.index]}
                   onChange={(event) => {
                     this.onBoostChange(event);
@@ -146,7 +143,7 @@ const InputStat = observer(
               </td>
               {/* TODO calculate modded stat totals*/}
               <td hidden={this.props.title === "HP" && "hidden"}>
-                <span className="totalMod"></span>
+                <span></span>
               </td>
             </tr>
           </thead>

@@ -5,14 +5,11 @@ import Tools from "./Tools";
 import { teamState } from "../store";
 
 class Teamalyzer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = teamState;
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   //QUESTIONS
-  // do my handleChange and handleRange functions need to live here?
-  // how can i stop state from updating at this level until i want the team to be analyzed?
   // want to include feature that lets user flip between previous and current version of the team. is it possible?
   // can i treat the pokemon like moves and pass them into the handlechange function?
   // i want to be able to update the state from the import/export component
@@ -20,8 +17,8 @@ class Teamalyzer extends React.Component {
   render() {
     return (
       <div>
-        <Inputs />
-        <Tools />
+        <Inputs teamState={teamState} />
+        <Tools teamState={teamState} />
       </div>
     );
   }

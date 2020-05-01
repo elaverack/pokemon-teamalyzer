@@ -11,10 +11,6 @@ import {
 
 const InputMove = observer(
   class InputMove extends React.Component {
-    // constructor(props) {
-    //   super(props);
-    // }
-
     onMoveChange(event) {
       let input = event.target.value;
       this.props.moveState.name = event.target.value;
@@ -26,16 +22,24 @@ const InputMove = observer(
         this.props.moveState.hits = hits;
       }
     }
+
     onPowerChange(event) {
       let input = handleRange(event);
       this.props.moveState.bp = input;
     }
+
+    onTypeChange(event) {
+      this.props.moveState.type = event.target.value;
+    }
+
     onCatChange(event) {
       this.props.moveState.category = event.target.value;
     }
+
     onCritToggle() {
       this.props.moveState.crit = !this.props.moveState.crit;
     }
+
     onHitsChange(event) {
       this.props.moveState.hits = event.target.value;
     }
@@ -47,11 +51,9 @@ const InputMove = observer(
               <td>
                 <input
                   type="text"
-                  className="moveSelector"
                   list="moveOptions"
                   placeholder="(No Move)"
                   value={this.props.moveState.name}
-                  name="moveName"
                   onChange={(event) => {
                     this.onMoveChange(event);
                   }}
@@ -60,8 +62,6 @@ const InputMove = observer(
               </td>
               <td>
                 <input
-                  className="powerInput"
-                  name="movePower"
                   min="0"
                   max="999"
                   value={this.props.moveState.bp}
@@ -72,12 +72,10 @@ const InputMove = observer(
               </td>
               <td>
                 <select
-                  className="typeSelector"
-                  name="moveType"
                   id={this.props.index}
                   value={this.props.moveState.type}
                   onChange={(event) => {
-                    this.onPowerChange(event);
+                    this.onTypeChange(event);
                   }}
                 >
                   {genTypeOptions()}
@@ -85,8 +83,6 @@ const InputMove = observer(
               </td>
               <td>
                 <select
-                  className="catSelector"
-                  name="moveCat"
                   id={this.props.index}
                   value={this.props.moveState.category}
                   onChange={(event) => {
@@ -100,8 +96,6 @@ const InputMove = observer(
               </td>
               <td>
                 <button
-                  className="critButton"
-                  name="moveCrit"
                   title="Force this attack to be a critical hit?"
                   type="button"
                   onClick={() => {
@@ -113,13 +107,11 @@ const InputMove = observer(
               </td>
               <td>
                 <select
-                  className="hitsSelector"
-                  name="moveHits"
+                  hidden={this.props.moveState.hits < 2 && "hidden"}
                   value={this.props.moveState.hits}
                   onChange={(event) => {
                     this.onHitsChange(event);
                   }}
-                  hidden={this.props.moveState.hits < 2 && "hidden"}
                 >
                   <option value="2">2 hits</option>
                   <option value="3">3 hits</option>

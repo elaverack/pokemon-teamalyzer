@@ -10,10 +10,8 @@ const InputNature = observer(
     render() {
       return (
         <div>
-          <label id="nature">Nature</label>
+          <label>Nature</label>
           <select
-            className="nature"
-            name="nature"
             value={this.props.pokeState.nature}
             onChange={(event) => {
               this.onNatureChange(event);

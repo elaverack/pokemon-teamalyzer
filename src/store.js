@@ -42,7 +42,9 @@ export let move = {
   crit: false,
 };
 
+// TODO make level editable but consistant across all pokemon
 export let pokemon = {
+  level: "50",
   species: "",
   types: ["None", "None"],
   gender: "Genderless",
@@ -66,7 +68,6 @@ export let pokemon = {
 
 export var teamState = observable({
   field: field,
-  level: "50",
   team: Array(6)
     .fill(null)
     .map(() => ({ ...pokemon })),

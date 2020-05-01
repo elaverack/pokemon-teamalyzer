@@ -11,13 +11,11 @@ const InputItem = observer(
     render() {
       return (
         <div>
-          <label id="item">Item</label>
+          <label>Item</label>
           <input
             type="text"
-            className="itemSelector"
             list="itemOptions"
             placeholder="(No Item)"
-            name="item"
             value={this.props.pokeState.item}
             onChange={(event) => {
               this.onItemChange(event);

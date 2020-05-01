@@ -1,10 +1,8 @@
 import React from "react";
-
 import InputField from "./InputField";
 import ImportExport from "./ImportExport";
 import InputPokemon from "./InputPokemon";
-import InputLevel from "./InputLevel";
-import { teamState } from "../store";
+//import InputLevel from "./InputLevel";
 
 const inputBlock = {
   float: "left",
@@ -17,15 +15,15 @@ class Inputs extends React.Component {
   //   }
 
   render() {
+    const inputPokemon = this.props.teamState.team.map((pokemon, idx) => (
+      <InputPokemon pokeState={pokemon} index={idx} />
+    ));
+
     return (
       <div style={inputBlock}>
         <ImportExport />
-        <input type="button" value="Analyze Team" onClick={this.onSubmit} />
-        <InputLevel />
         <InputField />
-
-        <InputPokemon pokeState={teamState.team[0]} />
-        <InputPokemon pokeState={teamState.team[1]} />
+        {inputPokemon}
       </div>
     );
   }

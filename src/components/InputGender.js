@@ -10,11 +10,9 @@ const InputGender = observer(
 
     render() {
       return (
-        <div className="hide">
+        <div>
           <label>Gender: </label>
           <select
-            className="gender"
-            name="gender"
             value={this.props.pokeState.gender}
             onChange={(event) => {
               this.onGenderChange(event);
