@@ -1,5 +1,3 @@
-/////// IMPORTS /////////////////////////////////////////////////////////////////////////////////
-
 import React from "react";
 import { observer } from "mobx-react";
 import { statNames } from "../utils";
@@ -14,8 +12,6 @@ import InputAbility from "./InputAbility";
 import InputItem from "./InputItem";
 import InputStatus from "./InputStatus";
 //import InputHP from "./InputHP";
-
-//////////// COMPONENT DEFINITION ////////////////////////////////////////////////////////////
 
 const InputPokemon = observer(
   class InputPokemon extends React.Component {

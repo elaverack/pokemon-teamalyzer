@@ -491,3 +491,5 @@
 [0430/234035.578:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0430/235535.579:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0501/001035.582:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0501/002535.583:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[0501/004035.585:ERROR:crash_report_database_win.cc(469)] failed to stat report
