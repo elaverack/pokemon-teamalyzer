@@ -1,6 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { handleRange } from "../utils";
+import { Pokemon } from "@smogon/calc";
+import { handleRange, validSpecies, gen } from "../utils";
 
 // TODO gather inputs into state
 const InputStat = observer(
@@ -19,6 +20,40 @@ const InputStat = observer(
     }
     onBoostChange(event) {
       this.props.pokeState.boosts[this.props.index] = event.target.value;
+    }
+
+    getStat(index) {
+      const state = this.props.pokeState;
+      let species = state.species;
+      if (!validSpecies(state.species)) {
+        species = "Ditto";
+      }
+      let currPokemon = new Pokemon(gen, species, {
+        nature: state.nature,
+        isDynamaxed: state.isMax,
+        ivs: {
+          hp: +state.ivVals[0],
+          atk: +state.ivVals[1],
+          def: +state.ivVals[2],
+          spa: +state.ivVals[3],
+          spd: +state.ivVals[4],
+          spe: +state.ivVals[5],
+        },
+        evs: {
+          hp: +state.evVals[0],
+          atk: +state.evVals[1],
+          def: +state.evVals[2],
+          spa: +state.evVals[3],
+          spd: +state.evVals[4],
+          spe: +state.evVals[5],
+        },
+      });
+      if (index === 0) {
+        return currPokemon.maxHP();
+      } else {
+        let statOut = [...Object.values(currPokemon.rawStats)];
+        return statOut[index];
+      }
     }
 
     render() {
@@ -83,7 +118,7 @@ const InputStat = observer(
                 />
               </td>
               <td>
-                <output>{this.props.pokeState.stat(this.props.index)}</output>
+                <output>{this.getStat(this.props.index)}</output>
               </td>
               <td hidden={this.props.title === "HP" && "hidden"}>
                 <select
@@ -109,7 +144,7 @@ const InputStat = observer(
                   <option value="-6">-6</option>
                 </select>
               </td>
-              {/* TODO pass in modded stat totals with props */}
+              {/* TODO calculate modded stat totals*/}
               <td hidden={this.props.title === "HP" && "hidden"}>
                 <span className="totalMod"></span>
               </td>

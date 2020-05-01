@@ -1,95 +1,139 @@
 import React from "react";
-import { genTypeOptions, genMoveOptions } from "../utils";
+import { observer } from "mobx-react";
+import { Move } from "@smogon/calc";
+import {
+  genTypeOptions,
+  genMoveOptions,
+  validMove,
+  gen,
+  handleRange,
+} from "../utils";
 
-class InputMove extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+const InputMove = observer(
+  class InputMove extends React.Component {
+    // constructor(props) {
+    //   super(props);
+    // }
 
-  render() {
-    return (
-      // QUESTION: why does the dom have a problem with duplicate ids here but not in InputStat??
-      <table>
-        <thead>
-          <tr>
-            <td>
-              <input
-                type="text"
-                className="moveSelector"
-                list="moveOptions"
-                placeholder="(No Move)"
-                value={this.props.moveName}
-                name="moveName"
-                onChange={this.props.handleChange}
-                // TODO set value from state aquired from imported set, empty string shows placeholder
-              />
-              <datalist id="moveOptions">{genMoveOptions()}</datalist>
-            </td>
-            <td>
-              <input
-                className="powerInput"
-                name="movePower"
-                min="0"
-                max="999"
-                value={this.props.movePower}
-                onChange={this.props.handleRange}
-              />
-            </td>
-            <td>
-              <select
-                className="typeSelector"
-                name="moveType"
-                id={this.props.index}
-                value={this.props.moveType}
-                onChange={this.props.handleChange}
-              >
-                {genTypeOptions()}
-              </select>
-            </td>
-            <td>
-              <select
-                className="catSelector"
-                name="moveCat"
-                id={this.props.index}
-                value={this.props.moveCat}
-                onChange={this.props.handleChange}
-              >
-                <option value="Physical">Physical</option>
-                <option value="Special">Special</option>
-                <option value="Status">Status</option>
-              </select>
-            </td>
-            <td>
-              <button
-                className="critButton"
-                name="moveCrit"
-                title="Force this attack to be a critical hit?"
-                type="button"
-                onClick={this.props.handleChange}
-              >
-                Crit
-              </button>
-            </td>
-            <td>
-              <select
-                className="hitsSelector"
-                name="moveHits"
-                value={this.props.moveHits}
-                onChange={this.props.handleChange}
-                hidden={this.props.moveHits < 2 && "hidden"}
-              >
-                <option value="2">2 hits</option>
-                <option value="3">3 hits</option>
-                <option value="4">4 hits</option>
-                <option value="5">5 hits</option>
-              </select>
-            </td>
-          </tr>
-        </thead>
-      </table>
-    );
+    onMoveChange(event) {
+      let input = event.target.value;
+      this.props.moveState.name = event.target.value;
+      if (validMove(input)) {
+        let { type, bp, category, hits } = new Move(gen, input);
+        this.props.moveState.type = type;
+        this.props.moveState.bp = bp;
+        this.props.moveState.category = category;
+        this.props.moveState.hits = hits;
+      }
+    }
+    onPowerChange(event) {
+      let input = handleRange(event);
+      this.props.moveState.bp = input;
+    }
+    onCatChange(event) {
+      this.props.moveState.category = event.target.value;
+    }
+    onCritToggle() {
+      this.props.moveState.crit = !this.props.moveState.crit;
+    }
+    onHitsChange(event) {
+      this.props.moveState.hits = event.target.value;
+    }
+    render() {
+      return (
+        <table>
+          <thead>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  className="moveSelector"
+                  list="moveOptions"
+                  placeholder="(No Move)"
+                  value={this.props.moveState.name}
+                  name="moveName"
+                  onChange={(event) => {
+                    this.onMoveChange(event);
+                  }}
+                />
+                <datalist id="moveOptions">{genMoveOptions()}</datalist>
+              </td>
+              <td>
+                <input
+                  className="powerInput"
+                  name="movePower"
+                  min="0"
+                  max="999"
+                  value={this.props.moveState.bp}
+                  onChange={(event) => {
+                    this.onPowerChange(event);
+                  }}
+                />
+              </td>
+              <td>
+                <select
+                  className="typeSelector"
+                  name="moveType"
+                  id={this.props.index}
+                  value={this.props.moveState.type}
+                  onChange={(event) => {
+                    this.onPowerChange(event);
+                  }}
+                >
+                  {genTypeOptions()}
+                </select>
+              </td>
+              <td>
+                <select
+                  className="catSelector"
+                  name="moveCat"
+                  id={this.props.index}
+                  value={this.props.moveState.category}
+                  onChange={(event) => {
+                    this.onCatChange(event);
+                  }}
+                >
+                  <option value="Physical">Physical</option>
+                  <option value="Special">Special</option>
+                  <option value="Status">Status</option>
+                </select>
+              </td>
+              <td>
+                <button
+                  className="critButton"
+                  name="moveCrit"
+                  title="Force this attack to be a critical hit?"
+                  type="button"
+                  onClick={() => {
+                    this.onCritToggle();
+                  }}
+                >
+                  Crit
+                </button>
+              </td>
+              <td>
+                <select
+                  className="hitsSelector"
+                  name="moveHits"
+                  value={this.props.moveState.hits}
+                  onChange={(event) => {
+                    this.onHitsChange(event);
+                  }}
+                  hidden={this.props.moveState.hits < 2 && "hidden"}
+                >
+                  <option value="2">2 hits</option>
+                  <option value="3">3 hits</option>
+                  <option value="4">4 hits</option>
+                  <option value="5">5 hits</option>
+                </select>
+              </td>
+            </tr>
+          </thead>
+        </table>
+      );
+    }
   }
-}
+);
 
 export default InputMove;
 
