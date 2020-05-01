@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { Pokemon } from "@smogon/calc";
 import { handleRange, validSpecies, gen } from "../utils";
 
-// TODO gather inputs into state
 const InputStat = observer(
   class InputStat extends React.Component {
     onBaseChange(event) {
@@ -141,7 +140,7 @@ const InputStat = observer(
                   <option value="-6">-6</option>
                 </select>
               </td>
-              {/* TODO calculate modded stat totals*/}
+              {/* OPTIONAL calculate modded stat totals*/}
               <td hidden={this.props.title === "HP" && "hidden"}>
                 <span></span>
               </td>

@@ -32,7 +32,7 @@ const InputStatus = observer(
 
 export default InputStatus;
 
-/*STRETCH include badly poisioned status condition
+/*OPTIONAL include badly poisioned status condition
  <option value="Badly Poisoned">Badly Poisoned</option>
   <select>
   <option value="1">1/16</option>

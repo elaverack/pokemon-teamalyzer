@@ -59,7 +59,7 @@ export let pokemon = {
   status: "",
   isMax: false,
   weight: "4",
-  //TODO OPTIONAL allow changing current hp to affect moves
+  //OPTIONAL allow changing current hp to affect moves
   // curHP: "100"
   moves: Array(4)
     .fill(null)

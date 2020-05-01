@@ -1,7 +1,7 @@
 import React from "react";
 import { genAbilityOptions } from "../utils";
 
-// STRETCH limit visible abilities to species/forme
+// OPTIONAL limit visible abilities to species/forme
 import { observer } from "mobx-react";
 
 const InputAbility = observer(
@@ -28,7 +28,6 @@ const InputAbility = observer(
             }}
           />
           <datalist id="abilityOptions">{genAbilityOptions()}</datalist>
-          {/* TODO conditional button styling to indicate state */}
           <button
             title="Is this ability active?"
             type="button"

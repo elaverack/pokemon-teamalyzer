@@ -3,9 +3,9 @@ import React from "react";
 /* TODO
 create functions needed to convert showdown export into pokemon class
 update the team state using the inputted pokemon
-don't store sets like in the damage calc? do users want to rapidly switch between potential sets/spreads? STRETCH FEATURE
+don't store sets like in the damage calc? do users want to rapidly switch between potential sets/spreads?
 what happens when someone inputs less than 6 pokemon, who gets replaced? probably last pokemon gets replaced
-user selects which pokemon to replace? STRETCH FEATURE
+user selects which pokemon to replace?
 */
 
 class ImportExport extends React.Component {

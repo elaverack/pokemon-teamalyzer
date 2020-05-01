@@ -1,7 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-// TODO set up state within component
 const InputGender = observer(
   class InputGender extends React.Component {
     onGenderChange(event) {

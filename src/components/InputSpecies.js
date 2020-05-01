@@ -3,8 +3,6 @@ import { observer } from "mobx-react";
 import { Pokemon } from "@smogon/calc";
 import { genSpeciesOptions, validSpecies, gen } from "../utils";
 
-// TODO onchange handler and state update
-
 const InputSpecies = observer(
   class InputSpecies extends React.Component {
     onSpeciesChange(event) {
@@ -50,23 +48,6 @@ const InputSpecies = observer(
           >
             Dynamax
           </button>
-          {/* TODO change species/button style to reflect dynamax state */}
-          {/* STRETCH
-        figure out how to import sets from smogon and store them
-        <span
-          id="importedSetsOptions"
-          style={{ width: "auto", display: "none" }}
-        >
-          <input type="checkbox" id="importedSets" /> Only show imported sets{" "}
-          <br />
-          <button id="clearSets">Clear Custom Sets</button>
-        </span> */}
-          {/* OPTIONAL
-        make dropdown to flip formes of pokemon without changing overall species
-        <div className="hide">
-          <label>Forme</label>
-          <select className="forme"></select>
-        </div> */}
         </div>
       );
     }
@@ -74,3 +55,9 @@ const InputSpecies = observer(
 );
 
 export default InputSpecies;
+
+/* OPTIONAL make dropdown to flip formes of pokemon without changing overall species
+        <div className="hide">
+          <label>Forme</label>
+          <select className="forme"></select>
+        </div> */
