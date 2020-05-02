@@ -2,7 +2,18 @@
   "name": "pokemon-teamalyzer",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "description": "",
+  "scripts": {
+    "start": "rimraf dist && parcel src/index.html --open",
+    "build": "parcel build src/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/preset-react": "^7.9.4",
     "@smogon/calc": "0.0.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -10,29 +21,10 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mobx-utils": "^5.5.7",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "rimraf": "^3.0.2"
   }
 }

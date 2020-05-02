@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 class InputHP extends React.Component {
   render() {
     return (
       <div>
-        <label>{"Current HP:  "}</label>
+        <label>{'Current HP:  '}</label>
         <input
           type="number"
           value={this.props.curHP}
@@ -13,7 +13,7 @@ class InputHP extends React.Component {
           onChange={this.props.handleRange}
         />
         /<output>{this.props.maxHP}</output>
-        {" : "}(<output>{this.props.percentHP}</output>
+        {' : '}(<output>{this.props.percentHP}</output>
         %)
       </div>
     );

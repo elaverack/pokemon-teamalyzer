@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const toolBlock = {
-  float: "right",
-  border: "1px solid"
+  float: 'right',
+  border: '1px solid',
 };
 
 class Tools extends React.Component {

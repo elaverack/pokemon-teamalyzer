@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /* TODO
 create functions needed to convert showdown export into pokemon class
@@ -11,14 +11,14 @@ user selects which pokemon to replace?
 class ImportExport extends React.Component {
   render() {
     return (
-      <div style={{ border: "1px solid" }}>
+      <div style={{ border: '1px solid' }}>
         <fieldset>
           <legend>Import / Export</legend>
           <form>
             <textarea></textarea>
           </form>
-          <button style={{ position: "static", bottom: 0 }}>Import</button>
-          <button style={{ position: "static", bottom: 0 }}>Export</button>
+          <button style={{ position: 'static', bottom: 0 }}>Import</button>
+          <button style={{ position: 'static', bottom: 0 }}>Export</button>
         </fieldset>
       </div>
     );
