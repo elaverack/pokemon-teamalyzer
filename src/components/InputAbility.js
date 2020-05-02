@@ -1,7 +1,5 @@
 import React from "react";
 import { genAbilityOptions } from "../utils";
-
-// OPTIONAL limit visible abilities to species/forme
 import { observer } from "mobx-react";
 
 const InputAbility = observer(
@@ -44,3 +42,5 @@ const InputAbility = observer(
 );
 
 export default InputAbility;
+
+// OPTIONAL limit visible abilities to species/forme

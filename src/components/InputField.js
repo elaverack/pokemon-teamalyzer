@@ -10,7 +10,7 @@ class InputField extends React.Component {
           <div title="Select the battle format.">
             <input type="radio" name="format" value="Singles" />
             <label>Singles</label>
-            <input type="radio" name="format" value="Doubles" defaultChecked />
+            <input type="radio" name="format" value="Doubles" />
             <label>Doubles</label>
           </div>
           <div className="terrainSelector" title="Select the current terrain.">

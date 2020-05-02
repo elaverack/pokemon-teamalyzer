@@ -42,9 +42,7 @@ export let move = {
   crit: false,
 };
 
-// TODO make level editable but consistant across all pokemon
 export let pokemon = {
-  level: "50",
   species: "",
   types: ["None", "None"],
   gender: "Genderless",
@@ -66,11 +64,17 @@ export let pokemon = {
     .map(() => ({ ...move })),
 };
 
-export var teamState = observable({
+export let teamState = observable({
   field: field,
+  level: "50",
   team: Array(6)
     .fill(null)
     .map(() => ({ ...pokemon })),
 });
 
 autorun(() => console.log(teamState.team[0].species));
+
+//QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
+//what is babel? how do i incorporate it?
+//QUESTION how do i get an observable object to pass state down to a nested object and update properly?
+//QUESTION how to store previous versions of state? flip between them?

@@ -2,6 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Pokemon } from "@smogon/calc";
 import { handleRange, validSpecies, gen } from "../utils";
+import { teamState } from "../store";
 
 const InputStat = observer(
   class InputStat extends React.Component {
@@ -28,7 +29,7 @@ const InputStat = observer(
         species = "Ditto";
       }
       let currPokemon = new Pokemon(gen, species, {
-        level: +state.level,
+        level: +teamState.level,
         nature: state.nature,
         isDynamaxed: state.isMax,
         ivs: {
@@ -74,25 +75,9 @@ const InputStat = observer(
               <th>
                 <label>{this.props.title}: </label>
               </th>
-              <td>
-                {/* <input
-                  className="base"
-                  name="baseVal"
-                  type="number"
-                  min="1"
-                  max="255"
-                  step="1"
-                  value={this.props.pokeState.baseVals[this.props.index]}
-                  onChange={(event) => {
-                    this.onBaseChange(event);
-                  }}
-                /> */}
-                {this.props.pokeState.baseVals[this.props.index]}
-              </td>
+              <td>{this.props.pokeState.baseVals[this.props.index]}</td>
               <td>
                 <input
-                  className="ivs"
-                  name="ivVal"
                   value={this.props.pokeState.ivVals[this.props.index]}
                   type="number"
                   min="0"
@@ -140,10 +125,6 @@ const InputStat = observer(
                   <option value="-6">-6</option>
                 </select>
               </td>
-              {/* OPTIONAL calculate modded stat totals*/}
-              <td hidden={this.props.title === "HP" && "hidden"}>
-                <span></span>
-              </td>
             </tr>
           </thead>
         </table>
@@ -153,3 +134,23 @@ const InputStat = observer(
 );
 
 export default InputStat;
+
+/* OPTIONAL make base stat value editable
+                <input
+                  className="base"
+                  name="baseVal"
+                  type="number"
+                  min="1"
+                  max="255"
+                  step="1"
+                  value={this.props.pokeState.baseVals[this.props.index]}
+                  onChange={(event) => {
+                    this.onBaseChange(event);
+                  }}
+                /> 
+
+OPTIONAL calculate modded stat totals
+              <td hidden={this.props.title === "HP" && "hidden"}>
+                <span></span>
+              </td>
+*/

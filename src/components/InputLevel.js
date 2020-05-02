@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { handleRange } from "../utils";
 
 const InputLevel = observer(
   class InputLevel extends React.Component {
@@ -9,11 +10,14 @@ const InputLevel = observer(
           <fieldset>
             <legend>Level</legend>
             <input
-              className="inputLevel"
-              name="level"
-              value={this.props.teamLevel.level}
+              type="number"
+              min="1"
+              max="100"
+              step="1"
+              value={this.props.teamState.level}
               onChange={(event) => {
-                this.props.teamLevel.level = event.target.value;
+                let input = handleRange(event);
+                this.props.teamState.level = input;
               }}
             />
           </fieldset>
@@ -24,3 +28,5 @@ const InputLevel = observer(
 );
 
 export default InputLevel;
+
+//OPTIONAL have each pokemon have local level but then change to team level when teamLevel component is activated
