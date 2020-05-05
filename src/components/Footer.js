@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 const footStyle = {
-  position: "fixed",
-  bottom: "0",
-  right: "50%",
-  border: "1px solid"
+  position: 'fixed',
+  bottom: '0',
+  right: '50%',
+  border: '1px solid',
 };
 
 function Footer() {

@@ -1,4 +1,4 @@
-import { observable, autorun } from "mobx";
+import { observable, autorun } from 'mobx';
 // import { computedFn } from "mobx-utils";
 // import { Pokemon } from "@smogon/calc";
 // import { validSpecies, gen } from "./utils";
@@ -8,7 +8,7 @@ import { observable, autorun } from "mobx";
 export let fieldSide = {
   stealthRock: false,
   steelsurge: false,
-  spikes: "0",
+  spikes: '0',
   reflect: false,
   lightscreen: false,
   protect: false,
@@ -24,9 +24,9 @@ export let fieldSide = {
 };
 
 export let field = {
-  format: "Doubles",
-  terrain: "None",
-  weather: "None",
+  format: 'Doubles',
+  terrain: 'None',
+  weather: 'None',
   gravity: false,
   sides: Array(2)
     .fill(null)
@@ -34,29 +34,29 @@ export let field = {
 };
 
 export let move = {
-  name: "",
-  bp: "",
-  type: "None",
-  category: "Physical",
-  hits: "1",
+  name: '',
+  bp: '',
+  type: 'None',
+  category: 'Physical',
+  hits: '1',
   crit: false,
 };
 
 export let pokemon = {
-  species: "",
-  types: ["None", "None"],
-  gender: "Genderless",
-  baseVals: ["48", "48", "48", "48", "48", "48"],
-  ivVals: ["31", "31", "31", "31", "31", "31"],
-  evVals: ["0", "0", "0", "0", "0", "0"],
-  boosts: ["0", "0", "0", "0", "0", "0"],
-  nature: "Serious",
-  ability: "",
+  species: '',
+  types: ['None', 'None'],
+  gender: 'Genderless',
+  baseVals: ['48', '48', '48', '48', '48', '48'],
+  ivVals: ['31', '31', '31', '31', '31', '31'],
+  evVals: ['0', '0', '0', '0', '0', '0'],
+  boosts: ['0', '0', '0', '0', '0', '0'],
+  nature: 'Serious',
+  ability: '',
   abilityOn: true,
-  item: "",
-  status: "",
+  item: '',
+  status: '',
   isMax: false,
-  weight: "4",
+  weight: '4',
   //OPTIONAL allow changing current hp to affect moves
   // curHP: "100"
   moves: Array(4)
@@ -66,7 +66,7 @@ export let pokemon = {
 
 export let teamState = observable({
   field: field,
-  level: "50",
+  level: '50',
   team: Array(6)
     .fill(null)
     .map(() => ({ ...pokemon })),

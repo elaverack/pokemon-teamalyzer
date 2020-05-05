@@ -1,34 +1,32 @@
-import React from "react";
-import { observer } from "mobx-react";
+import React from 'react';
+import { observer } from 'mobx-react';
 
-const InputStatus = observer(
-  class InputStatus extends React.Component {
-    onStatusChange(event) {
-      this.props.pokeState.status = event.target.value;
-    }
-
-    render() {
-      return (
-        <div>
-          <label>Status: </label>
-          <select
-            value={this.props.pokeState.status}
-            onChange={(event) => {
-              this.onStatusChange(event);
-            }}
-          >
-            <option value="Healthy">Healthy</option>
-            <option value="Poisoned">Poisoned</option>
-            <option value="Burned">Burned</option>
-            <option value="Paralyzed">Paralyzed</option>
-            <option value="Asleep">Asleep</option>
-            <option value="Frozen">Frozen</option>
-          </select>
-        </div>
-      );
-    }
+@observer
+class InputStatus extends React.Component {
+  onStatusChange(event) {
+    this.props.pokeState.status = event.target.value;
   }
-);
+
+  render() {
+    return (
+      <div>
+        <label>Status: </label>
+        <select
+          value={this.props.pokeState.status}
+          onChange={event => {
+            this.onStatusChange(event);
+          }}>
+          <option value="Healthy">Healthy</option>
+          <option value="Poisoned">Poisoned</option>
+          <option value="Burned">Burned</option>
+          <option value="Paralyzed">Paralyzed</option>
+          <option value="Asleep">Asleep</option>
+          <option value="Frozen">Frozen</option>
+        </select>
+      </div>
+    );
+  }
+}
 
 export default InputStatus;
 

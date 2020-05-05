@@ -1,5 +1,5 @@
-import React from "react";
-import InputFieldSide from "./InputFieldSide";
+import React from 'react';
+import InputFieldSide from './InputFieldSide';
 
 class InputField extends React.Component {
   render() {
