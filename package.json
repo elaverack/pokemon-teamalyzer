@@ -20,7 +20,6 @@
     "@testing-library/user-event": "^7.2.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
-    "mobx-utils": "^5.5.7",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
