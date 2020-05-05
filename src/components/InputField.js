@@ -1,6 +1,8 @@
 import React from 'react';
 import InputFieldSide from './InputFieldSide';
+import { observer } from '../../node_modules/mobx-react/dist/index';
 
+@observer
 class InputField extends React.Component {
   render() {
     return (
@@ -8,14 +10,36 @@ class InputField extends React.Component {
         <fieldset className="fieldInfo">
           <legend align="center">Field</legend>
           <div title="Select the battle format.">
-            <input type="radio" name="format" value="Singles" />
-            <label>Singles</label>
-            <input type="radio" name="format" value="Doubles" />
-            <label>Doubles</label>
+            <label>
+              <input
+                type="radio"
+                value="Singles"
+                checked={this.props.fieldState.format === 'Singles'}
+                onChange={event => {
+                  this.props.fieldState.format = event.target.value;
+                }}
+              />
+              Singles
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Doubles"
+                checked={this.props.fieldState.format === 'Doubles'}
+                onChange={event => {
+                  this.props.fieldState.format = event.target.value;
+                }}
+              />
+              Doubles
+            </label>
           </div>
-          <div className="terrainSelector" title="Select the current terrain.">
+          <div title="Select the current terrain.">
             Terrain:
-            <select className="terrain" name="terrain">
+            <select
+              value={this.props.fieldState.terrain}
+              onChange={event => {
+                this.props.fieldState.terrain = event.target.value;
+              }}>
               <option value="None">None</option>
               <option value="Electric">Electric</option>
               <option value="Grassy">Grassy</option>
@@ -23,26 +47,36 @@ class InputField extends React.Component {
               <option value="Misty">Misty</option>
             </select>
           </div>
-          <div className="weatherSelector" title="Select the current weather.">
+          <div title="Select the current weather.">
             Weather:
-            <select className="weather" name="weather">
-              <option value="None">None</option>
+            <select
+              value={this.props.fieldState.weather}
+              onChange={event => {
+                this.props.fieldState.weather = event.target.value;
+              }}>
+              ><option value="None">None</option>
               <option value="Sun">Sun</option>
               <option value="Rain">Rain</option>
               <option value="Sand">Sand</option>
               <option value="Hail">Hail</option>
             </select>
           </div>
-          <input className="gravityButton" value="Gravity" type="button" />
+          <input
+            type="button"
+            value="Gravity"
+            onClick={() => {
+              this.props.fieldState.gravity = !this.props.fieldState.gravity;
+            }}
+          />
           <hr />
           <table>
             <tbody>
               <tr>
                 <td>
-                  <InputFieldSide title="My" />
+                  <InputFieldSide title="My" sideState={this.props.fieldState.sides[0]} />
                 </td>
                 <td>
-                  <InputFieldSide title="Opponent's" />
+                  <InputFieldSide title="Opponent's" sideState={this.props.fieldState.sides[1]} />
                 </td>
               </tr>
             </tbody>

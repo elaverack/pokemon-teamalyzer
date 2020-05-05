@@ -3,7 +3,7 @@ import InputField from './InputField';
 import ImportExport from './ImportExport';
 import InputPokemon from './InputPokemon';
 import InputLevel from './InputLevel';
-import { observer } from 'mobx-react';
+import { observer } from '../../node_modules/mobx-react/dist/index';
 
 const inputBlock = {
   float: 'left',
@@ -12,18 +12,14 @@ const inputBlock = {
 
 @observer
 class Inputs extends React.Component {
-  //   constructor() {
-  //     super();
-  //   }
-
   render() {
     const inputPokemon = this.props.teamState.team.map((pokemon, idx) => (
-      <InputPokemon pokeState={pokemon} index={idx} />
+      <InputPokemon pokeState={pokemon} index={idx} key={idx} />
     ));
 
     return (
       <div style={inputBlock}>
-        <ImportExport />
+        <ImportExport teamState={this.props.teamState} />
         <InputLevel teamState={this.props.teamState} />
         <InputField fieldState={this.props.teamState.field} />
         {inputPokemon}

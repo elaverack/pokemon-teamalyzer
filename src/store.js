@@ -6,7 +6,7 @@ import { observable, autorun } from 'mobx';
 //////1 TEAM STORE DEFINITIONS /////////////////////////////////////////////////////////////////////////////
 
 export let fieldSide = {
-  stealthRock: false,
+  stealthrock: false,
   steelsurge: false,
   spikes: '0',
   reflect: false,
@@ -20,7 +20,7 @@ export let fieldSide = {
   auroraveil: false,
   allboost: false,
   battery: false,
-  switch: false,
+  switching: false,
 };
 
 export let field = {
@@ -72,7 +72,7 @@ export let teamState = observable({
     .map(() => ({ ...pokemon })),
 });
 
-autorun(() => console.log(teamState.team[0].species));
+autorun(() => console.log(teamState.field.sides[0].foresight));
 
 //QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
 //what is babel? how do i incorporate it?

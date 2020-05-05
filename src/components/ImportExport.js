@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from '../../node_modules/mobx-react/dist/index';
 
 /* TODO
 create functions needed to convert showdown export into pokemon class
@@ -8,6 +9,7 @@ what happens when someone inputs less than 6 pokemon, who gets replaced? probabl
 user selects which pokemon to replace?
 */
 
+@observer
 class ImportExport extends React.Component {
   render() {
     return (
