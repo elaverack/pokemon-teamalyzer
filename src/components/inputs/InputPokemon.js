@@ -1,12 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { statNames } from '../utils';
+import { statNames } from '../../utils';
 import InputStat from './InputStat';
 import InputMove from './InputMove';
 import InputSpecies from './InputSpecies';
 import InputType from './InputType';
 import InputGender from './InputGender';
-import Weight from './Weight';
+import Weight from '../Weight';
 import InputNature from './InputNature';
 import InputAbility from './InputAbility';
 import InputItem from './InputItem';

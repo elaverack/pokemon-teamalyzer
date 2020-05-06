@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Pokemon } from '@smogon/calc';
-import { genSpeciesOptions, validSpecies, gen } from '../utils';
+import { genSpeciesOptions, validSpecies, gen } from '../../utils';
 
 @observer
 class InputSpecies extends React.Component {

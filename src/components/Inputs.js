@@ -1,8 +1,8 @@
 import React from 'react';
-import InputField from './InputField';
+import InputField from './inputs/InputField';
 import ImportExport from './ImportExport';
-import InputPokemon from './InputPokemon';
-import InputLevel from './InputLevel';
+import InputPokemon from './inputs/InputPokemon';
+import InputLevel from './inputs/InputLevel';
 import { observer } from '../../node_modules/mobx-react/dist/index';
 
 const inputBlock = {

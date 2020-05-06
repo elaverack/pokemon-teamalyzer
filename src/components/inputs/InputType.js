@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { genTypeOptions } from '../utils';
+import { genTypeOptions } from '../../utils';
 
 @observer
 class InputType extends React.Component {

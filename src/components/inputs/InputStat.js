@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Pokemon } from '@smogon/calc';
-import { handleRange, validSpecies, gen } from '../utils';
-import { teamState } from '../store';
+import { handleRange, validSpecies, gen } from '../../utils';
+import { teamState } from '../../store';
 
 @observer
 class InputStat extends React.Component {

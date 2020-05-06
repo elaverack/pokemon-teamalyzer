@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from '../../node_modules/mobx-react/dist/index';
+import { observer } from '../../../node_modules/mobx-react/dist/index';
 
 @observer
 class InputFieldSide extends React.Component {

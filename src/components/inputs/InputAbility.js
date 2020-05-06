@@ -1,5 +1,5 @@
 import React from 'react';
-import { genAbilityOptions } from '../utils';
+import { genAbilityOptions } from '../../utils';
 import { observer } from 'mobx-react';
 
 @observer

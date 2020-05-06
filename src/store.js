@@ -73,7 +73,7 @@ export let teamState = observable({
     .map(() => ({ ...pokemon })),
 });
 
-autorun(() => console.log(teamState.field.sides[0].foresight));
+autorun(() => console.log(teamState.team[0].species));
 
 //QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
 //what is babel? how do i incorporate it?

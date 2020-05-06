@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { handleRange } from '../utils';
+import { handleRange } from '../../utils';
 
 @observer
 class InputLevel extends React.Component {

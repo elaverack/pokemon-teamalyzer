@@ -1,6 +1,6 @@
 import React from 'react';
 import InputFieldSide from './InputFieldSide';
-import { observer } from '../../node_modules/mobx-react/dist/index';
+import { observer } from '../../../node_modules/mobx-react/dist/index';
 
 @observer
 class InputField extends React.Component {

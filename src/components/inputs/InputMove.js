@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Move } from '@smogon/calc';
-import { genTypeOptions, genMoveOptions, validMove, gen, handleRange } from '../utils';
+import { genTypeOptions, genMoveOptions, validMove, gen, handleRange } from '../../utils';
 
 @observer
 class InputMove extends React.Component {
@@ -118,7 +118,7 @@ class InputMove extends React.Component {
 
 export default InputMove;
 
-/* OPTIONAL conditional render multi-use stat drop moves and metronome 
+/* OPTIONAL conditional render multi-use stat drop moves and metronome
         <select
           className="stat-drops"
           title="How many times was this move used in a row?"
@@ -128,7 +128,7 @@ export default InputMove;
           <option value="3">3 Times</option>
           <option value="4">4 Times</option>
           <option value="5">5 Times</option>
-        </select> 
+        </select>
         <select
           className="metronome hide"
           title="How many times was this move successfully and consecutively used while holding Metronome before this turn?"
