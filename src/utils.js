@@ -1,21 +1,14 @@
-import React from "react";
-import { TYPE_CHART, MOVES, SPECIES, ITEMS, ABILITIES } from "@smogon/calc";
+import React from 'react';
+import { TYPE_CHART, MOVES, SPECIES, ITEMS, ABILITIES } from '@smogon/calc';
 
 // GLOBAL CONSTANTS
-export const statNames = [
-  "HP",
-  "Attack",
-  "Defense",
-  "Sp-Attack",
-  "Sp-Defense",
-  "Speed",
-];
+export const statNames = ['HP', 'Attack', 'Defense', 'Sp-Attack', 'Sp-Defense', 'Speed'];
 
 export const gen = 8;
 
 // SECTION OPTION GENERATORS
 export function genTypeOptions() {
-  return Object.keys(TYPE_CHART[gen]).map((name) => (
+  return Object.keys(TYPE_CHART[gen]).map(name => (
     <option value={name} key={name}>
       {name}
     </option>
@@ -32,7 +25,7 @@ export function genMoveOptions() {
     }
   }
 
-  return Object.keys(moves).map((name) => (
+  return Object.keys(moves).map(name => (
     <option value={name} key={name}>
       {name}
     </option>
@@ -40,7 +33,7 @@ export function genMoveOptions() {
 }
 
 export function genSpeciesOptions() {
-  return Object.keys(SPECIES[gen]).map((name) => (
+  return Object.keys(SPECIES[gen]).map(name => (
     <option value={name} key={name}>
       {name}
     </option>
@@ -48,7 +41,7 @@ export function genSpeciesOptions() {
 }
 
 export function genItemOptions() {
-  return Object.values(ITEMS[gen]).map((name) => (
+  return Object.values(ITEMS[gen]).map(name => (
     <option value={name} key={name}>
       {name}
     </option>
@@ -56,7 +49,7 @@ export function genItemOptions() {
 }
 
 export function genAbilityOptions() {
-  return Object.values(ABILITIES[gen]).map((name) => (
+  return Object.values(ABILITIES[gen]).map(name => (
     <option value={name} key={name}>
       {name}
     </option>
