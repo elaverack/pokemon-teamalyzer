@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from '../../node_modules/mobx-react/dist/index';
-import OffensiveTable from './tools/OffensiveTable';
+import OffensiveTableTool from './tools/OffensiveTableTool';
 import DefensiveTable from './tools/DefensiveTable';
 
 const toolBlock = {
@@ -15,7 +15,7 @@ class Tools extends React.Component {
       <div style={toolBlock}>
         <legend>Tools</legend>
         <h1></h1>
-        <OffensiveTable teamState={this.props.teamState} />
+        <OffensiveTableTool teamState={this.props.teamState} />
         <DefensiveTable teamState={this.props.teamState} />
       </div>
     );

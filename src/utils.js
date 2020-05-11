@@ -41,16 +41,16 @@ export function genSpeciesOptions() {
 }
 
 export function genItemOptions() {
-  return Object.values(ITEMS[gen]).map(name => (
-    <option value={name} key={name}>
+  return Object.values(ITEMS[gen]).map((name, index) => (
+    <option value={name} key={index}>
       {name}
     </option>
   ));
 }
 
 export function genAbilityOptions() {
-  return Object.values(ABILITIES[gen]).map(name => (
-    <option value={name} key={name}>
+  return Object.values(ABILITIES[gen]).map((name, index) => (
+    <option value={name} key={index}>
       {name}
     </option>
   ));

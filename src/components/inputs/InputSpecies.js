@@ -12,7 +12,7 @@ class InputSpecies extends React.Component {
       this.props.pokeState.types = [currPokemon.type1, currPokemon.type2 || 'None'];
       this.props.pokeState.gender = currPokemon.gender;
       this.props.pokeState.weight = currPokemon.weight;
-      this.props.pokeState.baseVals = [...Object.values(currPokemon.species.bs)];
+      this.props.pokeState.baseVals = [...Object.values(currPokemon.species.baseStats)];
       this.props.pokeState.ability = currPokemon.ability;
     }
   }
