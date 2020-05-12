@@ -57,17 +57,35 @@ class InputStat extends React.Component {
     }
   }
 
+  getStandardBulk(statName) {
+    if (statName == 'Defense' || statName == 'Sp-Defense') {
+      let hp = this.getStat(0);
+      let def = this.getStat(this.props.index);
+      let boostStage = +this.props.pokeState.boosts[this.props.index];
+      let boostMultiplier = boostStage >= 0 ? (2 + boostStage) / 2 : 2 / (2 - boostStage);
+      def = def * boostMultiplier;
+      let dittoDef = 68;
+
+      return Math.round((def * (hp - 2)) / dittoDef + 2);
+    }
+  }
+
+  maxEvWarning() {
+    let total = this.props.pokeState.evVals.reduce((a, b) => +a + +b);
+    return total == 508 ? '  MAX' : total > 508 ? '  !!!' : '';
+  }
+
   render() {
     return (
       <table>
         <thead>
           <tr hidden={this.props.title !== 'HP' && 'hidden'}>
             <th />
-            <th className="col">Base</th>
-            <th className="col">IV</th>
-            <th className="col">EV</th>
-            <th className="col">Stat</th>
-            <th className="col">Boost</th>
+            <th>Base</th>
+            <th>IV</th>
+            <th>EV{this.maxEvWarning()}</th>
+            <th>Stat</th>
+            <th>Boost</th>
           </tr>
         </thead>
         <thead>
@@ -103,7 +121,7 @@ class InputStat extends React.Component {
             <td>
               <output>{this.getStat(this.props.index)}</output>
             </td>
-            <td hidden={this.props.title === 'HP' && 'hidden'}>
+            <td hidden={this.props.title === 'HP'}>
               <select
                 value={this.props.pokeState.boosts[this.props.index]}
                 onChange={event => {
@@ -123,6 +141,10 @@ class InputStat extends React.Component {
                 <option value="-5">-5</option>
                 <option value="-6">-6</option>
               </select>
+            </td>
+            <td hidden={this.props.title != 'Defense' && this.props.title != 'Sp-Defense'}>
+              <label>Bulk: </label>
+              <output>{this.getStandardBulk(this.props.title)}</output>
             </td>
           </tr>
         </thead>

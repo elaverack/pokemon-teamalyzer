@@ -15,7 +15,7 @@ class Tools extends React.Component {
       <div style={toolBlock}>
         <legend>Tools</legend>
         <h1></h1>
-        <OffensiveTableTool teamState={this.props.teamState} />
+        {/* <OffensiveTableTool teamState={this.props.teamState} /> */}
         <DefensiveTable teamState={this.props.teamState} />
       </div>
     );
