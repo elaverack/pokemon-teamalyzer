@@ -1,5 +1,5 @@
 import React from 'react';
-import { TYPE_CHART, Pokemon, calculate, Move } from '@smogon/calc';
+import { TYPE_CHART, Pokemon, calculate, Move, Field, Side } from '@smogon/calc';
 import { gen, validSpecies, validMove } from '../../utils';
 import { observer } from 'mobx-react';
 import 'mobx-react-lite/batchingForReactDom';
@@ -12,10 +12,9 @@ class OffensiveTableTool extends React.Component {
     this.state = { data: this.genData(), columns: this.genColumns() };
   }
 
-  calcDamage(type1, type2, poke, move) {
+  calcDamage(type1, type2, poke, move, fieldState) {
     if (poke.include && move.include && validSpecies(poke.species) && validMove(move.name)) {
-      let attackerName = poke.species;
-      const attacker = new Pokemon(gen, attackerName, {
+      const attacker = new Pokemon(gen, poke.species, {
         level: +this.props.teamState.level,
         item: poke.item,
         nature: poke.nature,
@@ -55,9 +54,50 @@ class OffensiveTableTool extends React.Component {
         overrides: { types: [type1, type1 === type2 ? '???' : type2] },
       });
 
-      const attack = new Move(gen, move.name);
+      const attack = new Move(gen, move.name, { useMax: poke.isMax, isCrit: move.crit });
 
-      let result = calculate(gen, attacker, defender, attack);
+      let aSide = fieldState.sides[0];
+      let dSide = fieldState.sides[1];
+      const field = new Field({
+        gameType: fieldState.format,
+        weather: fieldState.weather,
+        terrain: fieldState.terrain,
+        isGravity: fieldState.gravity,
+        defenderSide: {
+          spikes: dSide.spikes,
+          steelsurge: dSide.steelsurge,
+          isSR: dSide.stealthrock,
+          isReflect: dSide.reflect,
+          isLightScreen: dSide.lightscreen,
+          isProtected: dSide.protect,
+          isSeeded: dSide.leechseed,
+          isForesight: dSide.foresight,
+          isTailwind: dSide.tailwind,
+          isHelpingHand: dSide.helpinghand,
+          isFriendGuard: dSide.friendguard,
+          isAuroraVeil: dSide.auroraveil,
+          isBattery: dSide.battery,
+          isSwitching: dSide.switching,
+        },
+        attackerSide: {
+          spikes: aSide.spikes,
+          steelsurge: aSide.steelsurge,
+          isSR: aSide.stealthrock,
+          isReflect: aSide.reflect,
+          isLightScreen: aSide.lightscreen,
+          isProtected: aSide.protect,
+          isSeeded: aSide.leechseed,
+          isForesight: aSide.foresight,
+          isTailwind: aSide.tailwind,
+          isHelpingHand: aSide.helpinghand,
+          isFriendGuard: aSide.friendguard,
+          isAuroraVeil: aSide.auroraveil,
+          isBattery: aSide.battery,
+          isSwitching: aSide.switching,
+        },
+      });
+
+      let result = calculate(gen, attacker, defender, attack, field);
       //NOTE damage returned is maximum roll
       return result.range()[1];
     } else {
@@ -74,7 +114,7 @@ class OffensiveTableTool extends React.Component {
           value: this.props.teamState.team
             .map(pokemon =>
               pokemon.moves
-                .map(move => this.calcDamage(type1, type2, pokemon, move))
+                .map(move => this.calcDamage(type1, type2, pokemon, move, this.props.teamState.field))
                 .reduce((accumulator, currentValue) => accumulator + currentValue)
             )
             .reduce((accumulator, currentValue) => accumulator + currentValue),

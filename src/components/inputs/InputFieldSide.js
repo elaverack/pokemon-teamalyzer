@@ -188,7 +188,7 @@ class InputFieldSide extends React.Component {
                 <label>Aurora Veil</label>
               </td>
             </tr>
-            <tr>
+            {/* <tr>
               <td title="Has the Pok&eacute;mon boosted all its stats one stage?">
                 <input
                   type="checkbox"
@@ -199,7 +199,7 @@ class InputFieldSide extends React.Component {
                 />
                 <label>+1 All Stats</label>
               </td>
-            </tr>
+            </tr> */}
             <tr>
               <td title="Is the Pok&eacute;mon boosted by an ally's Battery ability?">
                 <input
