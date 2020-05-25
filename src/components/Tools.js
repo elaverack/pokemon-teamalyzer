@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from '../../node_modules/mobx-react/dist/index';
 import OffensiveTableTool from './tools/OffensiveTableTool';
-import DefensiveTable from './tools/DefensiveTable';
+import DefensiveTableTool from './tools/DefensiveTableTool';
 
 const toolBlock = {
   float: 'right',
@@ -15,8 +15,8 @@ class Tools extends React.Component {
       <div style={toolBlock}>
         <legend>Tools</legend>
         <h1></h1>
-        {/* <OffensiveTableTool teamState={this.props.teamState} /> */}
-        <DefensiveTable teamState={this.props.teamState} />
+        <OffensiveTableTool teamState={this.props.teamState} />
+        <DefensiveTableTool teamState={this.props.teamState} />
       </div>
     );
   }

@@ -24,6 +24,16 @@ class InputSpecies extends React.Component {
   render() {
     return (
       <div>
+        {/* TODO decide if include toggle label is necessary */}
+        {/* <label>Include?</label> */}
+        <input
+          title="Should this Pokemon be included in the analysis?"
+          type="checkbox"
+          checked={this.props.pokeState.include}
+          onChange={() => {
+            this.props.pokeState.include = !this.props.pokeState.include;
+          }}
+        />
         <input
           type="text"
           list="speciesOptions"

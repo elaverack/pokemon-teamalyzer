@@ -57,6 +57,8 @@ class InputStat extends React.Component {
     }
   }
 
+  //NOTE explanation for bulk calc described in Info page
+  //TODO create page or readme to explain "bulk" stat
   getStandardBulk(statName) {
     if (statName == 'Defense' || statName == 'Sp-Defense') {
       let hp = this.getStat(0);

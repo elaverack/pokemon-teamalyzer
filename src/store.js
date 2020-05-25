@@ -40,10 +40,12 @@ export let move = {
   category: 'Physical',
   hits: '1',
   crit: false,
+  include: true,
 };
 
 //TODO add and wire up active-pokemon boolean
 export let pokemon = {
+  include: true,
   species: '',
   types: ['None', 'None'],
   gender: 'Genderless',

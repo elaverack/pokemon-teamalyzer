@@ -17,31 +17,22 @@ class InputMove extends React.Component {
     }
   }
 
-  onPowerChange(event) {
-    let input = handleRange(event);
-    this.props.moveState.bp = input;
-  }
-
-  onTypeChange(event) {
-    this.props.moveState.type = event.target.value;
-  }
-
-  onCatChange(event) {
-    this.props.moveState.category = event.target.value;
-  }
-
-  onCritToggle() {
-    this.props.moveState.crit = !this.props.moveState.crit;
-  }
-
-  onHitsChange(event) {
-    this.props.moveState.hits = event.target.value;
-  }
   render() {
     return (
       <table>
         <thead>
           <tr>
+            <td title="Should this move be included in the analysis?">
+              {/* TODO decide if include toggle label is necessary */}
+              {/* <label>Include?</label> */}
+              <input
+                type="checkbox"
+                checked={this.props.moveState.include}
+                onChange={() => {
+                  this.props.moveState.include = !this.props.moveState.include;
+                }}
+              />
+            </td>
             <td>
               <input
                 type="text"
@@ -60,7 +51,8 @@ class InputMove extends React.Component {
                 max="999"
                 value={this.props.moveState.bp}
                 onChange={event => {
-                  this.onPowerChange(event);
+                  let input = handleRange(event);
+                  this.props.moveState.bp = input;
                 }}
               />
             </td>
@@ -69,7 +61,7 @@ class InputMove extends React.Component {
                 id={this.props.index}
                 value={this.props.moveState.type}
                 onChange={event => {
-                  this.onTypeChange(event);
+                  this.props.moveState.type = event.target.value;
                 }}>
                 {genTypeOptions()}
               </select>
@@ -79,7 +71,7 @@ class InputMove extends React.Component {
                 id={this.props.index}
                 value={this.props.moveState.category}
                 onChange={event => {
-                  this.onCatChange(event);
+                  this.props.moveState.category = event.target.value;
                 }}>
                 <option value="Physical">Physical</option>
                 <option value="Special">Special</option>
@@ -91,7 +83,7 @@ class InputMove extends React.Component {
                 title="Force this attack to be a critical hit?"
                 type="button"
                 onClick={() => {
-                  this.onCritToggle();
+                  this.props.moveState.crit = !this.props.moveState.crit;
                 }}>
                 Crit
               </button>
@@ -101,7 +93,7 @@ class InputMove extends React.Component {
                 hidden={this.props.moveState.hits < 2 && 'hidden'}
                 value={this.props.moveState.hits}
                 onChange={event => {
-                  this.onHitsChange(event);
+                  this.props.moveState.hits = event.target.value;
                 }}>
                 <option value="2">2 hits</option>
                 <option value="3">3 hits</option>

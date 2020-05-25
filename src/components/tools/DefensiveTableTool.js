@@ -3,10 +3,10 @@ import { TYPE_CHART, Pokemon, calculate, Move } from '@smogon/calc';
 import { gen, validSpecies, validMove } from '../../utils';
 import { observer } from 'mobx-react';
 import 'mobx-react-lite/batchingForReactDom';
-import OffensiveTable from './OffensiveTable';
+import DefensiveTable from './DefensiveTable';
 
 @observer
-class OffensiveTableTool extends React.Component {
+class DefensiveTableTool extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data: this.genData(), columns: this.genColumns() };
@@ -99,10 +99,10 @@ class OffensiveTableTool extends React.Component {
     return (
       <div>
         <input type="button" onClick={() => this.updateData()} value="ANALYZE" />
-        <OffensiveTable columns={this.state.columns} data={this.state.data} />
+        <DefensiveTable columns={this.state.columns} data={this.state.data} />
       </div>
     );
   }
 }
 
-export default observer(OffensiveTableTool);
+export default observer(DefensiveTableTool);
