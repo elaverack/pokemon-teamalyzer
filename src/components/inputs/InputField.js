@@ -62,12 +62,13 @@ class InputField extends React.Component {
             </select>
           </div>
           <input
-            type="button"
-            value="Gravity"
+            type="checkbox"
+            value={this.props.fieldState.gravity}
             onClick={() => {
               this.props.fieldState.gravity = !this.props.fieldState.gravity;
             }}
           />
+          <label>Gravity</label>
           <hr />
           <table>
             <tbody>

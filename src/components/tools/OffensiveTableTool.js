@@ -138,6 +138,8 @@ class OffensiveTableTool extends React.Component {
   render() {
     return (
       <div>
+        <label>Offense Analyzer</label>
+        <br />
         <input type="button" onClick={() => this.updateData()} value="ANALYZE" />
         <OffensiveTable columns={this.state.columns} data={this.state.data} />
       </div>
@@ -146,3 +148,5 @@ class OffensiveTableTool extends React.Component {
 }
 
 export default observer(OffensiveTableTool);
+
+//TODO add filters for physical and special attacks
