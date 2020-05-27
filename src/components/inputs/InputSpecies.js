@@ -7,11 +7,11 @@ import { genSpeciesOptions, validSpecies, gen } from '../../utils';
 class InputSpecies extends React.Component {
   onSpeciesChange(event) {
     this.props.pokeState.species = event.target.value;
-    if (validSpecies(event.target.value)) {
+    if (validSpecies(this.props.pokeState.species)) {
       let currPokemon = new Pokemon(gen, event.target.value);
-      this.props.pokeState.types = [currPokemon.type1, currPokemon.type2 || 'None'];
+      this.props.pokeState.types = [currPokemon.types[0], currPokemon.types[1] || '???'];
       this.props.pokeState.gender = currPokemon.gender;
-      this.props.pokeState.weight = currPokemon.weight;
+      this.props.pokeState.weight = currPokemon.weightkg;
       this.props.pokeState.baseVals = [...Object.values(currPokemon.species.baseStats)];
       this.props.pokeState.ability = currPokemon.ability;
     }

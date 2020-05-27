@@ -47,7 +47,7 @@ export let move = {
 export let pokemon = {
   include: true,
   species: '',
-  types: ['None', 'None'],
+  types: ['???', '???'],
   gender: 'Genderless',
   baseVals: ['48', '48', '48', '48', '48', '48'],
   ivVals: ['31', '31', '31', '31', '31', '31'],
@@ -75,7 +75,7 @@ export let teamState = observable({
     .map(() => ({ ...pokemon })),
 });
 
-//autorun(() => console.log(teamState.team[0].species));
+//autorun(() => console.log(teamState.team[0].types[0]));
 
 //QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
 //what is babel? how do i incorporate it?

@@ -140,6 +140,7 @@ class OffensiveTableTool extends React.Component {
       <div>
         <label>Offense Analyzer</label>
         <br />
+        <br />
         <input type="button" onClick={() => this.updateData()} value="ANALYZE" />
         <OffensiveTable columns={this.state.columns} data={this.state.data} />
       </div>

@@ -9,11 +9,10 @@ import DefensiveTable from './DefensiveTable';
 class DefensiveTableTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: this.genData(), columns: this.genColumns() };
+    this.state = { data: this.genData(), columns: this.genColumns(), category: 'Both' };
   }
 
-  //TODO add toggle between physical and special damage
-  calcDamage(type, poke, fieldState) {
+  calcDamage(type, poke, fieldState, category) {
     if (poke.include && validSpecies(poke.species)) {
       const defender = new Pokemon(gen, poke.species, {
         level: +this.props.teamState.level,
@@ -56,7 +55,8 @@ class DefensiveTableTool extends React.Component {
         overrides: { types: type === '???' ? 'Normal' : '???' },
       });
 
-      const attack = new Move(gen, 'Explosion', { overrides: { type: type } });
+      const spAttack = new Move(gen, 'Explosion', { overrides: { type: type, category: 'Special' } });
+      const phAttack = new Move(gen, 'Explosion', { overrides: { type: type } });
 
       let aSide = fieldState.sides[1];
       let dSide = fieldState.sides[0];
@@ -99,44 +99,76 @@ class DefensiveTableTool extends React.Component {
         },
       });
 
-      let result = calculate(gen, attacker, defender, attack, field);
-
       //NOTE damage returned is maximum roll
-      return Math.round((result.range()[1] / defender.maxHP()) * 1000);
+      let phResult = calculate(gen, attacker, defender, phAttack, field);
+      let phPerc = +((phResult.range()[1] / defender.maxHP()) * 100).toFixed(1);
+
+      let spResult = calculate(gen, attacker, defender, spAttack, field);
+      let spPerc = +((spResult.range()[1] / defender.maxHP()) * 100).toFixed(1);
+
+      switch (category) {
+        case 'Physical':
+          return phPerc;
+        case 'Special':
+          return spPerc;
+        case 'Both':
+          return +((spPerc + phPerc) / 2).toFixed(1);
+      }
     } else {
       return 0;
     }
   }
 
-  avgTypeDamage(atkType) {
+  avgTypeDamage(atkType, category) {
     let dmgArray = this.props.teamState.team.map((poke, index) =>
-      this.calcDamage(atkType, poke, this.props.teamState.field)
+      this.calcDamage(atkType, poke, this.props.teamState.field, category)
     );
     let dmgTotal = dmgArray.reduce((accumulator, currentValue) => accumulator + currentValue);
-    let activePoke = this.props.teamState.team.map(poke => {
-      return poke.include && validSpecies(poke.species);
-    });
-    let totalActive = activePoke.reduce((accumulator, currentValue) => accumulator + currentValue);
-    totalActive = totalActive == 0 ? 1 : totalActive;
-    return Math.round(dmgTotal / totalActive);
+    let activePoke = this.props.teamState.team
+      .map(poke => {
+        return poke.include && validSpecies(poke.species);
+      })
+      .reduce((accumulator, currentValue) => accumulator + currentValue);
+    activePoke = activePoke == 0 ? 1 : activePoke;
+    return +(dmgTotal / activePoke).toFixed(1);
   }
 
   //TODO add row where average damage taken by each pokemon across all types is calculated
-  genData() {
+  genData(category) {
     let damageData = Object.keys(TYPE_CHART[gen]).map(atkType => {
       let row = { rowTitle: atkType };
       this.props.teamState.team.map((poke, index) =>
         Object.defineProperty(row, String(index), {
-          value: this.calcDamage(atkType, poke, this.props.teamState.field),
+          value: this.calcDamage(atkType, poke, this.props.teamState.field, category),
         })
       );
       Object.defineProperty(row, 'AvgTypeDmg', {
-        value: this.avgTypeDamage(atkType),
+        value: this.avgTypeDamage(atkType, category),
       });
       return row;
     });
 
+    //create average row
+    // let colAvg = { rowTitle: 'Average' };
+    // Object.defineProperty(colAvg, String(index), {
+    //   value: this.getAvgAcrTypes(damageData, index),
+    // });
+
+    // damageData.push(avgAcrTypes);
+    // console.log(damageData);
     return damageData;
+  }
+
+  getAvgAcrTypes(damageData, index) {
+    columnTotal = 0;
+    for (let type in damageData) {
+      console.log(damageData[type][index]);
+      columnTotal += damageData[type][index];
+    }
+    for (let type in damageData) {
+      console.log(damageData[type][index]);
+      columnTotal += damageData[type][index];
+    }
   }
 
   genColumns() {
@@ -149,8 +181,8 @@ class DefensiveTableTool extends React.Component {
     return teamCols;
   }
 
-  updateData() {
-    this.setState({ data: this.genData(), columns: this.genColumns() });
+  updateData(category) {
+    this.setState({ data: this.genData(category), columns: this.genColumns() });
   }
 
   render() {
@@ -158,7 +190,45 @@ class DefensiveTableTool extends React.Component {
       <div>
         <label>Defense Analyzer</label>
         <br />
-        <input type="button" onClick={() => this.updateData()} value="ANALYZE" />
+        <div title="Select defense category.">
+          <label>
+            <input
+              type="radio"
+              value="Physical"
+              checked={this.state.category === 'Physical'}
+              onChange={event => {
+                this.setState({ category: event.target.value });
+                this.updateData(event.target.value);
+              }}
+            />
+            Physical
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Special"
+              checked={this.state.category === 'Special'}
+              onChange={event => {
+                this.setState({ category: event.target.value });
+                this.updateData(event.target.value);
+              }}
+            />
+            Special
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Both"
+              checked={this.state.category === 'Both'}
+              onChange={event => {
+                this.setState({ category: event.target.value });
+                this.updateData(event.target.value);
+              }}
+            />
+            Overall
+          </label>
+        </div>
+        <input type="button" onClick={() => this.updateData(this.state.category)} value="ANALYZE" />
         <DefensiveTable columns={this.state.columns} data={this.state.data} />
       </div>
     );

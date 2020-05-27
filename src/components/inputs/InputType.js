@@ -7,7 +7,7 @@ class InputType extends React.Component {
   onTypeChange(event) {
     this.props.pokeState.types[event.target.id] = event.target.value;
     if (this.props.pokeState.types[0] === this.props.pokeState.types[1]) {
-      this.props.pokeState.types[1] = 'None';
+      this.props.pokeState.types[1] = '???';
     }
   }
 
