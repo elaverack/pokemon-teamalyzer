@@ -133,6 +133,19 @@ class DefensiveTableTool extends React.Component {
     return +(dmgTotal / activePoke).toFixed(1);
   }
 
+  //TODO getAvgAcrTypes
+  getAvgAcrTypes(damageData, index) {
+    columnTotal = 0;
+    for (let type in damageData) {
+      console.log(damageData[type][index]);
+      columnTotal += damageData[type][index];
+    }
+    for (let type in damageData) {
+      console.log(damageData[type][index]);
+      columnTotal += damageData[type][index];
+    }
+  }
+
   //TODO add row where average damage taken by each pokemon across all types is calculated
   genData(category) {
     let damageData = Object.keys(TYPE_CHART[gen]).map(atkType => {
@@ -159,18 +172,6 @@ class DefensiveTableTool extends React.Component {
     console.log(damageData);
 
     return damageData;
-  }
-
-  getAvgAcrTypes(damageData, index) {
-    columnTotal = 0;
-    for (let type in damageData) {
-      console.log(damageData[type][index]);
-      columnTotal += damageData[type][index];
-    }
-    for (let type in damageData) {
-      console.log(damageData[type][index]);
-      columnTotal += damageData[type][index];
-    }
   }
 
   genColumns() {
