@@ -150,16 +150,10 @@ class DefensiveTableTool extends React.Component {
   genData(category) {
     let damageData = Object.keys(TYPE_CHART[gen]).map(atkType => {
       let row = { rowTitle: atkType };
-      this.props.teamState.team.map((poke, index) =>
-        Object.defineProperty(row, String(index), {
-          value: this.calcDamage(atkType, poke, this.props.teamState.field, category),
-          enumerable: true,
-        })
-      );
-      Object.defineProperty(row, 'AvgTypeDmg', {
-        value: this.avgTypeDamage(atkType, category),
-        enumerable: true,
+      this.props.teamState.team.map((poke, index) => {
+        row[index] = this.calcDamage(atkType, poke, this.props.teamState.field, category);
       });
+      row.avgTypeDmg = this.avgTypeDamage(atkType, category);
       return row;
     });
 
@@ -168,7 +162,6 @@ class DefensiveTableTool extends React.Component {
     //TODO write function to calc average values based on data array
     colAvg.rowTitle = 'Average';
     damageData.push(colAvg);
-    console.log(colAvg);
     console.log(damageData);
 
     return damageData;
