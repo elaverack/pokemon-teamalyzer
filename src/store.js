@@ -43,7 +43,6 @@ export let move = {
   include: true,
 };
 
-//TODO add and wire up active-pokemon boolean
 export let pokemon = {
   include: true,
   species: '',

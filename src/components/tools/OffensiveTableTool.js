@@ -230,5 +230,3 @@ class OffensiveTableTool extends React.Component {
 }
 
 export default observer(OffensiveTableTool);
-
-//TODO add filters for physical and special attacks
