@@ -2,14 +2,44 @@ import React from 'react';
 import { TYPE_CHART, Pokemon, calculate, Move, Field } from '@smogon/calc';
 import { gen, validSpecies } from '../../utils';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
 import 'mobx-react-lite/batchingForReactDom';
 import DefensiveTable from './DefensiveTable';
+
+const Styles = styled.div`
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`;
 
 @observer
 class DefensiveTableTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: this.genData(), columns: this.genColumns(), category: 'Both' };
+    this.state = { data: this.genData(this.category), columns: this.genColumns(), category: 'Physical' };
   }
 
   calcDamage(type, poke, fieldState, category) {
@@ -173,7 +203,7 @@ class DefensiveTableTool extends React.Component {
       accessor: String(index),
     }));
     teamCols.unshift({ Header: 'Attack Type', accessor: 'rowTitle' });
-    teamCols.push({ Header: 'Average Type Damage', accessor: 'AvgTypeDmg' });
+    teamCols.push({ Header: 'Average Type Damage', accessor: 'avgTypeDmg' });
     return teamCols;
   }
 
@@ -225,7 +255,17 @@ class DefensiveTableTool extends React.Component {
           </label>
         </div>
         <input type="button" onClick={() => this.updateData(this.state.category)} value="ANALYZE" />
-        <DefensiveTable columns={this.state.columns} data={this.state.data} />
+        <Styles>
+          <DefensiveTable
+            columns={this.state.columns}
+            data={this.state.data}
+            getCellProps={cellInfo => ({
+              style: {
+                backgroundColor: `hsl(${120 * ((120 - cellInfo.value) / 120) + 120}, 100%, 67%)`,
+              },
+            })}
+          />
+        </Styles>
       </div>
     );
   }

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@smogon/calc": "^0.3.0",
-    "react-table": "^7.0.4"
+    "react-table": "^7.0.4",
+    "styled-components": "^5.1.1"
   }
 }

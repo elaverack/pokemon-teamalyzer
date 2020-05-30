@@ -1,9 +1,21 @@
 import React from 'react';
 import { useTable } from 'react-table';
 
-function DefensiveTable(props) {
-  const { columns, data } = props;
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+// Create a default prop getter
+const defaultPropGetter = () => ({});
+
+function DefensiveTable({
+  columns,
+  data,
+  getHeaderProps = defaultPropGetter,
+  getColumnProps = defaultPropGetter,
+  getRowProps = defaultPropGetter,
+  getCellProps = defaultPropGetter,
+}) {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data,
+  });
 
   return (
     <div>
@@ -23,7 +35,19 @@ function DefensiveTable(props) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                  return (
+                    <td
+                      {...cell.getCellProps([
+                        {
+                          className: cell.column.className,
+                          style: cell.column.style,
+                        },
+                        getColumnProps(cell.column),
+                        getCellProps(cell),
+                      ])}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
                 })}
               </tr>
             );
