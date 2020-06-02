@@ -261,7 +261,7 @@ class DefensiveTableTool extends React.Component {
             data={this.state.data}
             getCellProps={cellInfo => ({
               style: {
-                backgroundColor: `hsl(${120 * ((120 - cellInfo.value) / 120) + 120}, 100%, 67%)`,
+                backgroundColor: `hsl(${120 * ((50 - cellInfo.value) / 50) + 120}, 100%, 67%)`,
               },
             })}
           />
