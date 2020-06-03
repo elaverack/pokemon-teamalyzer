@@ -8,7 +8,7 @@ class InputSpecies extends React.Component {
   onSpeciesChange(event) {
     this.props.pokeState.species = event.target.value;
     if (validSpecies(this.props.pokeState.species)) {
-      let currPokemon = new Pokemon(gen, event.target.value);
+      let currPokemon = new Pokemon(gen, this.props.pokeState.species);
       this.props.pokeState.types = [currPokemon.types[0], currPokemon.types[1] || '???'];
       this.props.pokeState.gender = currPokemon.gender;
       this.props.pokeState.weight = currPokemon.weightkg;

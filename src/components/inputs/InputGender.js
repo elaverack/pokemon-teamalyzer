@@ -16,9 +16,9 @@ class InputGender extends React.Component {
           onChange={event => {
             this.onGenderChange(event);
           }}>
-          <option value="genderless">Genderless</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="Genderless">Genderless</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
         </select>
       </div>
     );
