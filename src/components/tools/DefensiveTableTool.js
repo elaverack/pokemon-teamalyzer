@@ -167,11 +167,9 @@ class DefensiveTableTool extends React.Component {
   getAvgAcrTypes(damageData, index) {
     columnTotal = 0;
     for (let type in damageData) {
-      console.log(damageData[type][index]);
       columnTotal += damageData[type][index];
     }
     for (let type in damageData) {
-      console.log(damageData[type][index]);
       columnTotal += damageData[type][index];
     }
   }
@@ -191,9 +189,7 @@ class DefensiveTableTool extends React.Component {
     let colAvg = { ...damageData[0] };
     //TODO write function to calc average values based on data array
     colAvg.rowTitle = 'Average';
-    damageData.push(colAvg);
-    console.log(damageData);
-
+    //damageData.push(colAvg);
     return damageData;
   }
 

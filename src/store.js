@@ -74,6 +74,14 @@ export let teamState = observable({
     .map(() => ({ ...pokemon })),
 });
 
+export let initialTeamState = {
+  field: field,
+  level: '50',
+  team: Array(6)
+    .fill(null)
+    .map(() => ({ ...pokemon })),
+};
+
 //autorun(() => console.log(teamState.team[0].types[0]));
 
 //QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
