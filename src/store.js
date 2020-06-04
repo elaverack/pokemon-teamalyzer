@@ -35,7 +35,7 @@ export let field = {
 
 export let move = {
   name: '',
-  bp: '',
+  bp: '0',
   type: 'None',
   category: 'Physical',
   hits: '1',
@@ -82,9 +82,4 @@ export let initialTeamState = {
     .map(() => ({ ...pokemon })),
 };
 
-//autorun(() => console.log(teamState.team[0].types[0]));
-
-//QUESTION mobx likes to use decorators, but is only supported by typescript and babel.
-//what is babel? how do i incorporate it?
-//QUESTION how do i get an observable object to pass state down to a nested object and update properly?
-//QUESTION how to store previous versions of state? flip between them?
+//autorun(() => console.log(teamState.team[0].moves[0].bp));

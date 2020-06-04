@@ -39,7 +39,7 @@ const Styles = styled.div`
 class OffensiveTableTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: this.genData(this.category), columns: this.genColumns(), category: 'Both' };
+    this.state = { data: this.genData(this.category), columns: this.genColumns(), category: 'Both', maxDamage: 100 };
   }
 
   calcDamage(type1, type2, poke, move, fieldState, category) {
@@ -157,7 +157,15 @@ class OffensiveTableTool extends React.Component {
       );
       return row;
     });
+    this.setMaxDamage(damageData);
     return damageData;
+  }
+
+  setMaxDamage(damageData) {
+    let max = Math.max(
+      ...damageData.map(row => Math.max(...Object.values(row).filter(element => typeof element != 'string')))
+    );
+    this.setState({ maxDamage: max });
   }
 
   genColumns() {
@@ -167,7 +175,10 @@ class OffensiveTableTool extends React.Component {
   }
 
   updateData(category) {
-    this.setState({ data: this.genData(category), columns: this.genColumns() });
+    this.setState({
+      data: this.genData(category),
+      columns: this.genColumns(),
+    });
   }
 
   render() {
@@ -219,7 +230,7 @@ class OffensiveTableTool extends React.Component {
             data={this.state.data}
             getCellProps={cellInfo => ({
               style: {
-                backgroundColor: `hsl(${120 * ((120 - cellInfo.value) / 120) * -1 + 120}, 100%, 67%)`,
+                backgroundColor: `hsl(${(cellInfo.value / this.state.maxDamage) * 205}, 100%, 50%)`,
               },
             })}
           />

@@ -61,6 +61,7 @@ class InputMove extends React.Component {
                 id={this.props.index}
                 value={this.props.moveState.type}
                 onChange={event => {
+                  console.log('typechange');
                   this.props.moveState.type = event.target.value;
                 }}>
                 {genTypeOptions()}

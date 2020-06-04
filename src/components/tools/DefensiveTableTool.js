@@ -39,7 +39,12 @@ const Styles = styled.div`
 class DefensiveTableTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: this.genData(this.category), columns: this.genColumns(), category: 'Physical' };
+    this.state = {
+      data: this.genData(this.category),
+      columns: this.genColumns(),
+      category: 'Physical',
+      maxDamage: 100,
+    };
   }
 
   calcDamage(type, poke, fieldState, category) {
@@ -185,11 +190,11 @@ class DefensiveTableTool extends React.Component {
       return row;
     });
 
-    //create average row
-    let colAvg = { ...damageData[0] };
-    //TODO write function to calc average values based on data array
-    colAvg.rowTitle = 'Average';
-    //damageData.push(colAvg);
+    // //create average row
+    // let colAvg = { ...damageData[0] };
+    // //TODO write function to calc average values based on data array
+    // colAvg.rowTitle = 'Average';
+    // damageData.push(colAvg);
     return damageData;
   }
 
@@ -257,7 +262,7 @@ class DefensiveTableTool extends React.Component {
             data={this.state.data}
             getCellProps={cellInfo => ({
               style: {
-                backgroundColor: `hsl(${120 * ((50 - cellInfo.value) / 50) + 120}, 100%, 67%)`,
+                backgroundColor: `hsl(${100 * ((100 - cellInfo.value) / 100)}, 100%, 67%)`,
               },
             })}
           />
