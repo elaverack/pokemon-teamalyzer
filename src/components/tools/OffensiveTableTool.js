@@ -24,7 +24,7 @@ const Styles = styled.div`
     th,
     td {
       margin: 0;
-      padding: 0rem;
+      padding: 1px;
       border-bottom: 1px solid black;
       border-right: 1px solid black;
 
