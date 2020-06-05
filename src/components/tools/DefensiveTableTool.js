@@ -195,7 +195,15 @@ class DefensiveTableTool extends React.Component {
     // //TODO write function to calc average values based on data array
     // colAvg.rowTitle = 'Average';
     // damageData.push(colAvg);
+    this.setMaxDamage(damageData);
     return damageData;
+  }
+
+  setMaxDamage(damageData) {
+    let max = Math.max(
+      ...damageData.map(row => Math.max(...Object.values(row).filter(element => typeof element != 'string')))
+    );
+    this.setState({ maxDamage: max });
   }
 
   genColumns() {
@@ -262,7 +270,7 @@ class DefensiveTableTool extends React.Component {
             data={this.state.data}
             getCellProps={cellInfo => ({
               style: {
-                backgroundColor: `hsl(${100 * ((100 - cellInfo.value) / 100)}, 100%, 67%)`,
+                backgroundColor: `hsl(${(1 - cellInfo.value / (this.state.maxDamage + 0.1)) * 205}, 100%, 50%)`,
               },
             })}
           />

@@ -230,7 +230,7 @@ class OffensiveTableTool extends React.Component {
             data={this.state.data}
             getCellProps={cellInfo => ({
               style: {
-                backgroundColor: `hsl(${(cellInfo.value / this.state.maxDamage) * 205}, 100%, 50%)`,
+                backgroundColor: `hsl(${(cellInfo.value / (this.state.maxDamage + 0.1)) * 205}, 100%, 50%)`,
               },
             })}
           />
