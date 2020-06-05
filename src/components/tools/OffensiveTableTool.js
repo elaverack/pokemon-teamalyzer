@@ -89,8 +89,14 @@ class OffensiveTableTool extends React.Component {
         nature: 'Serious',
         overrides: { types: [type1, type1 === type2 ? '???' : type2] },
       });
+      //console.log(defender);
 
-      const attack = new Move(gen, move.name, { useMax: poke.isMax, isCrit: move.crit });
+      let attack = new Move(gen, move.name, {
+        useMax: poke.isMax,
+        isCrit: move.crit,
+        overrides: { bp: +move.bp },
+      });
+      //console.log(attack);
 
       let aSide = fieldState.sides[0];
       let dSide = fieldState.sides[1];

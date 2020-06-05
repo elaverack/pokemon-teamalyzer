@@ -17,6 +17,15 @@ class InputMove extends React.Component {
     }
   }
 
+  onBPChange() {
+    if (validMove(this.props.moveState.name)) {
+      let attack = new Move(gen, this.props.moveState.name);
+
+      console.log(this.props.moveState.bp);
+      console.log(attack);
+    }
+  }
+
   render() {
     return (
       <table>
@@ -53,6 +62,7 @@ class InputMove extends React.Component {
                 onChange={event => {
                   let input = handleRange(event);
                   this.props.moveState.bp = input;
+                  this.onBPChange();
                 }}
               />
             </td>
