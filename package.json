@@ -5,7 +5,7 @@
   "description": "",
   "scripts": {
     "start": "rimraf dist && parcel src/index.html --open",
-    "build": "parcel build src/index.html"
+    "build": "rimraf .cache dist && parcel build src/index.html"
   },
   "keywords": [],
   "author": "",
