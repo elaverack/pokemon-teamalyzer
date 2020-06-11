@@ -23,7 +23,14 @@ class InputPokemon extends React.Component {
 
     //Map render move input components
     const moveInputs = this.props.pokeState.moves.map((move, idx) => (
-      <InputMove key={idx} index={idx} moveState={move} />
+      <InputMove
+        key={idx}
+        index={idx}
+        moveState={move}
+        pokeState={this.props.pokeState}
+        fieldState={this.props.fieldState}
+        level={this.props.level}
+      />
     ));
 
     return (

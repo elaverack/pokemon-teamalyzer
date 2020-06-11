@@ -14,7 +14,13 @@ const inputBlock = {
 class Inputs extends React.Component {
   render() {
     const inputPokemon = this.props.teamState.team.map((pokemon, idx) => (
-      <InputPokemon pokeState={pokemon} index={idx} key={idx} />
+      <InputPokemon
+        pokeState={pokemon}
+        index={idx}
+        key={idx}
+        fieldState={this.props.teamState.field}
+        level={this.props.teamState.level}
+      />
     ));
 
     return (

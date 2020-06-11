@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Move } from '@smogon/calc';
-import { genTypeOptions, genMoveOptions, validMove, gen, handleRange } from '../../utils';
+import { calculate, Move, Pokemon, Field } from '@smogon/calc';
+import { genTypeOptions, genMoveOptions, validMove, validSpecies, gen, handleRange } from '../../utils';
 
 @observer
 class InputMove extends React.Component {
@@ -14,6 +14,104 @@ class InputMove extends React.Component {
       this.props.moveState.bp = bp;
       this.props.moveState.category = category;
       this.props.moveState.hits = hits;
+    }
+  }
+
+  moveStdDamage(poke, move, fieldState, level) {
+    if (poke.include && move.include && validSpecies(poke.species) && validMove(move.name)) {
+      const attacker = new Pokemon(gen, poke.species, {
+        level: +level,
+        item: poke.item,
+        nature: poke.nature,
+        gender: poke.gender,
+        isDynamaxed: poke.isMax,
+        ability: poke.ability,
+        abilityOn: poke.abilityOn,
+        status: poke.status,
+        ivs: {
+          hp: +poke.ivVals[0],
+          atk: +poke.ivVals[1],
+          def: +poke.ivVals[2],
+          spa: +poke.ivVals[3],
+          spd: +poke.ivVals[4],
+          spe: +poke.ivVals[5],
+        },
+        evs: {
+          hp: +poke.evVals[0],
+          atk: +poke.evVals[1],
+          def: +poke.evVals[2],
+          spa: +poke.evVals[3],
+          spd: +poke.evVals[4],
+          spe: +poke.evVals[5],
+        },
+        boosts: {
+          atk: +poke.boosts[1],
+          def: +poke.boosts[2],
+          spa: +poke.boosts[3],
+          spd: +poke.boosts[4],
+          spe: +poke.boosts[5],
+        },
+        overrides: { types: poke.types },
+      });
+
+      const defender = new Pokemon(gen, 'Ditto', {
+        level: +level,
+        nature: 'Serious',
+        overrides: { types: ['???', '???'] },
+      });
+
+      let attack = new Move(gen, move.name, {
+        useMax: poke.isMax, //NOTE Max Flare broken as of calc 0.3.0
+        isCrit: move.crit,
+        overrides: { basePower: +move.bp },
+      });
+
+      let aSide = fieldState.sides[0];
+      let dSide = fieldState.sides[1];
+      const field = new Field({
+        gameType: fieldState.format,
+        weather: fieldState.weather,
+        terrain: fieldState.terrain,
+        isGravity: fieldState.gravity,
+        defenderSide: {
+          spikes: dSide.spikes,
+          steelsurge: dSide.steelsurge,
+          isSR: dSide.stealthrock,
+          isReflect: dSide.reflect,
+          isLightScreen: dSide.lightscreen,
+          isProtected: dSide.protect,
+          isSeeded: dSide.leechseed,
+          isForesight: dSide.foresight,
+          isTailwind: dSide.tailwind,
+          isHelpingHand: dSide.helpinghand,
+          isFriendGuard: dSide.friendguard,
+          isAuroraVeil: dSide.auroraveil,
+          isBattery: dSide.battery,
+          isSwitching: dSide.switching,
+        },
+        attackerSide: {
+          spikes: aSide.spikes,
+          steelsurge: aSide.steelsurge,
+          isSR: aSide.stealthrock,
+          isReflect: aSide.reflect,
+          isLightScreen: aSide.lightscreen,
+          isProtected: aSide.protect,
+          isSeeded: aSide.leechseed,
+          isForesight: aSide.foresight,
+          isTailwind: aSide.tailwind,
+          isHelpingHand: aSide.helpinghand,
+          isFriendGuard: aSide.friendguard,
+          isAuroraVeil: aSide.auroraveil,
+          isBattery: aSide.battery,
+          isSwitching: aSide.switching,
+        },
+      });
+
+      let result = calculate(gen, attacker, defender, attack, field);
+      //NOTE damage returned is maximum roll
+      return result.range()[1];
+    } else {
+      return 0;
     }
   }
 
@@ -101,6 +199,17 @@ class InputMove extends React.Component {
                 <option value="4">4 hits</option>
                 <option value="5">5 hits</option>
               </select>
+            </td>
+            <td>
+              <label>Power: </label>
+              <output>
+                {this.moveStdDamage(
+                  this.props.pokeState,
+                  this.props.moveState,
+                  this.props.fieldState,
+                  this.props.level
+                )}
+              </output>
             </td>
           </tr>
         </thead>
