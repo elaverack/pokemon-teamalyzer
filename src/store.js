@@ -74,6 +74,14 @@ export let teamState = observable({
     .map(() => ({ ...pokemon })),
 });
 
+export let enemyTeamState = observable({
+  field: field,
+  level: '50',
+  team: Array(6)
+    .fill(null)
+    .map(() => ({ ...pokemon })),
+});
+
 export let initialTeamState = {
   field: field,
   level: '50',

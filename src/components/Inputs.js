@@ -10,6 +10,11 @@ const inputBlock = {
   border: '1px solid',
 };
 
+const enemyBlock = {
+  float: 'right',
+  border: '1px solid',
+};
+
 @observer
 class Inputs extends React.Component {
   render() {
@@ -23,12 +28,23 @@ class Inputs extends React.Component {
       />
     ));
 
+    const enemyPokemon = this.props.enemyTeamState.team.map((pokemon, idx) => (
+      <InputPokemon
+        pokeState={pokemon}
+        index={idx}
+        key={idx}
+        fieldState={this.props.teamState.field}
+        level={this.props.teamState.level}
+      />
+    ));
+
     return (
-      <div style={inputBlock}>
+      <div>
         <ImportExport teamState={this.props.teamState} />
         <InputLevel teamState={this.props.teamState} />
         <InputField fieldState={this.props.teamState.field} />
-        {inputPokemon}
+        <div style={inputBlock}>{inputPokemon}</div>
+        <div style={enemyBlock}>{enemyPokemon}</div>
       </div>
     );
   }

@@ -1,14 +1,23 @@
 import React from 'react';
 import Inputs from './Inputs';
 import Tools from './Tools';
-import { teamState } from '../store';
+import { enemyTeamState, teamState } from '../store';
+
+const inputBlock = {
+  float: 'center',
+  border: '1px solid',
+};
 
 class Teamalyzer extends React.Component {
   render() {
     return (
-      <div>
-        <Inputs teamState={teamState} />
-        <Tools teamState={teamState} />
+      <div style={inputBlock}>
+        <div>
+          <Inputs teamState={teamState} enemyTeamState={enemyTeamState} />
+        </div>
+        <div>
+          <Tools teamState={teamState} />
+        </div>
       </div>
     );
   }
