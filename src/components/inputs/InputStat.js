@@ -59,6 +59,7 @@ class InputStat extends React.Component {
 
   //NOTE explanation for bulk calc described in Info page
   //TODO create page or readme to explain "bulk" stat
+  //how do i incorporate abilities and items? use typeless phys/special attack and back out result
   getStandardBulk(statName) {
     if (statName == 'Defense' || statName == 'Sp-Defense') {
       let hp = this.getStat(0);
