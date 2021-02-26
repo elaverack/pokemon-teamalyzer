@@ -16,12 +16,12 @@ class InputStatus extends React.Component {
           onChange={event => {
             this.onStatusChange(event);
           }}>
-          <option value="Healthy">Healthy</option>
-          <option value="Poisoned">Poisoned</option>
-          <option value="Burned">Burned</option>
-          <option value="Paralyzed">Paralyzed</option>
-          <option value="Asleep">Asleep</option>
-          <option value="Frozen">Frozen</option>
+          <option value="">Healthy</option>
+          <option value="psn">Poisoned</option>
+          <option value="brn">Burned</option>
+          <option value="par">Paralyzed</option>
+          <option value="slp">Asleep</option>
+          <option value="frz">Frozen</option>
         </select>
       </div>
     );
