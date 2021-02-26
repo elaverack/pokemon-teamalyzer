@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Pokemon } from '@smogon/calc';
+import { Pokemon, Move, calculate, Field } from '@smogon/calc';
 import { handleRange, validSpecies, gen } from '../../utils';
 import { teamState } from '../../store';
 
@@ -57,10 +57,110 @@ class InputStat extends React.Component {
     }
   }
 
+  stdDamage(category) {
+    const poke = this.props.pokeState;
+    const level = this.props.level;
+    const fieldState = this.props.fieldState;
+    if (poke.include && validSpecies(poke.species)) {
+      const defender = new Pokemon(gen, poke.species, {
+        level: +level,
+        item: poke.item,
+        nature: poke.nature,
+        gender: poke.gender,
+        isDynamaxed: poke.isMax,
+        ability: poke.ability,
+        abilityOn: poke.abilityOn,
+        status: poke.status,
+        ivs: {
+          hp: +poke.ivVals[0],
+          atk: +poke.ivVals[1],
+          def: +poke.ivVals[2],
+          spa: +poke.ivVals[3],
+          spd: +poke.ivVals[4],
+          spe: +poke.ivVals[5],
+        },
+        evs: {
+          hp: +poke.evVals[0],
+          atk: +poke.evVals[1],
+          def: +poke.evVals[2],
+          spa: +poke.evVals[3],
+          spd: +poke.evVals[4],
+          spe: +poke.evVals[5],
+        },
+        boosts: {
+          atk: +poke.boosts[1],
+          def: +poke.boosts[2],
+          spa: +poke.boosts[3],
+          spd: +poke.boosts[4],
+          spe: +poke.boosts[5],
+        },
+        overrides: { types: poke.types },
+      });
+
+      const attacker = new Pokemon(gen, 'Ditto', {
+        level: 50,
+        nature: 'Serious',
+        overrides: { types: ['???', '???'] },
+      });
+
+      let explosion = new Move(gen, 'Explosion', {
+        overrides: { category: category, type: '???' },
+      });
+
+      let aSide = fieldState.sides[1];
+      let dSide = fieldState.sides[0];
+      const field = new Field({
+        gameType: fieldState.format,
+        weather: fieldState.weather,
+        terrain: fieldState.terrain,
+        isGravity: fieldState.gravity,
+        defenderSide: {
+          spikes: dSide.spikes,
+          steelsurge: dSide.steelsurge,
+          isSR: dSide.stealthrock,
+          isReflect: dSide.reflect,
+          isLightScreen: dSide.lightscreen,
+          isProtected: dSide.protect,
+          isSeeded: dSide.leechseed,
+          isForesight: dSide.foresight,
+          isTailwind: dSide.tailwind,
+          isHelpingHand: dSide.helpinghand,
+          isFriendGuard: dSide.friendguard,
+          isAuroraVeil: dSide.auroraveil,
+          isBattery: dSide.battery,
+          isSwitching: dSide.switching,
+        },
+        attackerSide: {
+          spikes: aSide.spikes,
+          steelsurge: aSide.steelsurge,
+          isSR: aSide.stealthrock,
+          isReflect: aSide.reflect,
+          isLightScreen: aSide.lightscreen,
+          isProtected: aSide.protect,
+          isSeeded: aSide.leechseed,
+          isForesight: aSide.foresight,
+          isTailwind: aSide.tailwind,
+          isHelpingHand: aSide.helpinghand,
+          isFriendGuard: aSide.friendguard,
+          isAuroraVeil: aSide.auroraveil,
+          isBattery: aSide.battery,
+          isSwitching: aSide.switching,
+        },
+      });
+
+      let result = calculate(gen, attacker, defender, explosion, field);
+      //NOTE damage returned is maximum roll
+      return result.range()[1];
+    } else {
+      return 0;
+    }
+  }
+
   //NOTE explanation for bulk calc described in Info page
   //TODO create page or readme to explain "bulk" stat
   //how do i incorporate abilities and items? use typeless phys/special attack and back out result
   getStandardBulk(statName) {
+    /*
     if (statName == 'Defense' || statName == 'Sp-Defense') {
       let hp = this.getStat(0);
       let def = this.getStat(this.props.index);
@@ -71,6 +171,19 @@ class InputStat extends React.Component {
 
       return Math.round((def * (hp - 2)) / dittoDef + 2);
     }
+    */
+    //calculate standard power of typeless ditto explosion
+    const stdPower = 84;
+    //calc damage of typeless ditto explosion into current pokemon
+    let damage = 1;
+    if (statName == 'Defense') {
+      damage = this.stdDamage('Physical');
+    } else {
+      damage = this.stdDamage('Special');
+    }
+    let maxhp = this.getStat(0);
+    let bulk = (stdPower * maxhp) / damage;
+    return bulk;
   }
 
   maxEvWarning() {

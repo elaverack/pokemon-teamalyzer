@@ -18,7 +18,14 @@ class InputPokemon extends React.Component {
   render() {
     //Map render stat input components
     const statInputs = statNames.map((statNames, idx) => (
-      <InputStat title={statNames} key={statNames} pokeState={this.props.pokeState} index={idx} />
+      <InputStat
+        title={statNames}
+        key={statNames}
+        pokeState={this.props.pokeState}
+        index={idx}
+        fieldState={this.props.fieldState}
+        level={this.props.level}
+      />
     ));
 
     //Map render move input components
