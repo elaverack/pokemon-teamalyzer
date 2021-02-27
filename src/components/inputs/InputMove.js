@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { calculate, Move, Pokemon, Field } from '@smogon/calc';
-import { genTypeOptions, genMoveOptions, validMove, validSpecies, gen, handleRange } from '../../utils';
+import { genTypeOptions, genMoveOptions, validMove, validSpecies, gen, handleRange, validItem } from '../../utils';
 
 @observer
 class InputMove extends React.Component {
@@ -18,7 +18,7 @@ class InputMove extends React.Component {
   }
 
   moveStdDamage(poke, move, fieldState, level) {
-    if (poke.include && move.include && validSpecies(poke.species) && validMove(move.name)) {
+    if (poke.include && move.include && validSpecies(poke.species) && validMove(move.name) && validItem(poke.item)) {
       const attacker = new Pokemon(gen, poke.species, {
         level: +level,
         item: poke.item,
@@ -63,7 +63,7 @@ class InputMove extends React.Component {
       let attack = new Move(gen, move.name, {
         useMax: poke.isMax, //NOTE Max Flare broken as of calc 0.3.0
         isCrit: move.crit,
-        overrides: { basePower: +move.bp },
+        overrides: { basePower: +move.bp, type: move.type },
       });
 
       let aSide = fieldState.sides[0];
@@ -159,7 +159,6 @@ class InputMove extends React.Component {
                 id={this.props.index}
                 value={this.props.moveState.type}
                 onChange={event => {
-                  console.log('typechange');
                   this.props.moveState.type = event.target.value;
                 }}>
                 {genTypeOptions()}

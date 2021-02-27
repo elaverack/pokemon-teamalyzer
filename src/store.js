@@ -46,7 +46,7 @@ export let move = {
 export let pokemon = {
   include: true,
   species: '',
-  types: ['???', '???'],
+  types: ['', ''],
   gender: 'Genderless',
   baseVals: ['48', '48', '48', '48', '48', '48'],
   ivVals: ['31', '31', '31', '31', '31', '31'],

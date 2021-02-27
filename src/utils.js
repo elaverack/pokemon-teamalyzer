@@ -70,7 +70,17 @@ export function validSpecies(input) {
 export function validMove(input) {
   let key;
   for (key in MOVES[gen]) {
-    if (input === key) {
+    if (input == key) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function validItem(input) {
+  let key;
+  for (key in ITEMS[gen]) {
+    if (input == ITEMS[gen][key] || input == '') {
       return true;
     }
   }

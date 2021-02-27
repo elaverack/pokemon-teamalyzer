@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Pokemon, Move, calculate, Field } from '@smogon/calc';
-import { handleRange, validSpecies, gen } from '../../utils';
+import { handleRange, validSpecies, gen, validItem } from '../../utils';
 import { teamState } from '../../store';
 
 @observer
@@ -61,7 +61,7 @@ class InputStat extends React.Component {
     const poke = this.props.pokeState;
     const level = this.props.level;
     const fieldState = this.props.fieldState;
-    if (poke.include && validSpecies(poke.species)) {
+    if (poke.include && validSpecies(poke.species) && validItem(poke.item)) {
       const defender = new Pokemon(gen, poke.species, {
         level: +level,
         item: poke.item,
@@ -94,17 +94,15 @@ class InputStat extends React.Component {
           spd: +poke.boosts[4],
           spe: +poke.boosts[5],
         },
-        overrides: { types: poke.types },
       });
 
       const attacker = new Pokemon(gen, 'Ditto', {
         level: 50,
         nature: 'Serious',
-        overrides: { types: ['???', '???'] },
       });
 
-      let explosion = new Move(gen, 'Explosion', {
-        overrides: { category: category, type: '???' },
+      let attack = new Move(gen, 'Hyper Beam', {
+        overrides: { category: category, type: '???', basePower: 999 },
       });
 
       let aSide = fieldState.sides[1];
@@ -148,42 +146,29 @@ class InputStat extends React.Component {
         },
       });
 
-      let result = calculate(gen, attacker, defender, explosion, field);
+      let result = calculate(gen, attacker, defender, attack, field);
       //NOTE damage returned is maximum roll
       return result.range()[1];
     } else {
-      return 0;
+      return 54243;
     }
   }
 
   //NOTE explanation for bulk calc described in Info page
   //TODO create page or readme to explain "bulk" stat
-  //how do i incorporate abilities and items? use typeless phys/special attack and back out result
   getStandardBulk(statName) {
-    /*
-    if (statName == 'Defense' || statName == 'Sp-Defense') {
-      let hp = this.getStat(0);
-      let def = this.getStat(this.props.index);
-      let boostStage = +this.props.pokeState.boosts[this.props.index];
-      let boostMultiplier = boostStage >= 0 ? (2 + boostStage) / 2 : 2 / (2 - boostStage);
-      def = def * boostMultiplier;
-      let dittoDef = 68;
-
-      return Math.round((def * (hp - 2)) / dittoDef + 2);
-    }
-    */
-    //calculate standard power of typeless ditto explosion
-    const stdPower = 84;
-    //calc damage of typeless ditto explosion into current pokemon
+    //calculate standard power of typeless 999 power single target attack from ditto
+    const stdPower = 441;
+    //calc damage of typeless 999 power single target attack from ditto
     let damage = 1;
     if (statName == 'Defense') {
       damage = this.stdDamage('Physical');
-    } else {
+    } else if (statName == 'Sp-Defense') {
       damage = this.stdDamage('Special');
     }
     let maxhp = this.getStat(0);
     let bulk = (stdPower * maxhp) / damage;
-    return bulk;
+    return Math.floor(bulk);
   }
 
   maxEvWarning() {
