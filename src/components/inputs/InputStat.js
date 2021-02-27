@@ -150,7 +150,7 @@ class InputStat extends React.Component {
       //NOTE damage returned is maximum roll
       return result.range()[1];
     } else {
-      return 54243;
+      return 441;
     }
   }
 
